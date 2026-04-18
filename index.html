@@ -10,16 +10,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0d1117;
-      --bg2:      #161b22;
-      --bg3:      #21262d;
-      --border:   #30363d;
-      --accent:   #4493f8;
-      --accent2:  #1f6feb;
-      --text:     #e6edf3;
-      --muted:    #8b949e;
-      --green:    #3fb950;
-      --radius:   12px;
+      --bg:      #0d1117;
+      --bg2:     #161b22;
+      --bg3:     #21262d;
+      --border:  #30363d;
+      --accent:  #4493f8;
+      --accent2: #1f6feb;
+      --text:    #e6edf3;
+      --muted:   #8b949e;
+      --radius:  14px;
     }
 
     html { scroll-behavior: smooth; }
@@ -28,170 +27,320 @@
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     /* ── Nav ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(13,17,23,.85);
-      backdrop-filter: blur(12px);
+      background: rgba(13,17,23,.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
+      padding: 0 2.5rem;
       display: flex; align-items: center; justify-content: space-between;
-      height: 56px;
+      height: 58px;
     }
-    .nav-logo { display: flex; align-items: center; gap: .6rem; font-weight: 600; font-size: 1.05rem; text-decoration: none; color: var(--text); }
-    .nav-logo img { width: 26px; height: 26px; border-radius: 6px; }
-    .nav-links { display: flex; gap: 1.5rem; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .15s; }
+    .nav-logo {
+      display: flex; align-items: center; gap: .65rem;
+      font-weight: 700; font-size: 1.05rem;
+      text-decoration: none; color: var(--text);
+      letter-spacing: -.01em;
+    }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: .9rem; font-weight: 500;
+      transition: color .15s;
+    }
     .nav-links a:hover { color: var(--text); }
+    .nav-links .nav-icon {
+      font-size: 1.15rem; line-height: 1;
+      opacity: .75; transition: opacity .15s, transform .15s;
+    }
+    .nav-links .nav-icon:hover { opacity: 1; transform: scale(1.15); }
 
     /* ── Hero ── */
     .hero {
       text-align: center;
-      padding: 6rem 2rem 4rem;
-      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(68,147,248,.15), transparent);
+      padding: 7rem 2rem 5rem;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% -5%, rgba(68,147,248,.18), transparent),
+        radial-gradient(ellipse 40% 30% at 80% 60%, rgba(31,111,235,.08), transparent);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234493f8' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
     }
     .hero-icon {
-      width: 96px; height: 96px;
-      border-radius: 22px;
-      box-shadow: 0 0 0 1px var(--border), 0 8px 32px rgba(0,0,0,.4);
-      margin: 0 auto 1.5rem;
+      width: 108px; height: 108px;
+      border-radius: 26px;
+      box-shadow:
+        0 0 0 1px rgba(68,147,248,.3),
+        0 0 40px rgba(68,147,248,.15),
+        0 16px 48px rgba(0,0,0,.5);
+      margin: 0 auto 2rem;
       display: block;
+      animation: floatIcon 4s ease-in-out infinite;
+    }
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 700;
-      letter-spacing: -.02em;
-      line-height: 1.15;
-      margin-bottom: .75rem;
+      font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
     }
-    .hero h1 span { color: var(--accent); }
+    .hero h1 span {
+      background: linear-gradient(135deg, #4493f8 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
     .hero p {
       font-size: 1.15rem;
       color: var(--muted);
       max-width: 560px;
-      margin: 0 auto 2.5rem;
+      margin: 0 auto 2.75rem;
+      line-height: 1.7;
     }
     .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
     .btn {
       display: inline-flex; align-items: center; gap: .5rem;
-      padding: .65rem 1.4rem;
-      border-radius: 8px;
+      padding: .75rem 1.6rem;
+      border-radius: 10px;
       font-size: .95rem;
       font-weight: 600;
       text-decoration: none;
-      transition: opacity .15s, transform .1s;
+      transition: all .2s;
+      position: relative; overflow: hidden;
     }
-    .btn:hover { opacity: .88; transform: translateY(-1px); }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
-    .badge {
-      display: inline-block;
-      background: rgba(63,185,80,.15);
-      color: var(--green);
-      border: 1px solid rgba(63,185,80,.3);
-      border-radius: 20px;
-      font-size: .75rem;
-      font-weight: 600;
-      padding: .2rem .7rem;
-      margin-bottom: 1.2rem;
-      letter-spacing: .04em;
-      text-transform: uppercase;
+    .btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,.08);
+      opacity: 0;
+      transition: opacity .15s;
     }
-
-    /* ── Demo strip ── */
-    .demo-strip {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
+    .btn:hover::after { opacity: 1; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(68,147,248,.35);
     }
-    .demo-stat { text-align: center; }
-    .demo-stat strong { display: block; font-size: 1.4rem; font-weight: 700; color: var(--text); }
-    .demo-stat span { font-size: .8rem; color: var(--muted); }
+    .btn-secondary {
+      background: var(--bg3);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
 
     /* ── Features ── */
-    section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
-    .section-label { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .75rem; }
-    h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -.01em; margin-bottom: 1rem; }
-    .section-sub { color: var(--muted); max-width: 540px; margin-bottom: 3rem; }
+    .section-wrap { padding: 5.5rem 2rem; max-width: 1140px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(68,147,248,.1);
+      border: 1px solid rgba(68,147,248,.2);
+      border-radius: 20px;
+      padding: .25rem .75rem;
+      margin-bottom: 1.1rem;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
 
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
     }
     .feature-card {
       background: var(--bg2);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: border-color .2s;
+      padding: 1.75rem;
+      transition: border-color .25s, box-shadow .25s, transform .2s;
+      position: relative;
+      overflow: hidden;
     }
-    .feature-card:hover { border-color: var(--accent2); }
-    .feature-icon { font-size: 1.6rem; margin-bottom: .75rem; }
-    .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: .4rem; }
-    .feature-card p { font-size: .875rem; color: var(--muted); }
+    .feature-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(68,147,248,.4), transparent);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .feature-card:hover {
+      border-color: rgba(68,147,248,.45);
+      box-shadow: 0 4px 24px rgba(68,147,248,.08), 0 1px 3px rgba(0,0,0,.3);
+      transform: translateY(-2px);
+    }
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(68,147,248,.12);
+      border: 1px solid rgba(68,147,248,.2);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .feature-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; letter-spacing: -.01em; }
+    .feature-card p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
 
     /* ── Download ── */
-    .download-section {
+    .alt-section {
       background: var(--bg2);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
-    .download-section section { padding: 5rem 2rem; }
     .download-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      max-width: 760px;
     }
     .download-card {
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 1.75rem;
       display: flex; flex-direction: column; gap: .5rem;
+      transition: border-color .2s, box-shadow .2s;
     }
-    .download-card h3 { font-size: 1rem; font-weight: 600; }
-    .download-card p { font-size: .825rem; color: var(--muted); flex: 1; }
-    .download-card .btn { align-self: flex-start; margin-top: .5rem; font-size: .85rem; padding: .5rem 1rem; }
-    .tag { font-size: .75rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: .1rem .45rem; color: var(--muted); }
+    .download-card:hover {
+      border-color: rgba(68,147,248,.4);
+      box-shadow: 0 4px 20px rgba(68,147,248,.07);
+    }
+    .download-card h3 { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: .5rem; }
+    .download-card p { font-size: .85rem; color: var(--muted); flex: 1; }
+    .download-card .btn { align-self: flex-start; margin-top: .75rem; font-size: .875rem; padding: .55rem 1.1rem; }
+    .tag {
+      font-size: .7rem; font-weight: 600;
+      background: rgba(68,147,248,.12);
+      border: 1px solid rgba(68,147,248,.25);
+      color: var(--accent);
+      border-radius: 4px;
+      padding: .1rem .45rem;
+      letter-spacing: .02em;
+    }
+    .winget-cmd {
+      display: block;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .7rem 1rem;
+      font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+      font-size: .83rem;
+      margin-top: .75rem;
+      color: #79c0ff;
+      letter-spacing: .01em;
+      user-select: all;
+    }
 
-    /* ── How it works ── */
-    .steps { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; max-width: 600px; }
-    .step { display: flex; gap: 1.2rem; align-items: flex-start; }
+    /* ── Steps ── */
+    .steps { display: flex; flex-direction: column; gap: 0; max-width: 640px; }
+    .step {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .step:last-child { border-bottom: none; }
     .step-num {
       flex-shrink: 0;
-      width: 32px; height: 32px;
-      background: var(--accent2);
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: .85rem;
+      font-weight: 800; font-size: .85rem;
+      box-shadow: 0 2px 12px rgba(68,147,248,.35);
+      color: #fff;
     }
-    .step-body h3 { font-size: .95rem; font-weight: 600; margin-bottom: .2rem; }
-    .step-body p { font-size: .875rem; color: var(--muted); }
+    .step-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: .3rem; }
+    .step-body p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Support ── */
+    .support-cards {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .support-card {
+      display: inline-flex; align-items: center; gap: .75rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: .95rem;
+      transition: all .2s;
+    }
+    .support-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    .support-card.gh { border-color: rgba(188,97,213,.3); }
+    .support-card.gh:hover { border-color: rgba(188,97,213,.6); background: rgba(188,97,213,.05); }
+    .support-card.bmc { border-color: rgba(255,221,0,.3); }
+    .support-card.bmc:hover { border-color: rgba(255,221,0,.6); background: rgba(255,221,0,.05); }
+    .support-card .s-icon { font-size: 1.4rem; line-height: 1; }
+    .support-card .s-label { display: flex; flex-direction: column; gap: .05rem; }
+    .support-card .s-label small { font-size: .72rem; color: var(--muted); font-weight: 400; }
 
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 2rem;
+      padding: 2.5rem 2rem;
       text-align: center;
       font-size: .825rem;
       color: var(--muted);
     }
-    footer a { color: var(--muted); text-decoration: none; }
+    footer a { color: var(--muted); text-decoration: none; transition: color .15s; }
     footer a:hover { color: var(--text); }
+    .footer-logo {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      font-weight: 700; font-size: 1rem; color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .footer-logo img { width: 22px; height: 22px; border-radius: 5px; }
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
 
-    @media (max-width: 600px) {
-      .nav-links { display: none; }
-      .demo-strip { gap: 1.5rem; }
+    @media (max-width: 640px) {
+      .nav-links a:not(.nav-icon) { display: none; }
+      .download-grid { grid-template-columns: 1fr; max-width: 100%; }
+      .support-cards { flex-direction: column; }
     }
   </style>
 </head>
@@ -200,130 +349,154 @@
 <!-- ── Nav ──────────────────────────────────────────────── -->
 <nav>
   <a class="nav-logo" href="#">
-    <img src="icon.png" alt="FanFolder icon" />
+    <img src="icon.png" alt="FanFolder" />
     FanFolder
   </a>
   <div class="nav-links">
     <a href="#features">Features</a>
     <a href="#download">Download</a>
-    <a href="https://github.com/sponsors/olebhartvigsen" target="_blank" rel="noopener" title="GitHub Sponsors" style="font-size:1.1rem;">🩷</a>
-    <a href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee" style="font-size:1.1rem;">☕</a>
+    <a class="nav-icon" href="https://github.com/sponsors/olebhartvigsen" target="_blank" rel="noopener" title="Support on GitHub Sponsors">🩷</a>
+    <a class="nav-icon" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee">☕</a>
   </div>
 </nav>
 
 <!-- ── Hero ─────────────────────────────────────────────── -->
 <header class="hero">
-<img class="hero-icon" src="icon.png" alt="FanFolder" />
+  <img class="hero-icon" src="icon.png" alt="FanFolder" />
   <h1>Your files,<br /><span>fanned out beautifully</span></h1>
-  <p>Click your taskbar icon and watch your recent files arc out in a smooth animated fan. Open, drag, and right-click with full Windows shell support.</p>
+  <p>Click the taskbar icon and your most recent files arc out in a smooth animated fan — ready to open, drag, or right-click with full Windows shell support.</p>
   <div class="btn-row">
     <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
-      ⬇ Download for Windows
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download for Windows
     </a>
-
   </div>
 </header>
 
-<!-- ── Stats strip ───────────────────────────────────────── -->
 <!-- ── Features ─────────────────────────────────────────── -->
-<section id="features">
+<section class="section-wrap" id="features">
   <div class="section-label">Features</div>
   <h2>A beautiful fan popup, right in your taskbar</h2>
-  <p class="section-sub" style="max-width:100%;">Click the icon and your latest files and folders fan out instantly — documents, images, whatever you were last working on, including files from OneDrive, Dropbox, or any cloud folder.</p>
+  <p class="section-sub">Click the icon and your latest files and folders fan out instantly — documents, images, whatever you were last working on, including files from OneDrive, Dropbox, or any cloud folder.</p>
 
   <div class="features-grid">
+
     <div class="feature-card">
-      <div class="feature-icon">🌀</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
       <h3>Animated fan layout</h3>
-      <p>Files arc out from the taskbar in a smooth fan, glide, spring or fade animation. Choose your style.</p>
+      <p>Files arc out from the taskbar in a smooth fan, glide, spring or fade animation. Choose your style in settings.</p>
     </div>
+
     <div class="feature-card">
-      <div class="feature-icon">📁</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      </div>
       <h3>Any folder</h3>
-      <p>Point it at any folder — Downloads, Desktop, Documents, or your OneDrive, Dropbox, or other cloud folder. Always shows what you were last working on.</p>
+      <p>Point it at Downloads, Desktop, Documents, or your OneDrive, Dropbox, or any other cloud folder. Always shows your most recent files.</p>
     </div>
+
     <div class="feature-card">
-      <div class="feature-icon">🖱️</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
       <h3>Full shell integration</h3>
-      <p>Right-click any file for the complete Windows shell context menu. Drag files to other apps with ghost preview.</p>
+      <p>Right-click any file for the complete Windows context menu. Drag files directly to other apps with a ghost preview.</p>
     </div>
+
     <div class="feature-card">
-      <div class="feature-icon">⚡</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
       <h3>Instant open</h3>
-      <p>Icons are pre-loaded in the background so the fan opens instantly with no delay.</p>
+      <p>Icons are pre-loaded in the background so the fan opens the moment you click — no waiting.</p>
     </div>
+
     <div class="feature-card">
-      <div class="feature-icon">🔍</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </div>
       <h3>Filter &amp; sort</h3>
-      <p>Sort by date modified, date created or name. Filter to show only what matters to you.</p>
+      <p>Sort by date modified, date created, or name. Filter to show only the files that matter to you.</p>
     </div>
+
     <div class="feature-card">
-      <div class="feature-icon">🌍</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
       <h3>Multilingual</h3>
-      <p>UI adapts automatically to your Windows display language.</p>
+      <p>The UI adapts automatically to your Windows display language — no extra setup needed.</p>
     </div>
+
     <div class="feature-card">
-      <div class="feature-icon">🔒</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
       <h3>Per-user install</h3>
-      <p>Installs to your user profile — no admin rights required. Auto-starts with Windows on login.</p>
+      <p>Installs to your user profile — no admin rights needed. Starts automatically with Windows on every login.</p>
     </div>
+
   </div>
 </section>
 
 <!-- ── Download ──────────────────────────────────────────── -->
-<div class="download-section" id="download">
-  <section>
+<div class="alt-section" id="download">
+  <div class="section-wrap">
     <div class="section-label">Download</div>
     <h2>Get FanFolder</h2>
-    <p class="section-sub">All builds are verified and published automatically.</p>
+    <p class="section-sub">All releases are built and verified automatically.</p>
 
-    <div class="download-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 700px;">
+    <div class="download-grid">
       <div class="download-card">
         <h3>Installer <span class="tag">Recommended</span></h3>
         <p>Download and run the installer. Works on all Windows 10/11 devices — no admin rights needed.</p>
-        <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">⬇ Download FanFolder</a>
+        <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download FanFolder
+        </a>
       </div>
       <div class="download-card">
         <h3>winget</h3>
-        <p>Install via the Windows Package Manager from the command line.</p>
-        <code style="display:block;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:.6rem .9rem;font-size:.85rem;margin-top:.75rem;color:var(--text);letter-spacing:.01em;">winget install OleBhartvigsen.FanFolder</code>
+        <p>Install via the Windows Package Manager from any terminal.</p>
+        <code class="winget-cmd">winget install OleBhartvigsen.FanFolder</code>
       </div>
     </div>
-  </section>
+  </div>
 </div>
 
-<!-- ── How it works ──────────────────────────────────────── -->
-<section id="install">
+<!-- ── Get started ───────────────────────────────────────── -->
+<section class="section-wrap" id="install">
   <div class="section-label">Get started</div>
   <h2>Up and running in seconds</h2>
-  <p class="section-sub">No configuration required — FanFolder works out of the box and auto-starts on login.</p>
+  <p class="section-sub">No configuration required — FanFolder works out of the box.</p>
 
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
         <h3>Download &amp; run the installer</h3>
-        <p>Run <code>FanFolderSetup.exe</code> — no admin rights needed. Installation takes a few seconds.</p>
+        <p>Run <code style="font-size:.85em;background:var(--bg3);padding:.1rem .35rem;border-radius:4px;">FanFolderSetup.exe</code> — no admin rights needed. Done in seconds.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
         <h3>Click the taskbar icon</h3>
-        <p>A FanFolder icon appears in your taskbar. Click it to open the fan and see your recent Downloads.</p>
+        <p>A FanFolder icon appears in your taskbar. Click it to open the fan and see your recent files.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
         <h3>Customize via the tray icon</h3>
-        <p>Right-click the tray icon to change folder, sort order, animation style, max items, and more.</p>
+        <p>Right-click the tray icon to change the folder, sort order, animation style, item count, and more.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
-        <h3>Runs automatically on login</h3>
+        <h3>Starts automatically on login</h3>
         <p>FanFolder registers itself to start with Windows — nothing else to configure.</p>
       </div>
     </div>
@@ -331,29 +504,42 @@
 </section>
 
 <!-- ── Support ───────────────────────────────────────────── -->
-<div class="download-section" id="support">
-  <section>
+<div class="alt-section" id="support">
+  <div class="section-wrap">
     <div class="section-label">Support the project</div>
-    <h2>Help keep FanFolder free</h2>
-    <p class="section-sub">If you enjoy FanFolder, consider supporting its development.</p>
-    <div class="btn-row" style="justify-content:flex-start; margin-top:1.5rem;">
-      <a class="btn btn-primary" href="https://github.com/sponsors/olebhartvigsen" target="_blank" rel="noopener">
-        ♥ GitHub Sponsors
+    <h2>Help keep FanFolder going</h2>
+    <p class="section-sub">If FanFolder saves you time, consider supporting its development.</p>
+    <div class="support-cards">
+      <a class="support-card gh" href="https://github.com/sponsors/olebhartvigsen" target="_blank" rel="noopener">
+        <span class="s-icon">🩷</span>
+        <span class="s-label">
+          GitHub Sponsors
+          <small>Recurring or one-time</small>
+        </span>
       </a>
-      <a class="btn btn-secondary" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" style="background:#FFDD00;color:#000;border-color:#FFDD00;">
-        ☕ Buy Me a Coffee
+      <a class="support-card bmc" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener">
+        <span class="s-icon">☕</span>
+        <span class="s-label">
+          Buy Me a Coffee
+          <small>Quick one-time support</small>
+        </span>
       </a>
     </div>
-  </section>
+  </div>
 </div>
 
 <!-- ── Footer ────────────────────────────────────────────── -->
 <footer>
-  <p>
-    FanFolder by <a href="https://github.com/olebhartvigsen">Ole Bhartvigsen</a> &nbsp;·&nbsp;
-    <a href="https://github.com/olebhartvigsen/FanFolder/releases">All releases</a> &nbsp;·&nbsp;
+  <div class="footer-logo">
+    <img src="icon.png" alt="FanFolder" />
+    FanFolder
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/olebhartvigsen/FanFolder/releases">Releases</a>
     <a href="https://github.com/olebhartvigsen/FanFolder/issues">Report an issue</a>
-  </p>
+    <a href="https://github.com/sponsors/olebhartvigsen">Sponsor</a>
+  </div>
+  <p style="margin-top:1.25rem;font-size:.78rem;">© <a href="https://github.com/olebhartvigsen">Ole Bhartvigsen</a></p>
 </footer>
 
 </body>
