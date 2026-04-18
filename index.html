@@ -349,11 +349,120 @@
     .footer-logo img { width: 22px; height: 22px; border-radius: 5px; }
     .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
 
+    /* ── Interactive Demo ── */
+    .demo-wrap { max-width: 860px; margin: 0 auto; }
+    .demo-screen {
+      position: relative; width: 100%; height: 460px;
+      background: linear-gradient(145deg, #1a2440 0%, #0d1322 65%, #151e30 100%);
+      border-radius: 18px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.07);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.04), 0 32px 80px rgba(0,0,0,.6);
+      user-select: none; cursor: default;
+    }
+    .demo-desktop-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 50% at 22% 28%, rgba(76,200,106,.07), transparent),
+        radial-gradient(ellipse 50% 45% at 75% 65%, rgba(155,110,212,.08), transparent),
+        radial-gradient(ellipse 35% 35% at 55% 40%, rgba(74,130,232,.05), transparent);
+    }
+    .demo-hint {
+      position: absolute; bottom: 62px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      pointer-events: none; transition: opacity .5s;
+    }
+    .demo-hint-text {
+      font-size: .72rem; font-weight: 600;
+      color: rgba(255,255,255,.78);
+      background: rgba(0,0,0,.45); border-radius: 6px;
+      padding: .2rem .65rem; white-space: nowrap;
+    }
+    .demo-hint-arrow { color: rgba(255,255,255,.6); animation: hintBounce 1.3s ease-in-out infinite; }
+    @keyframes hintBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+    .demo-fan-layer { position: absolute; inset: 0; pointer-events: none; }
+    .demo-fan-item {
+      position: absolute; width: 64px;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      cursor: pointer; pointer-events: all;
+    }
+    .demo-fan-item:hover .demo-fi { transform: scale(1.22); box-shadow: 0 8px 28px rgba(0,0,0,.55); }
+    .demo-fan-item:hover .demo-fl { color: #fff; }
+    .demo-fi {
+      width: 54px; height: 54px; border-radius: 13px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.4);
+      transition: transform .18s ease, box-shadow .18s;
+      position: relative; overflow: hidden; flex-shrink: 0;
+    }
+    .demo-fi::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(145deg, rgba(255,255,255,.2) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .demo-fi .ltr { font-size: .82rem; font-weight: 900; color: rgba(255,255,255,.95); line-height: 1; }
+    .demo-fi .ext { font-size: .56rem; font-weight: 700; letter-spacing: .04em; color: rgba(255,255,255,.6); text-transform: uppercase; }
+    .demo-fl {
+      font-size: .66rem; color: rgba(255,255,255,.72);
+      text-align: center; width: 84px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      transition: color .15s; text-shadow: 0 1px 6px rgba(0,0,0,.9);
+    }
+    .demo-ctx {
+      position: absolute;
+      background: rgba(26,30,40,.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,.11); border-radius: 10px;
+      padding: 4px 0; min-width: 160px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.55); z-index: 200; display: none;
+    }
+    .demo-ctx.show { display: block; }
+    .demo-ctx-row { padding: .43rem 1rem; font-size: .8rem; color: rgba(255,255,255,.82); cursor: pointer; transition: background .1s; }
+    .demo-ctx-row:hover { background: rgba(255,255,255,.1); }
+    .demo-ctx-sep { height: 1px; background: rgba(255,255,255,.09); margin: 3px 0; }
+    .demo-taskbar {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 48px;
+      background: rgba(12,16,26,.9); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; padding: 0 14px;
+    }
+    .demo-tb-start {
+      width: 36px; height: 36px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: rgba(255,255,255,.75);
+      border: none; background: transparent; transition: background .15s; flex-shrink: 0;
+    }
+    .demo-tb-start:hover { background: rgba(255,255,255,.1); }
+    .demo-tb-center { flex: 1; display: flex; align-items: center; justify-content: center; gap: 3px; }
+    .demo-tbicon {
+      width: 40px; height: 40px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; position: relative; transition: background .15s; flex-shrink: 0;
+    }
+    .demo-tbicon::after {
+      content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.35);
+    }
+    .demo-tbicon:hover { background: rgba(255,255,255,.1); }
+    .demo-ff { background: rgba(76,200,106,.1); border: 1px solid rgba(76,200,106,.22); }
+    .demo-ff::after { background: var(--green); opacity: 1; }
+    .demo-ff:hover { background: rgba(76,200,106,.18) !important; border-color: rgba(76,200,106,.45); }
+    .demo-ff.open { background: rgba(76,200,106,.2); border-color: rgba(76,200,106,.55); box-shadow: 0 0 22px rgba(76,200,106,.3); }
+    .demo-ff.open::after { width: 20px; transition: width .2s; }
+    .demo-ff-pulse { animation: ffPulse 2.5s ease-in-out infinite; }
+    @keyframes ffPulse {
+      0%,100% { box-shadow: 0 0 0 rgba(76,200,106,0); }
+      50%      { box-shadow: 0 0 18px rgba(76,200,106,.45); }
+    }
+    .demo-systray { display: flex; align-items: center; gap: 9px; flex-shrink: 0; color: rgba(255,255,255,.6); }
+    .demo-clock { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.3; }
+    .demo-clock .c-time { font-size: .76rem; color: rgba(255,255,255,.8); }
+    .demo-clock .c-date { font-size: .61rem; }
+
     @media (max-width: 640px) {
       .nav-links a:not(.nav-icon) { display: none; }
       .download-grid { grid-template-columns: 1fr; max-width: 100%; }
       .support-cards { flex-direction: column; }
       .steps { grid-template-columns: 1fr; }
+      .demo-screen { height: 360px; }
     }
   </style>
 </head>
@@ -385,6 +494,75 @@
     </a>
   </div>
 </header>
+
+<!-- ── Interactive Demo ─────────────────────────────────── -->
+<section class="section-wrap" id="demo" style="padding-top:4rem;padding-bottom:2.5rem;">
+  <div class="section-label">Try it</div>
+  <h2>See the fan in action</h2>
+  <p class="section-sub" style="margin-bottom:2rem;">Click the FanFolder icon in the taskbar below — just like on Windows.</p>
+
+  <div class="demo-wrap">
+    <div class="demo-screen" id="demoScreen">
+      <div class="demo-desktop-bg"></div>
+
+      <!-- Hint arrow pointing at FanFolder icon -->
+      <div class="demo-hint" id="demoHint">
+        <span class="demo-hint-text">👆 Click the FanFolder icon</span>
+        <svg class="demo-hint-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+
+      <!-- Fan items rendered here by JS -->
+      <div class="demo-fan-layer" id="demoFanLayer"></div>
+
+      <!-- Windows-style context menu -->
+      <div class="demo-ctx" id="demoCtx">
+        <div class="demo-ctx-row">Open</div>
+        <div class="demo-ctx-row">Open with…</div>
+        <div class="demo-ctx-sep"></div>
+        <div class="demo-ctx-row">Copy path</div>
+        <div class="demo-ctx-row">Properties</div>
+      </div>
+
+      <!-- Windows 11-style taskbar -->
+      <div class="demo-taskbar">
+        <button class="demo-tb-start" title="Start">
+          <svg width="15" height="15" viewBox="0 0 88 88" fill="currentColor"><rect x="0" y="0" width="40" height="40" rx="3"/><rect x="48" y="0" width="40" height="40" rx="3"/><rect x="0" y="48" width="40" height="40" rx="3"/><rect x="48" y="48" width="40" height="40" rx="3"/></svg>
+        </button>
+        <div class="demo-tb-center">
+          <!-- Edge -->
+          <div class="demo-tbicon" title="Microsoft Edge">
+            <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#0078d4"/><path d="M19 10.5c-.4-2.8-2.8-5-6.5-5-2.3 0-4.4 1.1-5.7 2.9.9-.4 1.9-.7 3-.7 3 0 5 2 5 4.8 0 .7-.1 1.4-.4 2 1.6-.8 2.7-2.5 2.9-4.2-.1-.4-.2-.6-.3-.8z" fill="#50cdff"/><path d="M7.5 16.8c1 .6 2.3 1 3.7 1 1.8 0 3.4-.7 4.6-1.8-.9-.2-1.9-.3-3-.3-2.6 0-4.5 1.1-5.3 1.1z" fill="#fff" opacity=".7"/></svg>
+          </div>
+          <!-- File Explorer -->
+          <div class="demo-tbicon" title="File Explorer">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 7a2 2 0 0 1 2-2h4l2 2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z" fill="#f5c518"/><path d="M2 11h20" stroke="#b89000" stroke-width="1.5"/></svg>
+          </div>
+          <!-- FanFolder — the interactive icon -->
+          <div class="demo-tbicon demo-ff demo-ff-pulse" id="demoFfBtn" title="FanFolder — click to open">
+            <img src="icon.png" width="23" height="23" alt="" style="border-radius:5px;display:block">
+          </div>
+          <!-- VS Code -->
+          <div class="demo-tbicon" title="Visual Studio Code">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17.5 1.8L9 11l-4.5-3.5L2 9l4 3.8-4 3.8 2.5 1.6L9 14.5 17.5 22 22 19.5V4.5L17.5 1.8z" fill="#007acc"/><path d="M17.5 7.5l-5.5 5 5.5 5V7.5z" fill="rgba(255,255,255,.25)"/></svg>
+          </div>
+          <!-- Notepad -->
+          <div class="demo-tbicon" title="Notepad">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" fill="#fff" stroke="#ccc" stroke-width="1.5"/><line x1="8" y1="8" x2="16" y2="8" stroke="#aaa" stroke-width="1.5"/><line x1="8" y1="12" x2="16" y2="12" stroke="#aaa" stroke-width="1.5"/><line x1="8" y1="16" x2="12" y2="16" stroke="#aaa" stroke-width="1.5"/></svg>
+          </div>
+        </div>
+        <!-- System tray -->
+        <div class="demo-systray">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 6l11 6 11-6M1 6v12h22V6"/></svg>
+          <div class="demo-clock">
+            <span class="c-time" id="demoTime">00:00</span>
+            <span class="c-date" id="demoDate">01/01/2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ── Features ─────────────────────────────────────────── -->
 <section class="section-wrap" id="features">
@@ -541,5 +719,161 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  'use strict';
+
+  var FILES = [
+    { name: 'Budget 2026',   ext: 'xlsx', bg: '#1d6f42', ltr: 'XL'  },
+    { name: 'Project Brief', ext: 'docx', bg: '#185abd', ltr: 'W'   },
+    { name: 'Q4 Pitch',      ext: 'pptx', bg: '#c43e1c', ltr: 'P'   },
+    { name: 'vacation',      ext: 'jpg',  bg: '#007c91', ltr: '\uD83C\uDFD4' },
+    { name: 'Invoice Mar',   ext: 'pdf',  bg: '#b91c1c', ltr: 'PDF' },
+    { name: 'design notes',  ext: 'txt',  bg: '#4a5568', ltr: 'TXT' },
+  ];
+
+  var fanOpen  = false;
+  var screen   = document.getElementById('demoScreen');
+  var ffBtn    = document.getElementById('demoFfBtn');
+  var fanLayer = document.getElementById('demoFanLayer');
+  var hint     = document.getElementById('demoHint');
+  var ctx      = document.getElementById('demoCtx');
+
+  // ── Live clock ──────────────────────────────────────────
+  function tick() {
+    var n  = new Date();
+    var hh = String(n.getHours()).padStart(2,'0');
+    var mm = String(n.getMinutes()).padStart(2,'0');
+    var dd = String(n.getDate()).padStart(2,'0');
+    var mo = String(n.getMonth()+1).padStart(2,'0');
+    document.getElementById('demoTime').textContent = hh+':'+mm;
+    document.getElementById('demoDate').textContent = dd+'/'+mo+'/'+n.getFullYear();
+  }
+  tick();
+  setInterval(tick, 15000);
+
+  // ── Align hint below FanFolder icon ─────────────────────
+  function positionHint() {
+    var br = ffBtn.getBoundingClientRect();
+    var sr = screen.getBoundingClientRect();
+    hint.style.left      = (br.left + br.width / 2 - sr.left) + 'px';
+    hint.style.transform = 'translateX(-50%)';
+  }
+  setTimeout(positionHint, 80);
+  window.addEventListener('resize', positionHint);
+
+  // ── Toggle ──────────────────────────────────────────────
+  ffBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    fanOpen ? closeFan() : openFan();
+  });
+  screen.addEventListener('click', function () {
+    if (fanOpen) closeFan();
+    ctx.classList.remove('show');
+  });
+
+  // ── Open ────────────────────────────────────────────────
+  function openFan() {
+    hint.style.opacity = '0';
+    fanLayer.innerHTML = '';
+
+    var br     = ffBtn.getBoundingClientRect();
+    var sr     = screen.getBoundingClientRect();
+    var hingeX = br.left + br.width  / 2 - sr.left;
+    var hingeY = br.top                  - sr.top;
+
+    var N      = FILES.length;
+    var R      = 170;
+    var spread = (N - 1) * 22;          // total arc in degrees
+    var start  = -spread / 2;
+
+    FILES.forEach(function (file, i) {
+      var deg = start + i * (spread / (N - 1));
+      var rad = deg * Math.PI / 180;
+      var dx  =  R * Math.sin(rad);
+      var dy  = -R * Math.cos(rad);
+
+      var el = document.createElement('div');
+      el.className = 'demo-fan-item';
+      // Start at hinge, invisible and tiny
+      el.style.cssText =
+        'left:' + (hingeX - 32) + 'px;' +
+        'top:'  + (hingeY - 32) + 'px;' +
+        'transform:translate(0,0) scale(0.1);' +
+        'opacity:0;transition:none;';
+
+      var isImg = file.ext === 'jpg' || file.ext === 'png';
+      var inner = isImg
+        ? '<span style="font-size:1.6rem;line-height:1">' + file.ltr + '</span>'
+        : '<span class="ltr">' + file.ltr + '</span><span class="ext">.' + file.ext + '</span>';
+
+      el.innerHTML =
+        '<div class="demo-fi" style="background:' + file.bg + '">' + inner + '</div>' +
+        '<span class="demo-fl">' + file.name + '.' + file.ext + '</span>';
+
+      // Click: bounce then close
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        el.style.transition = 'transform .14s ease, opacity .14s ease';
+        el.style.transform  = 'translate(' + dx + 'px,' + dy + 'px) scale(1.3)';
+        el.style.opacity    = '0';
+        setTimeout(closeFan, 170);
+      });
+
+      // Right-click: Windows context menu
+      el.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var mx = e.clientX - sr.left;
+        var my = e.clientY - sr.top;
+        ctx.style.left = Math.min(mx, sr.width  - 168) + 'px';
+        ctx.style.top  = Math.min(my, sr.height - 130) + 'px';
+        ctx.classList.add('show');
+      });
+
+      fanLayer.appendChild(el);
+
+      // Staggered fly-out animation
+      setTimeout(function () {
+        el.style.transition =
+          'transform 420ms cubic-bezier(0.23,1,0.32,1),' +
+          'opacity 260ms ease';
+        el.style.transform =
+          'translate(' + dx + 'px,' + dy + 'px)' +
+          ' scale(1) rotate(' + (deg * 0.06) + 'deg)';
+        el.style.opacity = '1';
+      }, 20 + i * 50);
+    });
+
+    ffBtn.classList.remove('demo-ff-pulse');
+    ffBtn.classList.add('open');
+    fanOpen = true;
+  }
+
+  // ── Close ───────────────────────────────────────────────
+  function closeFan() {
+    fanLayer.querySelectorAll('.demo-fan-item').forEach(function (el) {
+      el.style.transition = 'transform 220ms cubic-bezier(0.55,0,1,0.45),opacity 180ms ease';
+      el.style.transform  = 'translate(0,0) scale(0.08)';
+      el.style.opacity    = '0';
+    });
+    setTimeout(function () {
+      fanLayer.innerHTML = '';
+      fanOpen = false;
+      ffBtn.classList.remove('open');
+    }, 240);
+    ctx.classList.remove('show');
+  }
+
+  // ── Context menu row clicks close the demo ──────────────
+  ctx.querySelectorAll('.demo-ctx-row').forEach(function (row) {
+    row.addEventListener('click', function (e) {
+      e.stopPropagation();
+      ctx.classList.remove('show');
+      closeFan();
+    });
+  });
+})();
+</script>
 </body>
 </html>
