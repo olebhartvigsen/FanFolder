@@ -407,6 +407,12 @@
       box-shadow: 0 2px 8px rgba(0,0,0,.35);
     }
 
+    /* Icon spring-pop entry animation */
+    @keyframes iconPop {
+      0%   { transform: scale(0.01); animation-timing-function: cubic-bezier(0.34,1.56,0.64,1); }
+      100% { transform: scale(1); }
+    }
+
     /* File icon square */
     .demo-fi {
       width: 52px; height: 52px; border-radius: 13px;
@@ -744,14 +750,22 @@
 (function () {
   'use strict';
 
-  // Files shown in the fan (most-recent first = bottom of arc, same as real app)
+  // Files shown in the fan — 14 items, most-recent first (i=0 = bottom of arc)
   var FILES = [
-    { name: 'Budget 2026',   ext: 'xlsx', bg: '#1d6f42', ltr: 'XL'  },
-    { name: 'Project Brief', ext: 'docx', bg: '#185abd', ltr: 'W'   },
-    { name: 'Q4 Pitch',      ext: 'pptx', bg: '#c43e1c', ltr: 'P'   },
-    { name: 'vacation',      ext: 'jpg',  bg: '#007c91', ltr: '\uD83C\uDFD4', emoji: true },
-    { name: 'Invoice Mar',   ext: 'pdf',  bg: '#b91c1c', ltr: 'PDF' },
-    { name: 'design notes',  ext: 'txt',  bg: '#4a5568', ltr: 'TXT' },
+    { name: 'Budget 2026',      ext: 'xlsx', bg: '#1d6f42', ltr: 'XL'  },
+    { name: 'Project Brief',    ext: 'docx', bg: '#185abd', ltr: 'W'   },
+    { name: 'Q4 Pitch',         ext: 'pptx', bg: '#c43e1c', ltr: 'P'   },
+    { name: 'vacation',         ext: 'jpg',  bg: '#007c91', ltr: '\uD83C\uDFD4', emoji: true },
+    { name: 'Invoice March',    ext: 'pdf',  bg: '#b91c1c', ltr: 'PDF' },
+    { name: 'design notes',     ext: 'txt',  bg: '#4a5568', ltr: 'TXT' },
+    { name: 'Meeting Notes',    ext: 'docx', bg: '#1e40af', ltr: 'W'   },
+    { name: 'Architecture',     ext: 'png',  bg: '#0e7490', ltr: '\uD83D\uDDBC\uFE0F', emoji: true },
+    { name: 'roadmap',          ext: 'xlsx', bg: '#166534', ltr: 'XL'  },
+    { name: 'NDA Draft',        ext: 'pdf',  bg: '#7f1d1d', ltr: 'PDF' },
+    { name: 'resume-v3',        ext: 'docx', bg: '#312e81', ltr: 'W'   },
+    { name: 'client-logo',      ext: 'svg',  bg: '#92400e', ltr: 'SVG' },
+    { name: 'wireframes',       ext: 'fig',  bg: '#701a75', ltr: 'FIG' },
+    { name: 'backup',           ext: 'zip',  bg: '#374151', ltr: 'ZIP' },
   ];
 
   var fanOpen    = false;
@@ -812,12 +826,12 @@
     //
     // Explorer "Open in Explorer" button is appended as the last/topmost item.
     var allItems = FILES.slice().concat([{ name: 'Open in Explorer', isExplorer: true }]);
-    var total    = allItems.length;  // 7
-    var arcSpread = Math.min(total * 1.5, 22);   // ~10.5°
-    var startDist = 20;
-    var spacing   = 38;
+    var total    = allItems.length;  // 15
+    var arcSpread = Math.min(total * 1.5, 22);   // 22° (capped) for 15 items
+    var startDist = 14;
+    var spacing   = 26;   // 26px per item → max dist = 14 + 26*14 = 378px (fits 460px screen)
     var iconHalf  = 26;   // icon = 52 × 52
-    var PILL_W    = 128;  // fixed pill width for demo
+    var PILL_W    = 136;  // fixed pill width for demo
     var GAP       = 8;
 
     allItems.forEach(function (file, i) {
@@ -889,13 +903,22 @@
 
       fanLayer.appendChild(el);
 
-      // ── Staggered fly-out: each item springs from hinge to final position ───
+      // ── Staggered fly-out: item translates from hinge; icon pops with spring ─
       setTimeout(function () {
+        // Parent item flies from hinge to final position
         el.style.transition =
           'transform 400ms cubic-bezier(0.23,1,0.32,1),' +
           'opacity 240ms ease';
         el.style.transform = 'translate(0,0) scale(1)';
         el.style.opacity   = '1';
+
+        // Icon springs independently with overshoot
+        var fi = el.querySelector('.demo-fi');
+        fi.style.animation = 'iconPop 420ms cubic-bezier(0.34,1.56,0.64,1) both';
+        fi.addEventListener('animationend', function onEnd() {
+          fi.style.animation = '';
+          fi.removeEventListener('animationend', onEnd);
+        });
       }, 16 + i * 42);
     });
 
