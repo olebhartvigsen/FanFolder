@@ -380,15 +380,36 @@
     .demo-hint-arrow { color: rgba(255,255,255,.6); animation: hintBounce 1.3s ease-in-out infinite; }
     @keyframes hintBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
     .demo-fan-layer { position: absolute; inset: 0; pointer-events: none; }
+
+    /* Each fan item = [pill label] [icon] in a row, anchored by icon position */
     .demo-fan-item {
-      position: absolute; width: 64px;
-      display: flex; flex-direction: column; align-items: center; gap: 5px;
+      position: absolute;
+      display: flex; flex-direction: row; align-items: center; gap: 8px;
       cursor: pointer; pointer-events: all;
     }
-    .demo-fan-item:hover .demo-fi { transform: scale(1.22); box-shadow: 0 8px 28px rgba(0,0,0,.55); }
-    .demo-fan-item:hover .demo-fl { color: #fff; }
+    .demo-fan-item:hover .demo-fi {
+      transform: scale(1.28);
+      box-shadow: 0 10px 32px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.12);
+    }
+
+    /* Pill label — left of the icon, matching real app dark pill style */
+    .demo-pill {
+      background: rgba(14,15,20,.82);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 100px;
+      padding: .28rem .9rem;
+      font-size: .7rem; font-weight: 500; letter-spacing: .005em;
+      color: rgba(255,255,255,.9);
+      white-space: nowrap; max-width: 148px;
+      overflow: hidden; text-overflow: ellipsis;
+      flex-shrink: 0; pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,.35);
+    }
+
+    /* File icon square */
     .demo-fi {
-      width: 54px; height: 54px; border-radius: 13px;
+      width: 52px; height: 52px; border-radius: 13px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
       box-shadow: 0 4px 16px rgba(0,0,0,.4);
       transition: transform .18s ease, box-shadow .18s;
@@ -396,16 +417,16 @@
     }
     .demo-fi::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(145deg, rgba(255,255,255,.2) 0%, transparent 55%);
+      background: linear-gradient(145deg, rgba(255,255,255,.22) 0%, transparent 55%);
       pointer-events: none;
     }
     .demo-fi .ltr { font-size: .82rem; font-weight: 900; color: rgba(255,255,255,.95); line-height: 1; }
     .demo-fi .ext { font-size: .56rem; font-weight: 700; letter-spacing: .04em; color: rgba(255,255,255,.6); text-transform: uppercase; }
-    .demo-fl {
-      font-size: .66rem; color: rgba(255,255,255,.72);
-      text-align: center; width: 84px;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      transition: color .15s; text-shadow: 0 1px 6px rgba(0,0,0,.9);
+
+    /* Arrow/Explorer button icon */
+    .demo-fi-arrow {
+      background: rgba(60,68,92,.9) !important;
+      border: 1px solid rgba(255,255,255,.12);
     }
     .demo-ctx {
       position: absolute;
@@ -723,109 +744,144 @@
 (function () {
   'use strict';
 
+  // Files shown in the fan (most-recent first = bottom of arc, same as real app)
   var FILES = [
     { name: 'Budget 2026',   ext: 'xlsx', bg: '#1d6f42', ltr: 'XL'  },
     { name: 'Project Brief', ext: 'docx', bg: '#185abd', ltr: 'W'   },
     { name: 'Q4 Pitch',      ext: 'pptx', bg: '#c43e1c', ltr: 'P'   },
-    { name: 'vacation',      ext: 'jpg',  bg: '#007c91', ltr: '\uD83C\uDFD4' },
+    { name: 'vacation',      ext: 'jpg',  bg: '#007c91', ltr: '\uD83C\uDFD4', emoji: true },
     { name: 'Invoice Mar',   ext: 'pdf',  bg: '#b91c1c', ltr: 'PDF' },
     { name: 'design notes',  ext: 'txt',  bg: '#4a5568', ltr: 'TXT' },
   ];
 
-  var fanOpen  = false;
-  var screen   = document.getElementById('demoScreen');
-  var ffBtn    = document.getElementById('demoFfBtn');
-  var fanLayer = document.getElementById('demoFanLayer');
-  var hint     = document.getElementById('demoHint');
-  var ctx      = document.getElementById('demoCtx');
+  var fanOpen    = false;
+  var demoScreen = document.getElementById('demoScreen');
+  var ffBtn      = document.getElementById('demoFfBtn');
+  var fanLayer   = document.getElementById('demoFanLayer');
+  var hint       = document.getElementById('demoHint');
+  var ctx        = document.getElementById('demoCtx');
 
-  // ── Live clock ──────────────────────────────────────────
+  // ── Live clock ──────────────────────────────────────────────────────────────
   function tick() {
-    var n  = new Date();
-    var hh = String(n.getHours()).padStart(2,'0');
-    var mm = String(n.getMinutes()).padStart(2,'0');
-    var dd = String(n.getDate()).padStart(2,'0');
-    var mo = String(n.getMonth()+1).padStart(2,'0');
-    document.getElementById('demoTime').textContent = hh+':'+mm;
-    document.getElementById('demoDate').textContent = dd+'/'+mo+'/'+n.getFullYear();
+    var n = new Date();
+    document.getElementById('demoTime').textContent =
+      String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
+    document.getElementById('demoDate').textContent =
+      String(n.getDate()).padStart(2,'0') + '/' +
+      String(n.getMonth()+1).padStart(2,'0') + '/' + n.getFullYear();
   }
   tick();
   setInterval(tick, 15000);
 
-  // ── Align hint below FanFolder icon ─────────────────────
+  // ── Hint arrow centred over the FanFolder icon ──────────────────────────────
   function positionHint() {
     var br = ffBtn.getBoundingClientRect();
-    var sr = screen.getBoundingClientRect();
+    var sr = demoScreen.getBoundingClientRect();
     hint.style.left      = (br.left + br.width / 2 - sr.left) + 'px';
     hint.style.transform = 'translateX(-50%)';
   }
   setTimeout(positionHint, 80);
   window.addEventListener('resize', positionHint);
 
-  // ── Toggle ──────────────────────────────────────────────
+  // ── Toggle ──────────────────────────────────────────────────────────────────
   ffBtn.addEventListener('click', function (e) {
     e.stopPropagation();
     fanOpen ? closeFan() : openFan();
   });
-  screen.addEventListener('click', function () {
+  demoScreen.addEventListener('click', function () {
     if (fanOpen) closeFan();
     ctx.classList.remove('show');
   });
 
-  // ── Open ────────────────────────────────────────────────
+  // ── Open ─────────────────────────────────────────────────────────────────────
   function openFan() {
     hint.style.opacity = '0';
     fanLayer.innerHTML = '';
 
     var br     = ffBtn.getBoundingClientRect();
-    var sr     = screen.getBoundingClientRect();
+    var sr     = demoScreen.getBoundingClientRect();
+    // Arc hinge: top-centre of the FanFolder taskbar button
     var hingeX = br.left + br.width  / 2 - sr.left;
     var hingeY = br.top                  - sr.top;
 
-    var N      = FILES.length;
-    var R      = 170;
-    var spread = (N - 1) * 22;          // total arc in degrees
-    var start  = -spread / 2;
+    // Real-app arc geometry:
+    //   arcSpread = min(N * 1.5, 22) degrees  (≈10.5° for 7 items)
+    //   angleDeg  = 90 − (t − 0.5) × arcSpread  → centred on vertical
+    //   relX      = dist × cos(angleDeg)   (slightly left→right as items go up)
+    //   relY      = −dist × sin(angleDeg)  (upward)
+    //
+    // Explorer "Open in Explorer" button is appended as the last/topmost item.
+    var allItems = FILES.slice().concat([{ name: 'Open in Explorer', isExplorer: true }]);
+    var total    = allItems.length;  // 7
+    var arcSpread = Math.min(total * 1.5, 22);   // ~10.5°
+    var startDist = 20;
+    var spacing   = 38;
+    var iconHalf  = 26;   // icon = 52 × 52
+    var PILL_W    = 128;  // fixed pill width for demo
+    var GAP       = 8;
 
-    FILES.forEach(function (file, i) {
-      var deg = start + i * (spread / (N - 1));
-      var rad = deg * Math.PI / 180;
-      var dx  =  R * Math.sin(rad);
-      var dy  = -R * Math.cos(rad);
+    allItems.forEach(function (file, i) {
+      var t        = total > 1 ? i / (total - 1) : 0;
+      var angleDeg = 90 - (t - 0.5) * arcSpread;
+      var rad      = angleDeg * Math.PI / 180;
+      var dist     = startDist + spacing * i;
+      var relX     = dist * Math.cos(rad);   // small, slightly left→right
+      var relY     = -dist * Math.sin(rad);  // negative = upward
+
+      // Item div lays out: [pill] [gap] [icon]
+      // Position so icon centre lands at (hingeX+relX, hingeY+relY)
+      var itemLeft = hingeX + relX - iconHalf - GAP - PILL_W;
+      var itemTop  = hingeY + relY - iconHalf;
 
       var el = document.createElement('div');
       el.className = 'demo-fan-item';
-      // Start at hinge, invisible and tiny
+      // transform-origin = icon centre within the item element
       el.style.cssText =
-        'left:' + (hingeX - 32) + 'px;' +
-        'top:'  + (hingeY - 32) + 'px;' +
-        'transform:translate(0,0) scale(0.1);' +
+        'left:' + itemLeft + 'px;' +
+        'top:'  + itemTop  + 'px;' +
+        'transform-origin:' + (PILL_W + GAP + iconHalf) + 'px ' + iconHalf + 'px;' +
+        'transform:translate(' + (-relX).toFixed(1) + 'px,' + (-relY).toFixed(1) + 'px) scale(0.1);' +
         'opacity:0;transition:none;';
 
-      var isImg = file.ext === 'jpg' || file.ext === 'png';
-      var inner = isImg
-        ? '<span style="font-size:1.6rem;line-height:1">' + file.ltr + '</span>'
-        : '<span class="ltr">' + file.ltr + '</span><span class="ext">.' + file.ext + '</span>';
+      // Store relX/relY for close animation
+      el.dataset.rx = relX.toFixed(2);
+      el.dataset.ry = relY.toFixed(2);
 
-      el.innerHTML =
-        '<div class="demo-fi" style="background:' + file.bg + '">' + inner + '</div>' +
-        '<span class="demo-fl">' + file.name + '.' + file.ext + '</span>';
+      // ── Build inner HTML ────────────────────────────────────────────────────
+      var pillHtml, iconHtml;
+      if (file.isExplorer) {
+        pillHtml = '<div class="demo-pill">Open in Explorer</div>';
+        iconHtml =
+          '<div class="demo-fi demo-fi-arrow">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"' +
+          ' stroke="rgba(255,255,255,.85)" stroke-width="2.5"' +
+          ' stroke-linecap="round" stroke-linejoin="round">' +
+          '<polyline points="9 18 15 12 9 6"/></svg>' +
+          '</div>';
+      } else {
+        pillHtml = '<div class="demo-pill">' + file.name + '.' + file.ext + '</div>';
+        var inner = file.emoji
+          ? '<span style="font-size:1.5rem;line-height:1">' + file.ltr + '</span>'
+          : '<span class="ltr">'  + file.ltr + '</span>' +
+            '<span class="ext">.' + file.ext + '</span>';
+        iconHtml = '<div class="demo-fi" style="background:' + file.bg + '">' + inner + '</div>';
+      }
+      el.innerHTML = pillHtml + iconHtml;
 
-      // Click: bounce then close
+      // ── Click: bounce icon back to hinge then close ─────────────────────────
       el.addEventListener('click', function (e) {
         e.stopPropagation();
-        el.style.transition = 'transform .14s ease, opacity .14s ease';
-        el.style.transform  = 'translate(' + dx + 'px,' + dy + 'px) scale(1.3)';
+        var rx = parseFloat(el.dataset.rx), ry = parseFloat(el.dataset.ry);
+        el.style.transition = 'transform .2s cubic-bezier(0.55,0,1,0.45), opacity .16s ease';
+        el.style.transform  = 'translate(' + (-rx) + 'px,' + (-ry) + 'px) scale(0.1)';
         el.style.opacity    = '0';
-        setTimeout(closeFan, 170);
+        setTimeout(closeFan, 220);
       });
 
-      // Right-click: Windows context menu
+      // ── Right-click: Windows context menu ──────────────────────────────────
       el.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var mx = e.clientX - sr.left;
-        var my = e.clientY - sr.top;
+        e.preventDefault(); e.stopPropagation();
+        var mx = e.clientX - sr.left, my = e.clientY - sr.top;
         ctx.style.left = Math.min(mx, sr.width  - 168) + 'px';
         ctx.style.top  = Math.min(my, sr.height - 130) + 'px';
         ctx.classList.add('show');
@@ -833,16 +889,14 @@
 
       fanLayer.appendChild(el);
 
-      // Staggered fly-out animation
+      // ── Staggered fly-out: each item springs from hinge to final position ───
       setTimeout(function () {
         el.style.transition =
-          'transform 420ms cubic-bezier(0.23,1,0.32,1),' +
-          'opacity 260ms ease';
-        el.style.transform =
-          'translate(' + dx + 'px,' + dy + 'px)' +
-          ' scale(1) rotate(' + (deg * 0.06) + 'deg)';
-        el.style.opacity = '1';
-      }, 20 + i * 50);
+          'transform 400ms cubic-bezier(0.23,1,0.32,1),' +
+          'opacity 240ms ease';
+        el.style.transform = 'translate(0,0) scale(1)';
+        el.style.opacity   = '1';
+      }, 16 + i * 42);
     });
 
     ffBtn.classList.remove('demo-ff-pulse');
@@ -850,22 +904,24 @@
     fanOpen = true;
   }
 
-  // ── Close ───────────────────────────────────────────────
+  // ── Close ────────────────────────────────────────────────────────────────────
   function closeFan() {
     fanLayer.querySelectorAll('.demo-fan-item').forEach(function (el) {
-      el.style.transition = 'transform 220ms cubic-bezier(0.55,0,1,0.45),opacity 180ms ease';
-      el.style.transform  = 'translate(0,0) scale(0.08)';
+      var rx = parseFloat(el.dataset.rx) || 0;
+      var ry = parseFloat(el.dataset.ry) || 0;
+      el.style.transition = 'transform 210ms cubic-bezier(0.55,0,1,0.45), opacity 170ms ease';
+      el.style.transform  = 'translate(' + (-rx) + 'px,' + (-ry) + 'px) scale(0.1)';
       el.style.opacity    = '0';
     });
     setTimeout(function () {
       fanLayer.innerHTML = '';
       fanOpen = false;
       ffBtn.classList.remove('open');
-    }, 240);
+    }, 230);
     ctx.classList.remove('show');
   }
 
-  // ── Context menu row clicks close the demo ──────────────
+  // ── Context menu rows close the demo ─────────────────────────────────────────
   ctx.querySelectorAll('.demo-ctx-row').forEach(function (row) {
     row.addEventListener('click', function (e) {
       e.stopPropagation();
