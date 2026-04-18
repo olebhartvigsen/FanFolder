@@ -227,19 +227,11 @@
 </header>
 
 <!-- ── Stats strip ───────────────────────────────────────── -->
-<div class="demo-strip">
-  <div class="demo-stat"><strong>~1 MB</strong><span>installer size</span></div>
-  <div class="demo-stat"><strong>x64 + ARM64</strong><span>native builds</span></div>
-  <div class="demo-stat"><strong>16</strong><span>languages</span></div>
-  <div class="demo-stat"><strong>0</strong><span>dependencies to install</span></div>
-  <div class="demo-stat"><strong>MIT</strong><span>license</span></div>
-</div>
-
 <!-- ── Features ─────────────────────────────────────────── -->
 <section id="features">
   <div class="section-label">Features</div>
   <h2>A beautiful fan popup, right in your taskbar</h2>
-  <p class="section-sub">FanFolder is a native Win32 app — no Electron, no .NET runtime, no bloat. Just a tiny ~1 MB exe that runs silently in the background.</p>
+  <p class="section-sub">FanFolder runs silently in the background — lightweight, fast, and always ready.</p>
 
   <div class="features-grid">
     <div class="feature-card">
@@ -265,17 +257,12 @@
     <div class="feature-card">
       <div class="feature-icon">🔍</div>
       <h3>Filter &amp; sort</h3>
-      <p>Sort by date modified, date created or name. Filter by regex to show only what matters to you.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🖥️</div>
-      <h3>Native Win32</h3>
-      <p>Pure C++20 with GDI+ rendering. Supports per-monitor DPI scaling, ARM64, and Windows 10/11.</p>
+      <p>Sort by date modified, date created or name. Filter to show only what matters to you.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🌍</div>
-      <h3>16 languages</h3>
-      <p>UI adapts automatically to your Windows display language with localised strings for 16 languages.</p>
+      <h3>Multilingual</h3>
+      <p>UI adapts automatically to your Windows display language.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🔒</div>
@@ -290,28 +277,18 @@
   <section>
     <div class="section-label">Download</div>
     <h2>Get FanFolder</h2>
-    <p class="section-sub">All builds are compiled on GitHub Actions and published directly to this page.</p>
+    <p class="section-sub">All builds are verified and published automatically.</p>
 
     <div class="download-grid">
       <div class="download-card">
-        <h3>Combined installer <span class="tag">Recommended</span></h3>
-        <p>One installer for both x64 and ARM64 Windows. Automatically installs the right version for your machine.</p>
-        <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">⬇ FanFolderSetup.exe</a>
+        <h3>Installer <span class="tag">Recommended</span></h3>
+        <p>Download and run the installer. Works on all Windows 10/11 devices — no admin rights needed.</p>
+        <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">⬇ Download FanFolder</a>
       </div>
       <div class="download-card">
-        <h3>x64 MSI <span class="tag">x64</span></h3>
-        <p>MSI installer for 64-bit Intel/AMD Windows 10 and 11.</p>
-        <a class="btn btn-secondary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup-x64.msi">⬇ FanFolderSetup-x64.msi</a>
-      </div>
-      <div class="download-card">
-        <h3>ARM64 MSI <span class="tag">ARM64</span></h3>
-        <p>Native MSI installer for ARM64 Windows devices (Snapdragon X, Surface Pro X, etc).</p>
-        <a class="btn btn-secondary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup-arm64.msi">⬇ FanFolderSetup-arm64.msi</a>
-      </div>
-      <div class="download-card">
-        <h3>Portable EXE <span class="tag">No install</span></h3>
-        <p>Single executable — no installer needed. Just run it.</p>
-        <a class="btn btn-secondary" href="https://github.com/olebhartvigsen/FanFolder/releases">Browse releases ↗</a>
+        <h3>winget</h3>
+        <p>Install via the Windows Package Manager from the command line.</p>
+        <code style="display:block;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:.6rem .9rem;font-size:.85rem;margin-top:.75rem;color:var(--text);letter-spacing:.01em;">winget install OleBhartvigsen.FanFolder</code>
       </div>
     </div>
   </section>
