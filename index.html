@@ -276,14 +276,19 @@
     }
 
     /* ── Steps ── */
-    .steps { display: flex; flex-direction: column; gap: 0; max-width: 640px; }
-    .step {
-      display: flex; gap: 1.5rem; align-items: flex-start;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--border);
-      position: relative;
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      max-width: 900px;
     }
-    .step:last-child { border-bottom: none; }
+    .step {
+      display: flex; gap: 1.25rem; align-items: flex-start;
+      padding: 1.5rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
     .step-num {
       flex-shrink: 0;
       width: 36px; height: 36px;
@@ -348,6 +353,7 @@
       .nav-links a:not(.nav-icon) { display: none; }
       .download-grid { grid-template-columns: 1fr; max-width: 100%; }
       .support-cards { flex-direction: column; }
+      .steps { grid-template-columns: 1fr; }
     }
   </style>
 </head>
