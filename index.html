@@ -14,8 +14,13 @@
       --bg2:     #161b22;
       --bg3:     #21262d;
       --border:  #30363d;
-      --accent:  #4493f8;
-      --accent2: #1f6feb;
+      --green:   #4CC86A;
+      --green2:  #35A854;
+      --purple:  #9B6ED4;
+      --purple2: #7B50B8;
+      --blue:    #4A82E8;
+      --accent:  #4CC86A;
+      --accent2: #35A854;
       --text:    #e6edf3;
       --muted:   #8b949e;
       --radius:  14px;
@@ -66,23 +71,25 @@
       text-align: center;
       padding: 7rem 2rem 5rem;
       background:
-        radial-gradient(ellipse 70% 55% at 50% -5%, rgba(68,147,248,.18), transparent),
-        radial-gradient(ellipse 40% 30% at 80% 60%, rgba(31,111,235,.08), transparent);
+        radial-gradient(ellipse 70% 55% at 50% -5%, rgba(76,200,106,.14), transparent),
+        radial-gradient(ellipse 45% 35% at 80% 60%, rgba(155,110,212,.1), transparent),
+        radial-gradient(ellipse 40% 30% at 15% 70%, rgba(74,130,232,.08), transparent);
       position: relative;
       overflow: hidden;
     }
     .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234493f8' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234CC86A' fill-opacity='0.035'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       pointer-events: none;
     }
     .hero-icon {
       width: 108px; height: 108px;
       border-radius: 26px;
       box-shadow:
-        0 0 0 1px rgba(68,147,248,.3),
-        0 0 40px rgba(68,147,248,.15),
+        0 0 0 1px rgba(76,200,106,.35),
+        0 0 40px rgba(76,200,106,.2),
+        0 0 80px rgba(155,110,212,.1),
         0 16px 48px rgba(0,0,0,.5);
       margin: 0 auto 2rem;
       display: block;
@@ -100,7 +107,7 @@
       margin-bottom: 1rem;
     }
     .hero h1 span {
-      background: linear-gradient(135deg, #4493f8 0%, #a78bfa 100%);
+      background: linear-gradient(135deg, #4CC86A 0%, #9B6ED4 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -364,7 +371,7 @@
 <header class="hero">
   <img class="hero-icon" src="icon.png" alt="FanFolder" />
   <h1>Your files,<br /><span>fanned out beautifully</span></h1>
-  <p>Click the taskbar icon and your most recent files arc out in a smooth animated fan — ready to open, drag, or right-click with full Windows shell support.</p>
+  <p>Your latest files are always one click away. Click the taskbar icon and the files you were just working on fan out instantly — documents, images, cloud files from OneDrive or Dropbox, whatever it was. No searching, no digging through Explorer.</p>
   <div class="btn-row">
     <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
