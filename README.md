@@ -74,8 +74,24 @@ All settings are available from the tray-icon menu, or directly via the registry
 | `MaxItems` | REG_DWORD | `15` | Items shown in the fan (5–25) |
 | `IncludeDirectories` | REG_DWORD | `1` | Include subfolders |
 | `ShowExtensions` | REG_DWORD | `0` | Show file extensions in labels |
-| `FilterRegex` | REG_SZ | *(empty)* | Optional filename filter |
+| `FilterRegex` | REG_SZ | *(empty)* | Optional regex matched against each filename (case-insensitive). Only matching files are shown. See examples below. |
 | `AnimationStyle` | REG_SZ | `Spring` | `Fan`, `Glide`, `Spring`, `Fade`, or `None` |
+
+### `FilterRegex` examples
+
+| Goal | Regex |
+|------|-------|
+| Images only (JPG, PNG, GIF, WebP, BMP, SVG) | `\.(jpe?g\|png\|gif\|webp\|bmp\|svg)$` |
+| Executables / installers | `\.(exe\|msi\|msix)$` |
+| Documents (Word, PDF, text) | `\.(docx?\|pdf\|txt\|rtf)$` |
+| Spreadsheets | `\.(xlsx?\|csv\|ods)$` |
+| Archives | `\.(zip\|rar\|7z\|tar\|gz)$` |
+| Video | `\.(mp4\|mov\|mkv\|avi\|webm)$` |
+| Audio | `\.(mp3\|wav\|flac\|m4a\|ogg)$` |
+| Anything starting with "Report-" | `^Report-` |
+| Exclude hidden/temp files | `^[^.~]` |
+
+Leave the value empty to show all files.
 
 ---
 
