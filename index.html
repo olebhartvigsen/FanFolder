@@ -529,66 +529,6 @@
       margin-top: .15rem;
     }
 
-    /* ── Showcase strip (how it works) ─────────────────────────────── */
-    .hiw-band {
-      background:
-        linear-gradient(180deg, transparent 0%, rgba(76,200,106,.02) 50%, transparent 100%),
-        var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .hiw {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-top: 1rem;
-    }
-    .hiw-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2rem 1.75rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hiw-card .big-num {
-      font-size: 4.5rem;
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -.05em;
-      background: var(--grad-brand);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      opacity: .22;
-      position: absolute;
-      top: -.5rem; right: .5rem;
-    }
-    .hiw-card h3 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: .5rem;
-      letter-spacing: -.01em;
-      position: relative;
-    }
-    .hiw-card p {
-      font-size: .95rem;
-      color: var(--muted);
-      line-height: 1.6;
-      position: relative;
-    }
-    .hiw-card .ic {
-      width: 44px; height: 44px;
-      border-radius: 11px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem;
-      background: var(--grad-green);
-      box-shadow: 0 4px 14px rgba(76,200,106,.3);
-    }
-    .hiw-card:nth-child(2) .ic { background: var(--grad-purple); box-shadow: 0 4px 14px rgba(155,110,212,.3); }
-    .hiw-card:nth-child(3) .ic { background: var(--grad-blue);   box-shadow: 0 4px 14px rgba(74,130,232,.3); }
-    .hiw-card .ic svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-
     /* ── Download ──────────────────────────────────────────────────── */
     .download-grid {
       display: grid;
@@ -765,7 +705,6 @@
       .stats { grid-template-columns: repeat(2, 1fr); }
       .bento { grid-template-columns: repeat(2, 1fr); }
       .bento-card.wide, .bento-card.tall, .bento-card.med, .bento-card.full { grid-column: span 2; grid-row: auto; }
-      .hiw { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       nav { padding: 0 1.25rem; }
@@ -797,7 +736,6 @@
   </a>
   <div class="nav-links">
     <a href="#features">Features</a>
-    <a href="#how">How it works</a>
     <a href="#download">Download</a>
     <a class="nav-icon" href="https://github.com/sponsors/olebhartvigsen" target="_blank" rel="noopener" title="Support on GitHub Sponsors">🩷</a>
     <a class="nav-icon" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee">☕</a>
@@ -932,38 +870,6 @@
 
   </div>
 </section>
-
-<!-- ── How it works ───────────────────────────────────────────── -->
-<div class="hiw-band">
-  <section class="section-wrap" id="how">
-    <div class="section-head reveal">
-      <div class="section-label p">How it works</div>
-      <h2>Three things, nothing to learn</h2>
-      <p class="section-sub">Install it, click it, use it. That's it.</p>
-    </div>
-
-    <div class="hiw">
-      <div class="hiw-card reveal">
-        <div class="big-num">1</div>
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-        <h3>Install in seconds</h3>
-        <p>One small installer. No admin rights. Works on Windows 10 &amp; 11, both Intel and ARM.</p>
-      </div>
-      <div class="hiw-card reveal">
-        <div class="big-num">2</div>
-        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M5 12a7 7 0 0 1 14 0"/></svg></div>
-        <h3>Click the taskbar icon</h3>
-        <p>A FanFolder icon appears in your taskbar. Click it and your latest files arc out instantly.</p>
-      </div>
-      <div class="hiw-card reveal">
-        <div class="big-num">3</div>
-        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></div>
-        <h3>Forget it's there</h3>
-        <p>FanFolder starts with Windows. Your latest files are always one click away — forever.</p>
-      </div>
-    </div>
-  </section>
-</div>
 
 <!-- ── Download ───────────────────────────────────────────────── -->
 <section class="section-wrap" id="download">
