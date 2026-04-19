@@ -1,8 +1,8 @@
 # FanFolder
 
-**Turn any folder into a beautiful Mac-style fan on your Windows taskbar.**
+**Turn any folder into a beautiful animated fan on your Windows taskbar.**
 
-FanFolder brings the macOS Dock "Fan" folder experience to Windows. Pin any folder to the taskbar, click it, and watch your most recent files bloom out in an animated arc — ready to open, drag, or right-click with the full Windows shell context menu.
+Pin any folder to the Windows taskbar, click it, and watch your most recent files bloom out in an animated arc — ready to open, drag, or right-click with the full Windows shell context menu.
 
 🌐 **Website:** <https://olebhartvigsen.github.io/FanFolder/>
 ⬇️ **Download:** [Latest release](https://github.com/olebhartvigsen/FanFolder/releases/latest)
