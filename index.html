@@ -3,27 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FanFolder — Animated fan menu for the Windows taskbar</title>
-  <meta name="description" content="FanFolder adds an animated fan popup to your Windows taskbar. Click the icon and watch your recent files arc out — open, drag, and right-click with full shell support." />
+  <title>FanFolder — Your latest files, one click away</title>
+  <meta name="description" content="FanFolder adds an animated fan popup to your Windows taskbar. Click the icon — your latest files, folders, and cloud documents arc out instantly." />
+  <meta property="og:title" content="FanFolder — Your latest files, one click away" />
+  <meta property="og:description" content="An animated fan popup for the Windows taskbar. Your recent files, always one click away." />
   <link rel="icon" href="favicon.ico" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:      #0d1117;
-      --bg2:     #161b22;
-      --bg3:     #21262d;
-      --border:  #30363d;
-      --green:   #4CC86A;
-      --green2:  #35A854;
-      --purple:  #9B6ED4;
-      --purple2: #7B50B8;
-      --blue:    #4A82E8;
-      --accent:  #4CC86A;
-      --accent2: #35A854;
-      --text:    #e6edf3;
-      --muted:   #8b949e;
-      --radius:  14px;
+      --bg:       #0a0d13;
+      --bg2:      #12161f;
+      --bg3:      #1a1f2b;
+      --bg-card:  #141924;
+      --border:   #262c3a;
+      --border2:  #343b4d;
+
+      --green:    #4CC86A;
+      --green2:   #35A854;
+      --purple:   #9B6ED4;
+      --purple2:  #7B50B8;
+      --blue:     #4A82E8;
+      --blue2:    #3a6bd1;
+      --pink:     #ec4899;
+      --amber:    #f59e0b;
+
+      --accent:   #4CC86A;
+      --accent2:  #35A854;
+
+      --text:     #e6edf3;
+      --text2:    #c9d1dc;
+      --muted:    #8b94a3;
+      --muted2:   #6b7382;
+
+      --radius:   14px;
+      --radius-lg: 22px;
+
+      --grad-brand: linear-gradient(135deg, #4CC86A 0%, #9B6ED4 50%, #4A82E8 100%);
+      --grad-green: linear-gradient(135deg, #4CC86A 0%, #35A854 100%);
+      --grad-purple: linear-gradient(135deg, #9B6ED4 0%, #7B50B8 100%);
+      --grad-blue: linear-gradient(135deg, #4A82E8 0%, #3a6bd1 100%);
     }
 
     html { scroll-behavior: smooth; }
@@ -31,20 +50,55 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
       line-height: 1.65;
+      overflow-x: hidden;
     }
 
-    /* ── Nav ── */
+    ::selection { background: rgba(76,200,106,.35); color: #fff; }
+
+    /* ── Animated blob backdrop ─────────────────────────────────────────── */
+    .backdrop {
+      position: fixed; inset: 0; z-index: -1;
+      overflow: hidden; pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .4;
+      animation: blobFloat 22s ease-in-out infinite;
+    }
+    .blob.b1 { width: 520px; height: 520px; background: #4CC86A; top: -180px; left: -120px; }
+    .blob.b2 { width: 460px; height: 460px; background: #9B6ED4; top: 20%; right: -140px; animation-delay: -7s; animation-duration: 27s; }
+    .blob.b3 { width: 380px; height: 380px; background: #4A82E8; top: 60%; left: 30%; animation-delay: -14s; animation-duration: 31s; opacity: .28; }
+    @keyframes blobFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%      { transform: translate(60px, -40px) scale(1.08); }
+      66%      { transform: translate(-40px, 50px) scale(.94); }
+    }
+    .grain {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+      opacity: .035;
+      mix-blend-mode: overlay;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────────────── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(13,17,23,.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2.5rem;
+      background: rgba(10,13,19,.72);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      border-bottom: 1px solid transparent;
+      padding: 0 2rem;
       display: flex; align-items: center; justify-content: space-between;
-      height: 58px;
+      height: 62px;
+      transition: border-color .25s, background .25s;
+    }
+    nav.scrolled {
+      border-bottom-color: var(--border);
+      background: rgba(10,13,19,.88);
     }
     .nav-logo {
       display: flex; align-items: center; gap: .65rem;
@@ -52,7 +106,10 @@
       text-decoration: none; color: var(--text);
       letter-spacing: -.01em;
     }
-    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-logo img {
+      width: 30px; height: 30px; border-radius: 8px;
+      box-shadow: 0 0 0 1px rgba(76,200,106,.3), 0 4px 14px rgba(76,200,106,.2);
+    }
     .nav-links { display: flex; align-items: center; gap: 1.75rem; }
     .nav-links a {
       color: var(--muted); text-decoration: none;
@@ -61,684 +118,972 @@
     }
     .nav-links a:hover { color: var(--text); }
     .nav-links .nav-icon {
-      font-size: 1.15rem; line-height: 1;
-      opacity: .75; transition: opacity .15s, transform .15s;
+      font-size: 1.1rem; line-height: 1;
+      opacity: .7; transition: opacity .15s, transform .15s;
     }
     .nav-links .nav-icon:hover { opacity: 1; transform: scale(1.15); }
-
-    /* ── Hero ── */
-    .hero {
-      text-align: center;
-      padding: 7rem 2rem 5rem;
-      background:
-        radial-gradient(ellipse 70% 55% at 50% -5%, rgba(76,200,106,.14), transparent),
-        radial-gradient(ellipse 45% 35% at 80% 60%, rgba(155,110,212,.1), transparent),
-        radial-gradient(ellipse 40% 30% at 15% 70%, rgba(74,130,232,.08), transparent);
-      position: relative;
-      overflow: hidden;
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: var(--grad-green);
+      color: #fff !important;
+      padding: .45rem 1rem;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      box-shadow: 0 2px 10px rgba(76,200,106,.3);
+      transition: transform .15s, box-shadow .15s;
     }
-    .hero::before {
-      content: '';
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(76,200,106,.42); }
+
+    /* ── Hero ─────────────────────────────────────────────────────────── */
+    .hero {
+      padding: 5rem 2rem 4rem;
+      max-width: 1220px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+    }
+    .hero-copy .eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .78rem; font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--green);
+      background: rgba(76,200,106,.08);
+      border: 1px solid rgba(76,200,106,.22);
+      border-radius: 99px;
+      padding: .35rem .9rem .35rem .55rem;
+      margin-bottom: 1.5rem;
+    }
+    .eyebrow .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(76,200,106,.2);
+      animation: pulseDot 2.4s ease-in-out infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(76,200,106,.15); }
+      50%      { box-shadow: 0 0 0 6px rgba(76,200,106,.05); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5.2vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -.035em;
+      line-height: 1.05;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 .grad {
+      background: var(--grad-brand);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradShift 8s ease-in-out infinite;
+    }
+    @keyframes gradShift {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+    .hero-copy p {
+      font-size: 1.12rem;
+      color: var(--text2);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+      max-width: 540px;
+    }
+    .btn-row { display: flex; gap: .85rem; flex-wrap: wrap; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .55rem;
+      padding: .85rem 1.5rem;
+      border-radius: 11px;
+      font-size: .95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s, background .15s, border-color .15s;
+      position: relative;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary {
+      background: var(--grad-green);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(76,200,106,.35), inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .btn-primary:hover { box-shadow: 0 8px 28px rgba(76,200,106,.45), inset 0 1px 0 rgba(255,255,255,.3); }
+    .btn-ghost {
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      border: 1px solid var(--border2);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.06); border-color: var(--muted2); }
+
+    .trust-row {
+      margin-top: 2.25rem;
+      display: flex; flex-wrap: wrap;
+      gap: 1.1rem 1.75rem;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+    .trust-item {
+      display: inline-flex; align-items: center; gap: .4rem;
+    }
+    .trust-item svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+    /* ── Hero visual (static fan mockup) ─────────────────────────────── */
+    .hero-visual {
+      position: relative;
+      height: 520px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .hv-glow {
       position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234CC86A' fill-opacity='0.035'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 55%, rgba(76,200,106,.25), transparent 65%),
+        radial-gradient(ellipse 40% 40% at 30% 40%, rgba(155,110,212,.2), transparent 70%),
+        radial-gradient(ellipse 40% 40% at 70% 30%, rgba(74,130,232,.18), transparent 70%);
+      filter: blur(20px);
       pointer-events: none;
     }
-    .hero-icon {
-      width: 108px; height: 108px;
-      border-radius: 26px;
-      box-shadow:
-        0 0 0 1px rgba(76,200,106,.35),
-        0 0 40px rgba(76,200,106,.2),
-        0 0 80px rgba(155,110,212,.1),
-        0 16px 48px rgba(0,0,0,.5);
-      margin: 0 auto 2rem;
-      display: block;
-      animation: floatIcon 4s ease-in-out infinite;
+    .hv-stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
     }
-    @keyframes floatIcon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+    .hv-fan {
+      position: relative;
+      width: 340px;
+      height: 480px;
     }
-    .hero h1 {
-      font-size: clamp(2.2rem, 5.5vw, 3.6rem);
-      font-weight: 800;
-      letter-spacing: -.03em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
+    .hv-taskbar {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 48px;
+      background: linear-gradient(180deg, rgba(30,35,50,.85), rgba(20,24,36,.9));
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px;
+      padding: 0 14px;
     }
-    .hero h1 span {
-      background: linear-gradient(135deg, #4CC86A 0%, #9B6ED4 100%);
+    .hv-tb-ico {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 6px;
+      opacity: .75;
+    }
+    .hv-tb-ff {
+      width: 30px; height: 30px;
+      border-radius: 7px;
+      box-shadow: 0 0 0 1px rgba(76,200,106,.5), 0 0 18px rgba(76,200,106,.4);
+      position: relative;
+    }
+    .hv-tb-ff::after {
+      content: '';
+      position: absolute;
+      bottom: -8px; left: 50%;
+      transform: translateX(-50%);
+      width: 20px; height: 3px; border-radius: 2px;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+    }
+    .hv-tb-ff img { width: 100%; height: 100%; border-radius: 7px; display: block; }
+
+    /* Fan items arranged in arc above taskbar */
+    .hv-item {
+      position: absolute;
+      display: flex; align-items: center; gap: 8px;
+      flex-direction: row-reverse;
+      opacity: 0;
+      animation: hvItemIn 700ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+    @keyframes hvItemIn {
+      from { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(.2); }
+      to   { opacity: 1; transform: translate(0, 0) scale(1); }
+    }
+    .hv-pill {
+      background: rgba(20,25,36,.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--text);
+      font-size: .72rem;
+      font-weight: 500;
+      padding: .3rem .6rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(0,0,0,.4);
+    }
+    .hv-ico {
+      width: 42px; height: 42px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; color: #fff;
+      box-shadow: 0 6px 20px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.18);
+      flex-shrink: 0;
+      letter-spacing: -.02em;
+    }
+    .hv-ico.ext {
+      position: absolute; right: -4px; bottom: -4px;
+      width: 18px; height: 14px;
+      border-radius: 3px;
+      font-size: .5rem;
+      background: rgba(0,0,0,.6);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* ── Stats band ────────────────────────────────────────────────── */
+    .stats {
+      max-width: 1100px; margin: 1rem auto 0;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    .stat {
+      background: rgba(20,25,36,.5);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+      backdrop-filter: blur(6px);
+    }
+    .stat-n {
+      font-size: 1.65rem; font-weight: 800;
+      letter-spacing: -.02em;
+      background: var(--grad-brand);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .hero p {
-      font-size: 1.15rem;
+    .stat-l {
+      font-size: .8rem;
       color: var(--muted);
-      max-width: 560px;
-      margin: 0 auto 2.75rem;
-      line-height: 1.7;
-    }
-    .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: .5rem;
-      padding: .75rem 1.6rem;
-      border-radius: 10px;
-      font-size: .95rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all .2s;
-      position: relative; overflow: hidden;
-    }
-    .btn::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: rgba(255,255,255,.08);
-      opacity: 0;
-      transition: opacity .15s;
-    }
-    .btn:hover::after { opacity: 1; }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
-    .btn:active { transform: translateY(0); }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-      color: #fff;
-      box-shadow: 0 4px 16px rgba(68,147,248,.35);
-    }
-    .btn-secondary {
-      background: var(--bg3);
-      color: var(--text);
-      border: 1px solid var(--border);
+      margin-top: .15rem;
     }
 
-    /* ── Features ── */
-    .section-wrap { padding: 5.5rem 2rem; max-width: 1140px; margin: 0 auto; }
+    /* ── Section framing ──────────────────────────────────────────── */
+    .section-wrap { padding: 6rem 2rem; max-width: 1180px; margin: 0 auto; }
     .section-label {
       display: inline-flex; align-items: center; gap: .4rem;
-      font-size: .75rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: var(--accent);
-      background: rgba(68,147,248,.1);
-      border: 1px solid rgba(68,147,248,.2);
-      border-radius: 20px;
-      padding: .25rem .75rem;
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--green);
+      background: rgba(76,200,106,.08);
+      border: 1px solid rgba(76,200,106,.2);
+      border-radius: 99px;
+      padding: .3rem .85rem;
       margin-bottom: 1.1rem;
     }
+    .section-label.p { color: var(--purple); background: rgba(155,110,212,.08); border-color: rgba(155,110,212,.22); }
+    .section-label.b { color: var(--blue);   background: rgba(74,130,232,.08);  border-color: rgba(74,130,232,.22); }
+    .section-head { text-align: center; max-width: 720px; margin: 0 auto 3.5rem; }
+    .section-head h2 { text-align: center; }
     h2 {
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(1.8rem, 3.4vw, 2.5rem);
       font-weight: 800;
-      letter-spacing: -.02em;
-      line-height: 1.2;
+      letter-spacing: -.025em;
+      line-height: 1.15;
       margin-bottom: 1rem;
     }
     .section-sub {
-      color: var(--muted);
+      color: var(--text2);
       font-size: 1.05rem;
       line-height: 1.7;
-      margin-bottom: 3rem;
     }
 
-    .features-grid {
+    /* ── Bento feature grid ───────────────────────────────────────── */
+    .bento {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: minmax(180px, auto);
+      gap: 1.1rem;
     }
-    .feature-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem;
-      transition: border-color .25s, box-shadow .25s, transform .2s;
+    .bento-card {
       position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
       overflow: hidden;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
     }
-    .feature-card::before {
+    .bento-card::before {
       content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(68,147,248,.4), transparent);
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.06), transparent 40%);
       opacity: 0;
       transition: opacity .3s;
+      pointer-events: none;
     }
-    .feature-card:hover {
-      border-color: rgba(68,147,248,.45);
-      box-shadow: 0 4px 24px rgba(68,147,248,.08), 0 1px 3px rgba(0,0,0,.3);
-      transform: translateY(-2px);
-    }
-    .feature-card:hover::before { opacity: 1; }
+    .bento-card:hover { transform: translateY(-3px); border-color: var(--border2); box-shadow: 0 12px 32px rgba(0,0,0,.35); }
+    .bento-card:hover::before { opacity: 1; }
+    .bento-card.wide { grid-column: span 4; }
+    .bento-card.tall { grid-column: span 2; grid-row: span 2; }
+    .bento-card.med  { grid-column: span 2; }
+    .bento-card.full { grid-column: span 6; }
 
-    .feature-icon {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      background: rgba(68,147,248,.12);
-      border: 1px solid rgba(68,147,248,.2);
+    .bc-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
+      position: relative;
     }
-    .feature-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
-    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; letter-spacing: -.01em; }
-    .feature-card p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+    .bc-icon svg { width: 24px; height: 24px; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .bc-g { background: rgba(76,200,106,.12);  border: 1px solid rgba(76,200,106,.22); }
+    .bc-g svg { stroke: var(--green); }
+    .bc-p { background: rgba(155,110,212,.12); border: 1px solid rgba(155,110,212,.22); }
+    .bc-p svg { stroke: var(--purple); }
+    .bc-b { background: rgba(74,130,232,.12);  border: 1px solid rgba(74,130,232,.22); }
+    .bc-b svg { stroke: var(--blue); }
+    .bc-a { background: rgba(245,158,11,.12);  border: 1px solid rgba(245,158,11,.22); }
+    .bc-a svg { stroke: var(--amber); }
+    .bc-k { background: rgba(236,72,153,.12);  border: 1px solid rgba(236,72,153,.22); }
+    .bc-k svg { stroke: var(--pink); }
 
-    /* ── Divider ── */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
+    .bento-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -.015em;
+      margin-bottom: .4rem;
+    }
+    .bento-card p {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .bento-card.wide h3 { font-size: 1.25rem; }
+    .bento-card.wide p  { font-size: .95rem; max-width: 520px; }
+
+    /* visual decoration inside the wide card */
+    .bc-visual {
+      position: absolute;
+      right: -20px; bottom: -30px;
+      opacity: .6;
+      pointer-events: none;
+    }
+    .bc-visual .arc {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: conic-gradient(from 200deg, transparent 0%, rgba(76,200,106,.3) 25%, rgba(155,110,212,.3) 40%, transparent 55%);
+      mask: radial-gradient(circle at center, transparent 45%, #000 47%, #000 49%, transparent 51%);
+      -webkit-mask: radial-gradient(circle at center, transparent 45%, #000 47%, #000 49%, transparent 51%);
     }
 
-    /* ── Download ── */
-    .alt-section {
-      background: var(--bg2);
+    /* tall card inner list visual */
+    .tall-list {
+      margin-top: 1.2rem;
+      display: flex; flex-direction: column; gap: .55rem;
+    }
+    .tall-list .chip {
+      font-size: .78rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .55rem .75rem;
+      display: flex; align-items: center; gap: .55rem;
+      color: var(--text2);
+    }
+    .tall-list .chip .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+    }
+    .tall-list .chip:nth-child(1) .dot { background: var(--green); }
+    .tall-list .chip:nth-child(2) .dot { background: var(--purple); }
+    .tall-list .chip:nth-child(3) .dot { background: var(--blue); }
+    .tall-list .chip:nth-child(4) .dot { background: var(--amber); }
+    .tall-list .chip:nth-child(5) .dot { background: var(--pink); }
+
+    /* Animation styles mini preview (full card) */
+    .anim-strip {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .75rem;
+    }
+    .anim-chip {
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .9rem .75rem;
+      text-align: center;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text2);
+      transition: border-color .2s, transform .2s;
+    }
+    .anim-chip:hover { border-color: var(--green); transform: translateY(-2px); color: var(--green); }
+    .anim-chip small {
+      display: block;
+      font-size: .68rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: .15rem;
+    }
+
+    /* ── Showcase strip (how it works) ─────────────────────────────── */
+    .hiw-band {
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(76,200,106,.02) 50%, transparent 100%),
+        var(--bg2);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
+    .hiw {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+    .hiw-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hiw-card .big-num {
+      font-size: 4.5rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.05em;
+      background: var(--grad-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: .22;
+      position: absolute;
+      top: -.5rem; right: .5rem;
+    }
+    .hiw-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+      letter-spacing: -.01em;
+      position: relative;
+    }
+    .hiw-card p {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      position: relative;
+    }
+    .hiw-card .ic {
+      width: 44px; height: 44px;
+      border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      background: var(--grad-green);
+      box-shadow: 0 4px 14px rgba(76,200,106,.3);
+    }
+    .hiw-card:nth-child(2) .ic { background: var(--grad-purple); box-shadow: 0 4px 14px rgba(155,110,212,.3); }
+    .hiw-card:nth-child(3) .ic { background: var(--grad-blue);   box-shadow: 0 4px 14px rgba(74,130,232,.3); }
+    .hiw-card .ic svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── Download ──────────────────────────────────────────────────── */
     .download-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1.25rem;
-      max-width: 760px;
+      max-width: 820px; margin: 0 auto;
     }
     .download-card {
-      background: var(--bg);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.75rem;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
       display: flex; flex-direction: column; gap: .5rem;
-      transition: border-color .2s, box-shadow .2s;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
     }
-    .download-card:hover {
-      border-color: rgba(68,147,248,.4);
-      box-shadow: 0 4px 20px rgba(68,147,248,.07);
-    }
-    .download-card h3 { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: .5rem; }
-    .download-card p { font-size: .85rem; color: var(--muted); flex: 1; }
-    .download-card .btn { align-self: flex-start; margin-top: .75rem; font-size: .875rem; padding: .55rem 1.1rem; }
+    .download-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .download-card h3 { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: .55rem; letter-spacing: -.01em; }
+    .download-card p { font-size: .9rem; color: var(--muted); flex: 1; margin-bottom: .75rem; }
+    .download-card .btn { align-self: flex-start; margin-top: .25rem; font-size: .9rem; padding: .65rem 1.2rem; }
     .tag {
-      font-size: .7rem; font-weight: 600;
-      background: rgba(68,147,248,.12);
-      border: 1px solid rgba(68,147,248,.25);
-      color: var(--accent);
+      font-size: .65rem; font-weight: 700;
+      background: var(--grad-green);
+      color: #fff;
       border-radius: 4px;
-      padding: .1rem .45rem;
-      letter-spacing: .02em;
+      padding: .18rem .5rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
     }
     .winget-cmd {
-      display: block;
-      background: var(--bg3);
+      display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+      background: #0b0f18;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: .7rem 1rem;
-      font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
-      font-size: .83rem;
-      margin-top: .75rem;
-      color: #79c0ff;
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      font-family: "Cascadia Code", "Fira Code", "SF Mono", "Consolas", monospace;
+      font-size: .85rem;
+      margin-top: auto;
+      color: #8ab8ff;
       letter-spacing: .01em;
       user-select: all;
     }
+    .winget-cmd::before { content: '$'; color: var(--muted); margin-right: .2rem; }
+    .copy-btn {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .72rem; font-weight: 600;
+      padding: .22rem .55rem; border-radius: 6px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .copy-btn:hover { color: var(--green); border-color: var(--green); }
+    .copy-btn.done { color: var(--green); border-color: var(--green); }
 
-    /* ── Steps ── */
+    /* ── Steps ─────────────────────────────────────────────────────── */
     .steps {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-      max-width: 900px;
+      gap: 1rem;
+      max-width: 960px; margin: 0 auto;
     }
     .step {
-      display: flex; gap: 1.25rem; align-items: flex-start;
+      display: flex; gap: 1.15rem; align-items: flex-start;
       padding: 1.5rem;
-      background: var(--bg2);
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
+      transition: border-color .2s, transform .2s;
     }
+    .step:hover { border-color: var(--border2); transform: translateY(-2px); }
     .step-num {
       flex-shrink: 0;
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      width: 38px; height: 38px;
+      background: var(--grad-green);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: .85rem;
-      box-shadow: 0 2px 12px rgba(68,147,248,.35);
+      font-weight: 800; font-size: .9rem;
+      box-shadow: 0 4px 14px rgba(76,200,106,.35), inset 0 1px 0 rgba(255,255,255,.25);
       color: #fff;
     }
-    .step-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: .3rem; }
-    .step-body p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+    .step:nth-child(2) .step-num { background: var(--grad-purple); box-shadow: 0 4px 14px rgba(155,110,212,.35), inset 0 1px 0 rgba(255,255,255,.25); }
+    .step:nth-child(3) .step-num { background: var(--grad-blue);   box-shadow: 0 4px 14px rgba(74,130,232,.35),  inset 0 1px 0 rgba(255,255,255,.25); }
+    .step:nth-child(4) .step-num { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 14px rgba(245,158,11,.35), inset 0 1px 0 rgba(255,255,255,.25); }
+    .step-body h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: .3rem; letter-spacing: -.01em; }
+    .step-body p  { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+    .step-body code {
+      font-family: "Cascadia Code", "Fira Code", "SF Mono", "Consolas", monospace;
+      font-size: .82em;
+      background: var(--bg3);
+      padding: .12rem .4rem;
+      border-radius: 4px;
+      color: #8ab8ff;
+    }
 
-    /* ── Support ── */
+    /* ── Final CTA ─────────────────────────────────────────────────── */
+    .final-cta {
+      max-width: 900px; margin: 0 auto;
+      padding: 5rem 2rem 5rem;
+      text-align: center;
+      position: relative;
+    }
+    .final-cta-box {
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(76,200,106,.18), transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(155,110,212,.18), transparent 60%),
+        linear-gradient(180deg, rgba(20,25,36,.9), rgba(14,18,27,.9));
+      border: 1px solid var(--border2);
+      border-radius: 24px;
+      padding: 3.5rem 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .final-cta h2 { margin-bottom: .75rem; }
+    .final-cta p {
+      color: var(--text2);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+
+    /* ── Support ──────────────────────────────────────────────────── */
     .support-cards {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      margin-top: 2rem;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+      max-width: 720px; margin: 0 auto;
     }
     .support-card {
-      display: inline-flex; align-items: center; gap: .75rem;
-      padding: 1rem 1.5rem;
-      background: var(--bg);
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
       text-decoration: none;
       color: var(--text);
       font-weight: 600;
       font-size: .95rem;
       transition: all .2s;
     }
-    .support-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.25);
-    }
-    .support-card.gh { border-color: rgba(188,97,213,.3); }
-    .support-card.gh:hover { border-color: rgba(188,97,213,.6); background: rgba(188,97,213,.05); }
-    .support-card.bmc { border-color: rgba(255,221,0,.3); }
-    .support-card.bmc:hover { border-color: rgba(255,221,0,.6); background: rgba(255,221,0,.05); }
-    .support-card .s-icon { font-size: 1.4rem; line-height: 1; }
+    .support-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.3); }
+    .support-card.gh { border-color: rgba(155,110,212,.3); }
+    .support-card.gh:hover { border-color: rgba(155,110,212,.6); background: linear-gradient(135deg, rgba(155,110,212,.08), transparent); }
+    .support-card.bmc { border-color: rgba(245,158,11,.3); }
+    .support-card.bmc:hover { border-color: rgba(245,158,11,.6); background: linear-gradient(135deg, rgba(245,158,11,.08), transparent); }
+    .support-card .s-icon { font-size: 1.6rem; line-height: 1; }
     .support-card .s-label { display: flex; flex-direction: column; gap: .05rem; }
-    .support-card .s-label small { font-size: .72rem; color: var(--muted); font-weight: 400; }
+    .support-card .s-label small { font-size: .74rem; color: var(--muted); font-weight: 400; }
 
-    /* ── Footer ── */
+    /* ── Footer ──────────────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
       padding: 2.5rem 2rem;
       text-align: center;
       font-size: .825rem;
       color: var(--muted);
+      background: var(--bg2);
     }
     footer a { color: var(--muted); text-decoration: none; transition: color .15s; }
     footer a:hover { color: var(--text); }
-    .footer-logo {
-      display: flex; align-items: center; justify-content: center; gap: .5rem;
-      font-weight: 700; font-size: 1rem; color: var(--text);
-      margin-bottom: 1rem;
-    }
-    .footer-logo img { width: 22px; height: 22px; border-radius: 5px; }
-    .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
 
-    /* ── Interactive Demo ── */
-    .demo-wrap { max-width: 860px; margin: 0 auto; }
-    .demo-screen {
-      position: relative; width: 100%; height: 460px;
-      background: linear-gradient(145deg, #1a2440 0%, #0d1322 65%, #151e30 100%);
-      border-radius: 18px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.07);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.04), 0 32px 80px rgba(0,0,0,.6);
-      user-select: none; cursor: default;
-    }
-    .demo-desktop-bg {
-      position: absolute; inset: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 55% 50% at 22% 28%, rgba(76,200,106,.07), transparent),
-        radial-gradient(ellipse 50% 45% at 75% 65%, rgba(155,110,212,.08), transparent),
-        radial-gradient(ellipse 35% 35% at 55% 40%, rgba(74,130,232,.05), transparent);
-    }
-    .demo-hint {
-      position: absolute; bottom: 62px;
-      display: flex; flex-direction: column; align-items: center; gap: 3px;
-      pointer-events: none; transition: opacity .5s;
-    }
-    .demo-hint-text {
-      font-size: .72rem; font-weight: 600;
-      color: rgba(255,255,255,.78);
-      background: rgba(0,0,0,.45); border-radius: 6px;
-      padding: .2rem .65rem; white-space: nowrap;
-    }
-    .demo-hint-arrow { color: rgba(255,255,255,.6); animation: hintBounce 1.3s ease-in-out infinite; }
-    @keyframes hintBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
-    .demo-fan-layer { position: absolute; inset: 0; pointer-events: none; }
-
-    /* Each fan item = [pill label] [icon] in a row, anchored by icon position */
-    .demo-fan-item {
-      position: absolute;
-      display: flex; flex-direction: row; align-items: center; gap: 8px;
-      cursor: pointer; pointer-events: all;
-    }
-    .demo-fan-item:hover .demo-fi {
-      transform: scale(1.28);
-      box-shadow: 0 10px 32px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.12);
+    /* ── Scroll reveal ───────────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(0.23, 1, 0.32, 1); }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .blob, .hero h1 .grad, .eyebrow .dot, .hv-item { animation: none !important; }
     }
 
-    /* Pill label — left of the icon, matching real app dark pill style */
-    .demo-pill {
-      background: rgba(14,15,20,.82);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: 100px;
-      padding: .28rem .9rem;
-      font-size: .7rem; font-weight: 500; letter-spacing: .005em;
-      color: rgba(255,255,255,.9);
-      white-space: nowrap; max-width: 148px;
-      overflow: hidden; text-overflow: ellipsis;
-      flex-shrink: 0; pointer-events: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,.35);
+    /* ── Responsive ─────────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 3rem; text-align: center; }
+      .hero-copy p, .btn-row, .trust-row { margin-left: auto; margin-right: auto; }
+      .btn-row { justify-content: center; }
+      .trust-row { justify-content: center; }
+      .hero-visual { height: 420px; order: -1; }
+      .hv-fan { width: 300px; height: 400px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .bento { grid-template-columns: repeat(2, 1fr); }
+      .bento-card.wide, .bento-card.tall, .bento-card.med, .bento-card.full { grid-column: span 2; grid-row: auto; }
+      .hiw { grid-template-columns: 1fr; }
     }
-
-    /* Icon spring-pop entry animation */
-    @keyframes iconPop {
-      0%   { transform: scale(0.01); animation-timing-function: cubic-bezier(0.34,1.56,0.64,1); }
-      100% { transform: scale(1); }
-    }
-
-    /* File icon square */
-    .demo-fi {
-      width: 52px; height: 52px; border-radius: 13px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
-      box-shadow: 0 4px 16px rgba(0,0,0,.4);
-      transition: transform .18s ease, box-shadow .18s;
-      position: relative; overflow: hidden; flex-shrink: 0;
-    }
-    .demo-fi::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(145deg, rgba(255,255,255,.22) 0%, transparent 55%);
-      pointer-events: none;
-    }
-    .demo-fi .ltr { font-size: .82rem; font-weight: 900; color: rgba(255,255,255,.95); line-height: 1; }
-    .demo-fi .ext { font-size: .56rem; font-weight: 700; letter-spacing: .04em; color: rgba(255,255,255,.6); text-transform: uppercase; }
-
-    /* Arrow/Explorer button icon */
-    .demo-fi-arrow {
-      background: rgba(60,68,92,.9) !important;
-      border: 1px solid rgba(255,255,255,.12);
-    }
-    .demo-ctx {
-      position: absolute;
-      background: rgba(26,30,40,.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,.11); border-radius: 10px;
-      padding: 4px 0; min-width: 160px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.55); z-index: 200; display: none;
-    }
-    .demo-ctx.show { display: block; }
-    .demo-ctx-row { padding: .43rem 1rem; font-size: .8rem; color: rgba(255,255,255,.82); cursor: pointer; transition: background .1s; }
-    .demo-ctx-row:hover { background: rgba(255,255,255,.1); }
-    .demo-ctx-sep { height: 1px; background: rgba(255,255,255,.09); margin: 3px 0; }
-    .demo-taskbar {
-      position: absolute; bottom: 0; left: 0; right: 0; height: 48px;
-      background: rgba(12,16,26,.9); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-top: 1px solid rgba(255,255,255,.07);
-      display: flex; align-items: center; padding: 0 14px;
-    }
-    .demo-tb-start {
-      width: 36px; height: 36px; border-radius: 7px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: rgba(255,255,255,.75);
-      border: none; background: transparent; transition: background .15s; flex-shrink: 0;
-    }
-    .demo-tb-start:hover { background: rgba(255,255,255,.1); }
-    .demo-tb-center { flex: 1; display: flex; align-items: center; justify-content: center; gap: 3px; }
-    .demo-tbicon {
-      width: 40px; height: 40px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; position: relative; transition: background .15s; flex-shrink: 0;
-    }
-    .demo-tbicon::after {
-      content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
-      width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.35);
-    }
-    .demo-tbicon:hover { background: rgba(255,255,255,.1); }
-    .demo-ff { background: rgba(76,200,106,.1); border: 1px solid rgba(76,200,106,.22); }
-    .demo-ff::after { background: var(--green); opacity: 1; }
-    .demo-ff:hover { background: rgba(76,200,106,.18) !important; border-color: rgba(76,200,106,.45); }
-    .demo-ff.open { background: rgba(76,200,106,.2); border-color: rgba(76,200,106,.55); box-shadow: 0 0 22px rgba(76,200,106,.3); }
-    .demo-ff.open::after { width: 20px; transition: width .2s; }
-    .demo-ff-pulse { animation: ffPulse 2.5s ease-in-out infinite; }
-    @keyframes ffPulse {
-      0%,100% { box-shadow: 0 0 0 rgba(76,200,106,0); }
-      50%      { box-shadow: 0 0 18px rgba(76,200,106,.45); }
-    }
-    .demo-systray { display: flex; align-items: center; gap: 9px; flex-shrink: 0; color: rgba(255,255,255,.6); }
-    .demo-clock { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.3; }
-    .demo-clock .c-time { font-size: .76rem; color: rgba(255,255,255,.8); }
-    .demo-clock .c-date { font-size: .61rem; }
-
     @media (max-width: 640px) {
-      .nav-links a:not(.nav-icon) { display: none; }
-      .download-grid { grid-template-columns: 1fr; max-width: 100%; }
-      .support-cards { flex-direction: column; }
-      .steps { grid-template-columns: 1fr; }
-      .demo-screen { height: 360px; }
+      nav { padding: 0 1.25rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a:not(.nav-icon):not(.nav-cta) { display: none; }
+      .hero { padding: 2rem 1.25rem 3rem; }
+      .section-wrap { padding: 4rem 1.25rem; }
+      .stats { grid-template-columns: 1fr 1fr; padding: 0 1.25rem; }
+      .download-grid, .steps, .support-cards { grid-template-columns: 1fr; }
+      .anim-strip { grid-template-columns: repeat(2, 1fr); }
+      .final-cta-box { padding: 2.5rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── Nav ──────────────────────────────────────────────── -->
-<nav>
+<div class="backdrop">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+<div class="grain"></div>
+
+<!-- ── Nav ───────────────────────────────────────────────────────── -->
+<nav id="topnav">
   <a class="nav-logo" href="#">
     <img src="icon.png" alt="FanFolder" />
     FanFolder
   </a>
   <div class="nav-links">
     <a href="#features">Features</a>
+    <a href="#how">How it works</a>
     <a href="#download">Download</a>
     <a class="nav-icon" href="https://github.com/sponsors/olebhartvigsen" target="_blank" rel="noopener" title="Support on GitHub Sponsors">🩷</a>
     <a class="nav-icon" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee">☕</a>
+    <a class="nav-cta" href="#download">Get FanFolder</a>
   </div>
 </nav>
 
-<!-- ── Hero ─────────────────────────────────────────────── -->
+<!-- ── Hero ─────────────────────────────────────────────────────── -->
 <header class="hero">
-  <img class="hero-icon" src="icon.png" alt="FanFolder" />
-  <h1>Your files,<br /><span>fanned out beautifully</span></h1>
-  <p>Your latest files are always one click away. Click the taskbar icon and the files you were just working on fan out instantly — documents, images, cloud files from OneDrive or Dropbox, whatever it was. No searching, no digging through Explorer.</p>
-  <div class="btn-row">
-    <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download for Windows
-    </a>
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="dot"></span> Free • Open source • Windows 10/11</div>
+    <h1>Your latest files,<br /><span class="grad">one click away.</span></h1>
+    <p>Click the taskbar icon and the files you were just working on fan out instantly — documents, images, and cloud files from OneDrive or Dropbox. No searching. No digging through Explorer.</p>
+
+    <div class="btn-row">
+      <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download for Windows
+      </a>
+      <a class="btn btn-ghost" href="#features">
+        See what it does
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    <div class="trust-row">
+      <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>No admin required</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>x64 &amp; ARM64</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Installs in seconds</span>
+    </div>
+  </div>
+
+  <!-- Static hero visual: mini taskbar with fan of files above it -->
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hv-glow"></div>
+    <div class="hv-stage">
+      <div class="hv-fan" id="hvFan">
+        <!-- Taskbar -->
+        <div class="hv-taskbar">
+          <div class="hv-tb-ico"><svg width="20" height="20" viewBox="0 0 88 88" fill="rgba(255,255,255,.55)"><rect x="0" y="0" width="40" height="40" rx="3"/><rect x="48" y="0" width="40" height="40" rx="3"/><rect x="0" y="48" width="40" height="40" rx="3"/><rect x="48" y="48" width="40" height="40" rx="3"/></svg></div>
+          <div class="hv-tb-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M2 7a2 2 0 0 1 2-2h4l2 2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z" fill="#f5c518"/></svg></div>
+          <div class="hv-tb-ff"><img src="icon.png" alt="" /></div>
+          <div class="hv-tb-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17.5 1.8L9 11l-4.5-3.5L2 9l4 3.8-4 3.8 2.5 1.6L9 14.5 17.5 22 22 19.5V4.5L17.5 1.8z" fill="#007acc"/></svg></div>
+          <div class="hv-tb-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" fill="rgba(255,255,255,.5)"/></svg></div>
+        </div>
+        <!-- Items are injected by JS into arc -->
+      </div>
+    </div>
   </div>
 </header>
 
-<!-- ── Interactive Demo ─────────────────────────────────── -->
-<section class="section-wrap" id="demo" style="padding-top:4rem;padding-bottom:2.5rem;">
-  <div class="section-label">Try it</div>
-  <h2>See the fan in action</h2>
-  <p class="section-sub" style="margin-bottom:2rem;">Click the FanFolder icon in the taskbar below — just like on Windows.</p>
+<!-- ── Stats band ──────────────────────────────────────────────── -->
+<div class="stats reveal">
+  <div class="stat"><div class="stat-n">1&#8239;click</div><div class="stat-l">To your latest files</div></div>
+  <div class="stat"><div class="stat-n">5</div><div class="stat-l">Animation styles</div></div>
+  <div class="stat"><div class="stat-n">&lt;2&nbsp;MB</div><div class="stat-l">Installer size</div></div>
+  <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Open source</div></div>
+</div>
 
-  <div class="demo-wrap">
-    <div class="demo-screen" id="demoScreen">
-      <div class="demo-desktop-bg"></div>
-
-      <!-- Hint arrow pointing at FanFolder icon -->
-      <div class="demo-hint" id="demoHint">
-        <span class="demo-hint-text">👆 Click the FanFolder icon</span>
-        <svg class="demo-hint-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-
-      <!-- Fan items rendered here by JS -->
-      <div class="demo-fan-layer" id="demoFanLayer"></div>
-
-      <!-- Windows-style context menu -->
-      <div class="demo-ctx" id="demoCtx">
-        <div class="demo-ctx-row">Open</div>
-        <div class="demo-ctx-row">Open with…</div>
-        <div class="demo-ctx-sep"></div>
-        <div class="demo-ctx-row">Copy path</div>
-        <div class="demo-ctx-row">Properties</div>
-      </div>
-
-      <!-- Windows 11-style taskbar -->
-      <div class="demo-taskbar">
-        <button class="demo-tb-start" title="Start">
-          <svg width="15" height="15" viewBox="0 0 88 88" fill="currentColor"><rect x="0" y="0" width="40" height="40" rx="3"/><rect x="48" y="0" width="40" height="40" rx="3"/><rect x="0" y="48" width="40" height="40" rx="3"/><rect x="48" y="48" width="40" height="40" rx="3"/></svg>
-        </button>
-        <div class="demo-tb-center">
-          <!-- Edge -->
-          <div class="demo-tbicon" title="Microsoft Edge">
-            <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#0078d4"/><path d="M19 10.5c-.4-2.8-2.8-5-6.5-5-2.3 0-4.4 1.1-5.7 2.9.9-.4 1.9-.7 3-.7 3 0 5 2 5 4.8 0 .7-.1 1.4-.4 2 1.6-.8 2.7-2.5 2.9-4.2-.1-.4-.2-.6-.3-.8z" fill="#50cdff"/><path d="M7.5 16.8c1 .6 2.3 1 3.7 1 1.8 0 3.4-.7 4.6-1.8-.9-.2-1.9-.3-3-.3-2.6 0-4.5 1.1-5.3 1.1z" fill="#fff" opacity=".7"/></svg>
-          </div>
-          <!-- File Explorer -->
-          <div class="demo-tbicon" title="File Explorer">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M2 7a2 2 0 0 1 2-2h4l2 2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z" fill="#f5c518"/><path d="M2 11h20" stroke="#b89000" stroke-width="1.5"/></svg>
-          </div>
-          <!-- FanFolder — the interactive icon -->
-          <div class="demo-tbicon demo-ff demo-ff-pulse" id="demoFfBtn" title="FanFolder — click to open">
-            <img src="icon.png" width="23" height="23" alt="" style="border-radius:5px;display:block">
-          </div>
-          <!-- VS Code -->
-          <div class="demo-tbicon" title="Visual Studio Code">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17.5 1.8L9 11l-4.5-3.5L2 9l4 3.8-4 3.8 2.5 1.6L9 14.5 17.5 22 22 19.5V4.5L17.5 1.8z" fill="#007acc"/><path d="M17.5 7.5l-5.5 5 5.5 5V7.5z" fill="rgba(255,255,255,.25)"/></svg>
-          </div>
-          <!-- Notepad -->
-          <div class="demo-tbicon" title="Notepad">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" fill="#fff" stroke="#ccc" stroke-width="1.5"/><line x1="8" y1="8" x2="16" y2="8" stroke="#aaa" stroke-width="1.5"/><line x1="8" y1="12" x2="16" y2="12" stroke="#aaa" stroke-width="1.5"/><line x1="8" y1="16" x2="12" y2="16" stroke="#aaa" stroke-width="1.5"/></svg>
-          </div>
-        </div>
-        <!-- System tray -->
-        <div class="demo-systray">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 6l11 6 11-6M1 6v12h22V6"/></svg>
-          <div class="demo-clock">
-            <span class="c-time" id="demoTime">00:00</span>
-            <span class="c-date" id="demoDate">01/01/2026</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Features ─────────────────────────────────────────── -->
+<!-- ── Features (Bento) ───────────────────────────────────────── -->
 <section class="section-wrap" id="features">
-  <div class="section-label">Features</div>
-  <h2>A beautiful fan popup, right in your taskbar</h2>
-  <p class="section-sub">Click the icon and your latest files and folders fan out instantly — documents, images, whatever you were last working on, including files from OneDrive, Dropbox, or any cloud folder.</p>
+  <div class="section-head reveal">
+    <div class="section-label">Features</div>
+    <h2>Built to put your files&nbsp;<span style="background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">right where you need them</span></h2>
+    <p class="section-sub">The files and folders you were just working on — including the ones in OneDrive, Dropbox, or any other cloud folder — always one click away.</p>
+  </div>
 
-  <div class="features-grid">
+  <div class="bento">
 
-    <div class="feature-card">
-      <div class="feature-icon">
+    <!-- Hero feature: animation styles, wide -->
+    <div class="bento-card wide reveal">
+      <div class="bc-icon bc-g">
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
       </div>
-      <h3>Animated fan layout</h3>
-      <p>Files arc out from the taskbar in a smooth fan, glide, spring or fade animation. Choose your style in settings.</p>
+      <h3>Five animation styles, one perfect feel</h3>
+      <p>Files arc out from your taskbar with smooth, physics-based motion. Pick whichever vibe fits your desktop — each one is tuned to feel snappy and alive.</p>
+      <div class="anim-strip">
+        <div class="anim-chip">Fan<small>arc in</small></div>
+        <div class="anim-chip">Glide<small>drift up</small></div>
+        <div class="anim-chip">Spring<small>bouncy</small></div>
+        <div class="anim-chip">Fade<small>soft</small></div>
+        <div class="anim-chip">None<small>instant</small></div>
+      </div>
+      <div class="bc-visual"><div class="arc"></div></div>
     </div>
 
-    <div class="feature-card">
-      <div class="feature-icon">
+    <!-- Tall: Any folder / cloud -->
+    <div class="bento-card tall reveal">
+      <div class="bc-icon bc-p">
         <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
       </div>
-      <h3>Any folder</h3>
-      <p>Point it at Downloads, Desktop, Documents, or your OneDrive, Dropbox, or any other cloud folder. Always shows your most recent files.</p>
+      <h3>Any folder, any cloud</h3>
+      <p>Point FanFolder at whatever matters most — and it always shows your latest items.</p>
+      <div class="tall-list">
+        <div class="chip"><span class="dot"></span> Downloads</div>
+        <div class="chip"><span class="dot"></span> OneDrive</div>
+        <div class="chip"><span class="dot"></span> Dropbox</div>
+        <div class="chip"><span class="dot"></span> Documents</div>
+        <div class="chip"><span class="dot"></span> Any custom path</div>
+      </div>
     </div>
 
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+    <!-- Med: Shell integration -->
+    <div class="bento-card med reveal">
+      <div class="bc-icon bc-b">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
       </div>
       <h3>Full shell integration</h3>
-      <p>Right-click any file for the complete Windows context menu. Drag files directly to other apps with a ghost preview.</p>
+      <p>Right-click any file for the real Windows context menu. Drag files straight into other apps with a ghost preview.</p>
     </div>
 
-    <div class="feature-card">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <!-- Med: Instant -->
+    <div class="bento-card med reveal">
+      <div class="bc-icon bc-a">
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       </div>
       <h3>Instant open</h3>
-      <p>Icons are pre-loaded in the background so the fan opens the moment you click — no waiting.</p>
+      <p>Icons are pre-loaded in the background so the fan opens the moment you click — zero wait.</p>
     </div>
 
-    <div class="feature-card">
-      <div class="feature-icon">
+    <!-- Med: Filter & sort -->
+    <div class="bento-card med reveal">
+      <div class="bc-icon bc-k">
         <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
       </div>
       <h3>Filter &amp; sort</h3>
-      <p>Sort by date modified, date created, or name. Filter to show only the files that matter to you.</p>
+      <p>Sort by date modified, created, or name. Regex filter so you only see what you want.</p>
     </div>
 
-    <div class="feature-card">
-      <div class="feature-icon">
+    <!-- Med: Multilingual -->
+    <div class="bento-card med reveal">
+      <div class="bc-icon bc-g">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </div>
-      <h3>Multilingual</h3>
-      <p>The UI adapts automatically to your Windows display language — no extra setup needed.</p>
+      <h3>Follows your language</h3>
+      <p>The UI adapts automatically to your Windows display language — no setup needed.</p>
     </div>
 
   </div>
 </section>
 
-<!-- ── Download ──────────────────────────────────────────── -->
-<div class="alt-section" id="download">
-  <div class="section-wrap">
-    <div class="section-label">Download</div>
-    <h2>Get FanFolder</h2>
-    <p class="section-sub">All releases are built and verified automatically.</p>
+<!-- ── How it works ───────────────────────────────────────────── -->
+<div class="hiw-band">
+  <section class="section-wrap" id="how">
+    <div class="section-head reveal">
+      <div class="section-label p">How it works</div>
+      <h2>Three things, nothing to learn</h2>
+      <p class="section-sub">Install it, click it, use it. That's it.</p>
+    </div>
 
-    <div class="download-grid">
-      <div class="download-card">
-        <h3>Installer <span class="tag">Recommended</span></h3>
-        <p>Download and run the installer. Works on all Windows 10/11 devices — no admin rights needed.</p>
-        <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download FanFolder
-        </a>
+    <div class="hiw">
+      <div class="hiw-card reveal">
+        <div class="big-num">1</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+        <h3>Install in seconds</h3>
+        <p>One small installer. No admin rights. Works on Windows 10 &amp; 11, both Intel and ARM.</p>
       </div>
-      <div class="download-card">
-        <h3>winget</h3>
-        <p>Install via the Windows Package Manager from any terminal.</p>
-        <code class="winget-cmd">winget install OleBhartvigsen.FanFolder</code>
+      <div class="hiw-card reveal">
+        <div class="big-num">2</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M5 12a7 7 0 0 1 14 0"/></svg></div>
+        <h3>Click the taskbar icon</h3>
+        <p>A FanFolder icon appears in your taskbar. Click it and your latest files arc out instantly.</p>
+      </div>
+      <div class="hiw-card reveal">
+        <div class="big-num">3</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></div>
+        <h3>Forget it's there</h3>
+        <p>FanFolder starts with Windows. Your latest files are always one click away — forever.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ── Download ───────────────────────────────────────────────── -->
+<section class="section-wrap" id="download">
+  <div class="section-head reveal">
+    <div class="section-label b">Download</div>
+    <h2>Ready when you are</h2>
+    <p class="section-sub">All releases are built and signed automatically from source.</p>
+  </div>
+
+  <div class="download-grid reveal">
+    <div class="download-card">
+      <h3>Installer <span class="tag">Recommended</span></h3>
+      <p>Download and run — no admin rights needed. Installs for your user only, starts with Windows automatically.</p>
+      <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download FanFolder
+      </a>
+    </div>
+    <div class="download-card">
+      <h3>winget</h3>
+      <p>Install via the Windows Package Manager — fast, silent, repeatable.</p>
+      <div class="winget-cmd" id="wingetCmd">
+        <span>winget install OleBhartvigsen.FanFolder</span>
+        <button class="copy-btn" id="copyBtn" type="button">Copy</button>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ── Get started ───────────────────────────────────────── -->
-<section class="section-wrap" id="install">
-  <div class="section-label">Get started</div>
-  <h2>Up and running in seconds</h2>
-  <p class="section-sub">No configuration required — FanFolder works out of the box.</p>
+<!-- ── Get Started (detailed) ─────────────────────────────────── -->
+<section class="section-wrap" id="install" style="padding-top:0;">
+  <div class="section-head reveal">
+    <div class="section-label">Get started</div>
+    <h2>Up and running in under a minute</h2>
+    <p class="section-sub">No configuration required — FanFolder works out of the box.</p>
+  </div>
 
-  <div class="steps">
+  <div class="steps reveal">
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <h3>Download &amp; run the installer</h3>
-        <p>Run <code style="font-size:.85em;background:var(--bg3);padding:.1rem .35rem;border-radius:4px;">FanFolderSetup.exe</code> — no admin rights needed. Done in seconds.</p>
+        <h3>Run the installer</h3>
+        <p>Run <code>FanFolderSetup.exe</code> — no admin rights needed. Done in seconds.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
         <h3>Click the taskbar icon</h3>
-        <p>A FanFolder icon appears in your taskbar. Click it to open the fan and see your recent files.</p>
+        <p>A FanFolder icon appears in your taskbar. Click it to see your recent files.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
-        <h3>Customize via the tray icon</h3>
-        <p>Right-click the tray icon to change the folder, sort order, animation style, item count, and more.</p>
+        <h3>Customize via tray menu</h3>
+        <p>Right-click the tray icon to change folder, sort order, animation style, and item count.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
-        <h3>Starts automatically on login</h3>
+        <h3>Starts automatically</h3>
         <p>FanFolder registers itself to start with Windows — nothing else to configure.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Support ───────────────────────────────────────────── -->
-<div class="alt-section" id="support">
-  <div class="section-wrap">
-    <div class="section-label">Support the project</div>
-    <h2>Help keep FanFolder going</h2>
-    <p class="section-sub">If FanFolder saves you time, consider supporting its development.</p>
-    <div class="support-cards">
-      <a class="support-card gh" href="https://github.com/sponsors/olebhartvigsen" target="_blank" rel="noopener">
-        <span class="s-icon">🩷</span>
-        <span class="s-label">
-          GitHub Sponsors
-          <small>Recurring or one-time</small>
-        </span>
+<!-- ── Final CTA ───────────────────────────────────────────────── -->
+<div class="final-cta reveal">
+  <div class="final-cta-box">
+    <h2>Your files shouldn't hide from you.</h2>
+    <p>Install FanFolder and put your latest files one click away — forever.</p>
+    <div class="btn-row" style="justify-content:center;">
+      <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download for Windows
       </a>
-      <a class="support-card bmc" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener">
-        <span class="s-icon">☕</span>
-        <span class="s-label">
-          Buy Me a Coffee
-          <small>Quick one-time support</small>
-        </span>
+      <a class="btn btn-ghost" href="https://github.com/olebhartvigsen/FanFolder" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.67 5.56.67 11.83c0 5.01 3.25 9.26 7.76 10.77.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.13-3.16.69-3.83-1.34-3.83-1.34-.52-1.31-1.26-1.66-1.26-1.66-1.03-.71.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.65 1.23 3.3.94.1-.73.4-1.23.72-1.51-2.52-.29-5.17-1.26-5.17-5.6 0-1.24.44-2.25 1.17-3.05-.12-.29-.51-1.44.11-3 0 0 .95-.3 3.12 1.16.91-.25 1.88-.38 2.85-.38.97 0 1.94.13 2.85.38 2.17-1.46 3.12-1.16 3.12-1.16.62 1.56.23 2.71.11 3 .73.8 1.17 1.81 1.17 3.05 0 4.36-2.66 5.3-5.19 5.58.41.35.78 1.05.78 2.11 0 1.52-.01 2.75-.01 3.12 0 .3.21.66.79.55 4.5-1.51 7.75-5.76 7.75-10.77C23.33 5.56 18.27.5 12 .5z"/></svg>
+        Star on GitHub
       </a>
     </div>
   </div>
 </div>
 
-<!-- ── Footer ────────────────────────────────────────────── -->
+<!-- ── Support ─────────────────────────────────────────────────── -->
+<section class="section-wrap" id="support" style="padding-top:0;">
+  <div class="section-head reveal">
+    <div class="section-label p">Support the project</div>
+    <h2>Help keep FanFolder going</h2>
+    <p class="section-sub">If FanFolder saves you time, consider supporting its development.</p>
+  </div>
+
+  <div class="support-cards reveal">
+    <a class="support-card gh" href="https://github.com/sponsors/olebhartvigsen" target="_blank" rel="noopener">
+      <span class="s-icon">🩷</span>
+      <span class="s-label">
+        GitHub Sponsors
+        <small>Recurring or one-time</small>
+      </span>
+    </a>
+    <a class="support-card bmc" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener">
+      <span class="s-icon">☕</span>
+      <span class="s-label">
+        Buy Me a Coffee
+        <small>Quick one-time support</small>
+      </span>
+    </a>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────── -->
 <footer>
   <div class="footer-links">
     <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/LICENSE">License</a>
@@ -750,209 +1095,119 @@
 (function () {
   'use strict';
 
-  // Files shown in the fan — 14 items, most-recent first (i=0 = bottom of arc)
+  // ── Nav background on scroll ─────────────────────────────────
+  var nav = document.getElementById('topnav');
+  function onScroll() {
+    if (window.scrollY > 8) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ── Scroll-reveal via IntersectionObserver ───────────────────
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -60px 0px', threshold: .05 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  // ── Bento card pointer glow ──────────────────────────────────
+  document.querySelectorAll('.bento-card').forEach(function (card) {
+    card.addEventListener('mousemove', function (e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top)  + 'px');
+    });
+  });
+
+  // ── Copy winget command ──────────────────────────────────────
+  var copyBtn = document.getElementById('copyBtn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      var text = 'winget install OleBhartvigsen.FanFolder';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          copyBtn.textContent = 'Copied ✓';
+          copyBtn.classList.add('done');
+          setTimeout(function () {
+            copyBtn.textContent = 'Copy';
+            copyBtn.classList.remove('done');
+          }, 1600);
+        });
+      }
+    });
+  }
+
+  // ── Hero static fan visual ───────────────────────────────────
+  // Arrange 8 file chips in an arc above the FanFolder taskbar icon.
+  var fan = document.getElementById('hvFan');
+  if (!fan) return;
+
   var FILES = [
-    { name: 'Budget 2026',      ext: 'xlsx', bg: '#1d6f42', ltr: 'XL'  },
-    { name: 'Project Brief',    ext: 'docx', bg: '#185abd', ltr: 'W'   },
-    { name: 'Q4 Pitch',         ext: 'pptx', bg: '#c43e1c', ltr: 'P'   },
-    { name: 'vacation',         ext: 'jpg',  bg: '#007c91', ltr: '\uD83C\uDFD4', emoji: true },
-    { name: 'Invoice March',    ext: 'pdf',  bg: '#b91c1c', ltr: 'PDF' },
-    { name: 'design notes',     ext: 'txt',  bg: '#4a5568', ltr: 'TXT' },
-    { name: 'Meeting Notes',    ext: 'docx', bg: '#1e40af', ltr: 'W'   },
-    { name: 'Architecture',     ext: 'png',  bg: '#0e7490', ltr: '\uD83D\uDDBC\uFE0F', emoji: true },
-    { name: 'roadmap',          ext: 'xlsx', bg: '#166534', ltr: 'XL'  },
-    { name: 'NDA Draft',        ext: 'pdf',  bg: '#7f1d1d', ltr: 'PDF' },
-    { name: 'resume-v3',        ext: 'docx', bg: '#312e81', ltr: 'W'   },
-    { name: 'client-logo',      ext: 'svg',  bg: '#92400e', ltr: 'SVG' },
-    { name: 'wireframes',       ext: 'fig',  bg: '#701a75', ltr: 'FIG' },
-    { name: 'backup',           ext: 'zip',  bg: '#374151', ltr: 'ZIP' },
+    { name: 'Budget.xlsx',    bg: '#1d6f42', lt: 'XL'  },
+    { name: 'Brief.docx',     bg: '#185abd', lt: 'W'   },
+    { name: 'Pitch.pptx',     bg: '#c43e1c', lt: 'P'   },
+    { name: 'trip.jpg',       bg: '#0e7490', lt: '🏞️', emoji: true },
+    { name: 'Invoice.pdf',    bg: '#b91c1c', lt: 'PDF' },
+    { name: 'notes.txt',      bg: '#475569', lt: 'TXT' },
+    { name: 'design.png',     bg: '#7c3aed', lt: '🖼️', emoji: true },
+    { name: 'backup.zip',     bg: '#374151', lt: 'ZIP' }
   ];
 
-  var fanOpen    = false;
-  var demoScreen = document.getElementById('demoScreen');
-  var ffBtn      = document.getElementById('demoFfBtn');
-  var fanLayer   = document.getElementById('demoFanLayer');
-  var hint       = document.getElementById('demoHint');
-  var ctx        = document.getElementById('demoCtx');
+  // Anchor = centre of hv-tb-ff inside the .hv-fan box
+  // .hv-fan is 340x480, taskbar sits at bottom, icon ~centered
+  // Approx: hinge at (170, 456) within fan box
+  var W = 340, H = 480;
+  var hingeX = W / 2;
+  var hingeY = H - 24; // top of taskbar roughly
+  var arcSpread = FILES.length * 1.8; // gentle arc
+  var startDist = 28;
+  var spacing   = 44;
+  var iconHalf  = 21;   // 42/2
+  var gap       = 8;
+  var pillW     = 108;  // approx, just for left offset
 
-  // ── Live clock ──────────────────────────────────────────────────────────────
-  function tick() {
-    var n = new Date();
-    document.getElementById('demoTime').textContent =
-      String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
-    document.getElementById('demoDate').textContent =
-      String(n.getDate()).padStart(2,'0') + '/' +
-      String(n.getMonth()+1).padStart(2,'0') + '/' + n.getFullYear();
-  }
-  tick();
-  setInterval(tick, 15000);
+  FILES.forEach(function (f, i) {
+    var t = FILES.length > 1 ? i / (FILES.length - 1) : 0;
+    var angleDeg = 90 - (t - 0.5) * arcSpread;
+    var rad = angleDeg * Math.PI / 180;
+    var dist = startDist + spacing * i;
+    var rx = dist * Math.cos(rad);
+    var ry = -dist * Math.sin(rad);
 
-  // ── Hint arrow centred over the FanFolder icon ──────────────────────────────
-  function positionHint() {
-    var br = ffBtn.getBoundingClientRect();
-    var sr = demoScreen.getBoundingClientRect();
-    hint.style.left      = (br.left + br.width / 2 - sr.left) + 'px';
-    hint.style.transform = 'translateX(-50%)';
-  }
-  setTimeout(positionHint, 80);
-  window.addEventListener('resize', positionHint);
+    // Item left/top so icon centre is at (hingeX+rx, hingeY+ry)
+    var left = hingeX + rx - iconHalf - gap - pillW;
+    var top  = hingeY + ry - iconHalf;
 
-  // ── Toggle ──────────────────────────────────────────────────────────────────
-  ffBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    fanOpen ? closeFan() : openFan();
-  });
-  demoScreen.addEventListener('click', function () {
-    if (fanOpen) closeFan();
-    ctx.classList.remove('show');
-  });
+    var el = document.createElement('div');
+    el.className = 'hv-item';
+    el.style.left = left + 'px';
+    el.style.top  = top + 'px';
+    el.style.setProperty('--sx', (-rx).toFixed(1) + 'px');
+    el.style.setProperty('--sy', (-ry).toFixed(1) + 'px');
+    el.style.animationDelay = (180 + i * 70) + 'ms';
 
-  // ── Open ─────────────────────────────────────────────────────────────────────
-  function openFan() {
-    hint.style.opacity = '0';
-    fanLayer.innerHTML = '';
+    var inner = f.emoji
+      ? '<span style="font-size:1.3rem;line-height:1">' + f.lt + '</span>'
+      : f.lt;
 
-    var br     = ffBtn.getBoundingClientRect();
-    var sr     = demoScreen.getBoundingClientRect();
-    // Arc hinge: top-centre of the FanFolder taskbar button
-    var hingeX = br.left + br.width  / 2 - sr.left;
-    var hingeY = br.top                  - sr.top;
+    el.innerHTML =
+      '<div class="hv-ico" style="background:' + f.bg + '">' + inner + '</div>' +
+      '<div class="hv-pill">' + f.name + '</div>';
 
-    // Real-app arc geometry:
-    //   arcSpread = min(N * 1.5, 22) degrees  (≈10.5° for 7 items)
-    //   angleDeg  = 90 − (t − 0.5) × arcSpread  → centred on vertical
-    //   relX      = dist × cos(angleDeg)   (slightly left→right as items go up)
-    //   relY      = −dist × sin(angleDeg)  (upward)
-    //
-    // Explorer "Open in Explorer" button is appended as the last/topmost item.
-    var allItems = FILES.slice().concat([{ name: 'Open in Explorer', isExplorer: true }]);
-    var total    = allItems.length;  // 15
-    var arcSpread = Math.min(total * 1.5, 22);   // 22° (capped) for 15 items
-    var startDist = 14;
-    var spacing   = 26;   // 26px per item → max dist = 14 + 26*14 = 378px (fits 460px screen)
-    var iconHalf  = 26;   // icon = 52 × 52
-    var PILL_W    = 136;  // fixed pill width for demo
-    var GAP       = 8;
-
-    allItems.forEach(function (file, i) {
-      var t        = total > 1 ? i / (total - 1) : 0;
-      var angleDeg = 90 - (t - 0.5) * arcSpread;
-      var rad      = angleDeg * Math.PI / 180;
-      var dist     = startDist + spacing * i;
-      var relX     = dist * Math.cos(rad);   // small, slightly left→right
-      var relY     = -dist * Math.sin(rad);  // negative = upward
-
-      // Item div lays out: [pill] [gap] [icon]
-      // Position so icon centre lands at (hingeX+relX, hingeY+relY)
-      var itemLeft = hingeX + relX - iconHalf - GAP - PILL_W;
-      var itemTop  = hingeY + relY - iconHalf;
-
-      var el = document.createElement('div');
-      el.className = 'demo-fan-item';
-      // transform-origin = icon centre within the item element
-      el.style.cssText =
-        'left:' + itemLeft + 'px;' +
-        'top:'  + itemTop  + 'px;' +
-        'transform-origin:' + (PILL_W + GAP + iconHalf) + 'px ' + iconHalf + 'px;' +
-        'transform:translate(' + (-relX).toFixed(1) + 'px,' + (-relY).toFixed(1) + 'px) scale(0.1);' +
-        'opacity:0;transition:none;';
-
-      // Store relX/relY for close animation
-      el.dataset.rx = relX.toFixed(2);
-      el.dataset.ry = relY.toFixed(2);
-
-      // ── Build inner HTML ────────────────────────────────────────────────────
-      var pillHtml, iconHtml;
-      if (file.isExplorer) {
-        pillHtml = '<div class="demo-pill">Open in Explorer</div>';
-        iconHtml =
-          '<div class="demo-fi demo-fi-arrow">' +
-          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"' +
-          ' stroke="rgba(255,255,255,.85)" stroke-width="2.5"' +
-          ' stroke-linecap="round" stroke-linejoin="round">' +
-          '<polyline points="9 18 15 12 9 6"/></svg>' +
-          '</div>';
-      } else {
-        pillHtml = '<div class="demo-pill">' + file.name + '.' + file.ext + '</div>';
-        var inner = file.emoji
-          ? '<span style="font-size:1.5rem;line-height:1">' + file.ltr + '</span>'
-          : '<span class="ltr">'  + file.ltr + '</span>' +
-            '<span class="ext">.' + file.ext + '</span>';
-        iconHtml = '<div class="demo-fi" style="background:' + file.bg + '">' + inner + '</div>';
-      }
-      el.innerHTML = pillHtml + iconHtml;
-
-      // ── Click: bounce icon back to hinge then close ─────────────────────────
-      el.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var rx = parseFloat(el.dataset.rx), ry = parseFloat(el.dataset.ry);
-        el.style.transition = 'transform .2s cubic-bezier(0.55,0,1,0.45), opacity .16s ease';
-        el.style.transform  = 'translate(' + (-rx) + 'px,' + (-ry) + 'px) scale(0.1)';
-        el.style.opacity    = '0';
-        setTimeout(closeFan, 220);
-      });
-
-      // ── Right-click: Windows context menu ──────────────────────────────────
-      el.addEventListener('contextmenu', function (e) {
-        e.preventDefault(); e.stopPropagation();
-        var mx = e.clientX - sr.left, my = e.clientY - sr.top;
-        ctx.style.left = Math.min(mx, sr.width  - 168) + 'px';
-        ctx.style.top  = Math.min(my, sr.height - 130) + 'px';
-        ctx.classList.add('show');
-      });
-
-      fanLayer.appendChild(el);
-
-      // ── Staggered fly-out: item translates from hinge; icon pops with spring ─
-      setTimeout(function () {
-        // Parent item flies from hinge to final position
-        el.style.transition =
-          'transform 400ms cubic-bezier(0.23,1,0.32,1),' +
-          'opacity 240ms ease';
-        el.style.transform = 'translate(0,0) scale(1)';
-        el.style.opacity   = '1';
-
-        // Icon springs independently with overshoot
-        var fi = el.querySelector('.demo-fi');
-        fi.style.animation = 'iconPop 420ms cubic-bezier(0.34,1.56,0.64,1) both';
-        fi.addEventListener('animationend', function onEnd() {
-          fi.style.animation = '';
-          fi.removeEventListener('animationend', onEnd);
-        });
-      }, 16 + i * 42);
-    });
-
-    ffBtn.classList.remove('demo-ff-pulse');
-    ffBtn.classList.add('open');
-    fanOpen = true;
-  }
-
-  // ── Close ────────────────────────────────────────────────────────────────────
-  function closeFan() {
-    fanLayer.querySelectorAll('.demo-fan-item').forEach(function (el) {
-      var rx = parseFloat(el.dataset.rx) || 0;
-      var ry = parseFloat(el.dataset.ry) || 0;
-      el.style.transition = 'transform 210ms cubic-bezier(0.55,0,1,0.45), opacity 170ms ease';
-      el.style.transform  = 'translate(' + (-rx) + 'px,' + (-ry) + 'px) scale(0.1)';
-      el.style.opacity    = '0';
-    });
-    setTimeout(function () {
-      fanLayer.innerHTML = '';
-      fanOpen = false;
-      ffBtn.classList.remove('open');
-    }, 230);
-    ctx.classList.remove('show');
-  }
-
-  // ── Context menu rows close the demo ─────────────────────────────────────────
-  ctx.querySelectorAll('.demo-ctx-row').forEach(function (row) {
-    row.addEventListener('click', function (e) {
-      e.stopPropagation();
-      ctx.classList.remove('show');
-      closeFan();
-    });
+    fan.appendChild(el);
   });
 })();
 </script>
+
 </body>
 </html>
