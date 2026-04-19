@@ -65,17 +65,17 @@ Source code is maintained in a private repository. This repository (`FanFolder`)
 
 ## Configuration
 
-All settings are available from the tray-icon menu, or directly via the registry at `HKCU\SOFTWARE\FanFolder`:
+All settings are available via the registry at `HKCU\SOFTWARE\FanFolder`. Most common ones are also available from the tray-icon menu — the rest are registry-only (edit with `regedit`).
 
-| Value | Type | Default | Description |
-|-------|------|---------|-------------|
-| `FolderPath` | REG_SZ | Downloads | Folder to display |
-| `SortMode` | REG_SZ | `DateModifiedDesc` | Sort order (`DateModifiedDesc`, `DateModifiedAsc`, `DateCreatedDesc`, `DateCreatedAsc`, `NameAsc`, `NameDesc`) |
-| `MaxItems` | REG_DWORD | `15` | Items shown in the fan (5–25) |
-| `IncludeDirectories` | REG_DWORD | `1` | Include subfolders |
-| `ShowExtensions` | REG_DWORD | `0` | Show file extensions in labels |
-| `FilterRegex` | REG_SZ | *(empty)* | Optional regex matched against each filename (case-insensitive). Only matching files are shown. See examples below. |
-| `AnimationStyle` | REG_SZ | `Spring` | `Fan`, `Glide`, `Spring`, `Fade`, or `None` |
+| Value | Type | Default | Tray menu | Description |
+|-------|------|---------|:---------:|-------------|
+| `FolderPath` | REG_SZ | Downloads | ✅ | Folder to display |
+| `SortMode` | REG_SZ | `DateModifiedDesc` | ✅ | Sort order (`DateModifiedDesc`, `DateModifiedAsc`, `DateCreatedDesc`, `DateCreatedAsc`, `NameAsc`, `NameDesc`) |
+| `MaxItems` | REG_DWORD | `15` | ✅ | Items shown in the fan (5–25) |
+| `IncludeDirectories` | REG_DWORD | `1` | ✅ | Include subfolders |
+| `ShowExtensions` | REG_DWORD | `0` | ✅ | Show file extensions in labels |
+| `FilterRegex` | REG_SZ | *(empty)* | ❌ registry only | Optional regex matched against each filename (case-insensitive). Only matching files are shown. See examples below. |
+| `AnimationStyle` | REG_SZ | `Spring` | ❌ registry only | `Fan`, `Glide`, `Spring`, `Fade`, or `None` |
 
 ### `FilterRegex` examples
 
