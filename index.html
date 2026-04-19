@@ -502,6 +502,44 @@
     .tall-list .chip:nth-child(4) .dot { background: var(--amber); }
     .tall-list .chip:nth-child(5) .dot { background: var(--pink); }
 
+    /* flagship "any folder / any cloud" chip row */
+    .any-row {
+      margin-top: 1.3rem;
+      display: flex; flex-wrap: wrap; gap: .55rem;
+      position: relative; z-index: 1;
+    }
+    .any-row .chip {
+      font-size: .82rem; font-weight: 600;
+      background: rgba(15,23,42,.04);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .55rem .85rem;
+      display: inline-flex; align-items: center; gap: .5rem;
+      color: var(--text);
+      transition: border-color .2s, transform .2s, background .2s;
+    }
+    .any-row .chip:hover { transform: translateY(-2px); border-color: var(--border2); background: #ffffff; }
+    .any-row .chip .g { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .any-row .chip:nth-child(1) .g { background: var(--green); }
+    .any-row .chip:nth-child(2) .g { background: var(--purple); }
+    .any-row .chip:nth-child(3) .g { background: var(--blue); }
+    .any-row .chip:nth-child(4) .g { background: #14b8a6; }
+    .any-row .chip:nth-child(5) .g { background: var(--amber); }
+    .any-row .chip:nth-child(6) .g { background: var(--pink); }
+
+    /* animation strip in tall card: vertical stack */
+    .bento-card.tall .anim-strip {
+      grid-template-columns: 1fr;
+      gap: .5rem;
+      margin-top: 1.1rem;
+    }
+    .bento-card.tall .anim-chip {
+      text-align: left;
+      padding: .65rem .8rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .bento-card.tall .anim-chip small { margin-top: 0; }
+
     /* Animation styles mini preview (full card) */
     .anim-strip {
       margin-top: 1.5rem;
@@ -799,36 +837,37 @@
 
   <div class="bento">
 
-    <!-- Hero feature: animation styles, wide -->
+    <!-- Hero feature: Any folder, any cloud -->
     <div class="bento-card wide reveal">
+      <div class="bc-icon bc-p">
+        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Any folder. Any cloud. Always the latest.</h3>
+      <p>Point FanFolder at whatever folder matters most — your Downloads, OneDrive, Dropbox, Google Drive, or any custom path — and the taskbar icon always reveals the newest items inside. No searching. No digging. Just the files you actually need, right now.</p>
+      <div class="any-row">
+        <div class="chip"><span class="g"></span> Downloads</div>
+        <div class="chip"><span class="g"></span> OneDrive</div>
+        <div class="chip"><span class="g"></span> Dropbox</div>
+        <div class="chip"><span class="g"></span> Google Drive</div>
+        <div class="chip"><span class="g"></span> Documents</div>
+        <div class="chip"><span class="g"></span> Any custom path</div>
+      </div>
+      <div class="bc-visual"><div class="arc"></div></div>
+    </div>
+
+    <!-- Tall: Five animation styles -->
+    <div class="bento-card tall reveal">
       <div class="bc-icon bc-g">
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
       </div>
-      <h3>Five animation styles, one perfect feel</h3>
-      <p>Files arc out from your taskbar with smooth, physics-based motion. Pick whichever vibe fits your desktop — each one is tuned to feel snappy and alive.</p>
+      <h3>Five animation styles</h3>
+      <p>Pick whichever vibe fits your desktop — each one is tuned to feel snappy and alive.</p>
       <div class="anim-strip">
         <div class="anim-chip">Fan<small>arc in</small></div>
         <div class="anim-chip">Glide<small>drift up</small></div>
         <div class="anim-chip">Spring<small>bouncy</small></div>
         <div class="anim-chip">Fade<small>soft</small></div>
         <div class="anim-chip">None<small>instant</small></div>
-      </div>
-      <div class="bc-visual"><div class="arc"></div></div>
-    </div>
-
-    <!-- Tall: Any folder / cloud -->
-    <div class="bento-card tall reveal">
-      <div class="bc-icon bc-p">
-        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-      </div>
-      <h3>Any folder, any cloud</h3>
-      <p>Point FanFolder at whatever matters most — and it always shows your latest items.</p>
-      <div class="tall-list">
-        <div class="chip"><span class="dot"></span> Downloads</div>
-        <div class="chip"><span class="dot"></span> OneDrive</div>
-        <div class="chip"><span class="dot"></span> Dropbox</div>
-        <div class="chip"><span class="dot"></span> Documents</div>
-        <div class="chip"><span class="dot"></span> Any custom path</div>
       </div>
     </div>
 
