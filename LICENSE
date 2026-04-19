@@ -1,21 +1,131 @@
-MIT License
+FanFolder Software License Agreement
 
-Copyright (c) 2026 Ole Hartvigsen
+Copyright (c) 2026 Ole Bulow Hartvigsen. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This License Agreement (the "Agreement") is a legal agreement between
+you (either an individual or a single entity, "You") and Ole Bulow
+Hartvigsen ("Licensor") for the FanFolder software application,
+including the compiled executable, installer, associated documentation,
+and any updates or new versions (collectively, the "Software").
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+By downloading, installing, copying, or otherwise using the Software,
+You agree to be bound by the terms of this Agreement. If You do not
+agree, do not install or use the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+──────────────────────────────────────────────────────────────────────
+1. LICENSE GRANT — FREE FOR LIFE
+──────────────────────────────────────────────────────────────────────
+
+Licensor grants You a perpetual, worldwide, royalty-free, non-exclusive,
+non-transferable license to:
+
+  (a) install and use the Software on any number of devices You own or
+      control, for personal or commercial purposes, at no charge; and
+  (b) redistribute unmodified copies of the official Software installer,
+      provided that this Agreement is included with every copy and no
+      fee is charged for the Software itself.
+
+All current and future features of the Software are and will remain
+free to use. Licensor commits that no feature available at any point
+will be placed behind a payment, subscription, or time-limited trial.
+
+──────────────────────────────────────────────────────────────────────
+2. SOURCE CODE — NOT PROVIDED
+──────────────────────────────────────────────────────────────────────
+
+The Software is licensed, not sold. This Agreement grants You no rights
+to the source code of the Software. The source code is proprietary and
+confidential to Licensor and is not distributed under this Agreement.
+
+──────────────────────────────────────────────────────────────────────
+3. RESTRICTIONS
+──────────────────────────────────────────────────────────────────────
+
+You may not:
+
+  (a) reverse engineer, decompile, or disassemble the Software, except
+      to the extent such activity is expressly permitted by applicable
+      law notwithstanding this limitation;
+  (b) modify, adapt, translate, or create derivative works based on
+      the Software;
+  (c) rent, lease, lend, sell, sublicense, or otherwise commercially
+      exploit the Software or charge any fee for access to it;
+  (d) remove, alter, or obscure any copyright, trademark, attribution,
+      or other proprietary notices contained in the Software;
+  (e) misrepresent the origin or authorship of the Software; or
+  (f) use the Software in violation of any applicable law or regulation.
+
+──────────────────────────────────────────────────────────────────────
+4. OWNERSHIP
+──────────────────────────────────────────────────────────────────────
+
+The Software is the intellectual property of Licensor and is protected
+by copyright laws and international treaties. Licensor retains all
+rights, title, and interest in and to the Software, including all
+intellectual property rights. All rights not expressly granted to You
+in this Agreement are reserved by Licensor.
+
+──────────────────────────────────────────────────────────────────────
+5. OPTIONAL DONATIONS
+──────────────────────────────────────────────────────────────────────
+
+The Software is provided free of charge. If You find it useful, You
+may, at Your sole discretion, make a voluntary donation ("buy me a
+coffee") to support continued development. Any such donation is a
+gift and does not grant You any additional rights under this Agreement.
+
+──────────────────────────────────────────────────────────────────────
+6. NO WARRANTY
+──────────────────────────────────────────────────────────────────────
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY
+OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+NON-INFRINGEMENT, AND ACCURACY. LICENSOR DOES NOT WARRANT THAT THE
+SOFTWARE WILL BE ERROR-FREE OR UNINTERRUPTED.
+
+──────────────────────────────────────────────────────────────────────
+7. LIMITATION OF LIABILITY
+──────────────────────────────────────────────────────────────────────
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+LICENSOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+CONSEQUENTIAL, OR EXEMPLARY DAMAGES (INCLUDING BUT NOT LIMITED TO LOSS
+OF DATA, LOSS OF PROFITS, OR BUSINESS INTERRUPTION) ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR INABILITY TO USE THE SOFTWARE, EVEN IF
+LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+──────────────────────────────────────────────────────────────────────
+8. TERMINATION
+──────────────────────────────────────────────────────────────────────
+
+This Agreement is effective until terminated. It terminates
+automatically without notice if You fail to comply with any of its
+terms. Upon termination, You must cease all use of the Software and
+destroy all copies in Your possession or control. Sections 2, 3, 4,
+6, 7, and 9 survive termination.
+
+──────────────────────────────────────────────────────────────────────
+9. GOVERNING LAW
+──────────────────────────────────────────────────────────────────────
+
+This Agreement is governed by the laws of Denmark, without regard to
+its conflict-of-law principles. The United Nations Convention on
+Contracts for the International Sale of Goods does not apply.
+
+──────────────────────────────────────────────────────────────────────
+10. ENTIRE AGREEMENT
+──────────────────────────────────────────────────────────────────────
+
+This Agreement constitutes the entire agreement between You and
+Licensor concerning the Software and supersedes all prior or
+contemporaneous understandings regarding its subject matter. If any
+provision of this Agreement is held to be unenforceable, the remaining
+provisions will remain in full force and effect.
+
+──────────────────────────────────────────────────────────────────────
+11. CONTACT
+──────────────────────────────────────────────────────────────────────
+
+Licensor: Ole Bulow Hartvigsen
+Project:  FanFolder — https://github.com/olebhartvigsen/FanFolder
