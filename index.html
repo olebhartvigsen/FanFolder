@@ -12,37 +12,37 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0a0d13;
-      --bg2:      #12161f;
-      --bg3:      #1a1f2b;
-      --bg-card:  #141924;
-      --border:   #262c3a;
-      --border2:  #343b4d;
+      --bg:       #f7f9fc;
+      --bg2:      #eef2f7;
+      --bg3:      #e3e9f1;
+      --bg-card:  #ffffff;
+      --border:   #e4e8ef;
+      --border2:  #cfd6e0;
 
-      --green:    #4CC86A;
-      --green2:   #35A854;
-      --purple:   #9B6ED4;
-      --purple2:  #7B50B8;
-      --blue:     #4A82E8;
-      --blue2:    #3a6bd1;
-      --pink:     #ec4899;
-      --amber:    #f59e0b;
+      --green:    #2FA44F;
+      --green2:   #247B3C;
+      --purple:   #7B50B8;
+      --purple2:  #5F3B96;
+      --blue:     #2F6BD8;
+      --blue2:    #234fa8;
+      --pink:     #db2777;
+      --amber:    #d97706;
 
-      --accent:   #4CC86A;
-      --accent2:  #35A854;
+      --accent:   #2FA44F;
+      --accent2:  #247B3C;
 
-      --text:     #e6edf3;
-      --text2:    #c9d1dc;
-      --muted:    #8b94a3;
-      --muted2:   #6b7382;
+      --text:     #0f172a;
+      --text2:    #334155;
+      --muted:    #64748b;
+      --muted2:   #94a3b8;
 
       --radius:   14px;
       --radius-lg: 22px;
 
-      --grad-brand: linear-gradient(135deg, #4CC86A 0%, #9B6ED4 50%, #4A82E8 100%);
-      --grad-green: linear-gradient(135deg, #4CC86A 0%, #35A854 100%);
-      --grad-purple: linear-gradient(135deg, #9B6ED4 0%, #7B50B8 100%);
-      --grad-blue: linear-gradient(135deg, #4A82E8 0%, #3a6bd1 100%);
+      --grad-brand: linear-gradient(135deg, #2FA44F 0%, #7B50B8 50%, #2F6BD8 100%);
+      --grad-green: linear-gradient(135deg, #2FA44F 0%, #247B3C 100%);
+      --grad-purple: linear-gradient(135deg, #7B50B8 0%, #5F3B96 100%);
+      --grad-blue: linear-gradient(135deg, #2F6BD8 0%, #234fa8 100%);
     }
 
     html { scroll-behavior: smooth; }
@@ -55,7 +55,7 @@
       overflow-x: hidden;
     }
 
-    ::selection { background: rgba(76,200,106,.35); color: #fff; }
+    ::selection { background: rgba(47,164,79,.28); color: var(--text); }
 
     /* ── Animated blob backdrop ─────────────────────────────────────────── */
     .backdrop {
@@ -65,13 +65,13 @@
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(120px);
-      opacity: .4;
+      filter: blur(130px);
+      opacity: .22;
       animation: blobFloat 22s ease-in-out infinite;
     }
     .blob.b1 { width: 520px; height: 520px; background: #4CC86A; top: -180px; left: -120px; }
-    .blob.b2 { width: 460px; height: 460px; background: #9B6ED4; top: 20%; right: -140px; animation-delay: -7s; animation-duration: 27s; }
-    .blob.b3 { width: 380px; height: 380px; background: #4A82E8; top: 60%; left: 30%; animation-delay: -14s; animation-duration: 31s; opacity: .28; }
+    .blob.b2 { width: 460px; height: 460px; background: #9B6ED4; top: 20%; right: -140px; animation-delay: -7s; animation-duration: 27s; opacity: .18; }
+    .blob.b3 { width: 380px; height: 380px; background: #4A82E8; top: 60%; left: 30%; animation-delay: -14s; animation-duration: 31s; opacity: .14; }
     @keyframes blobFloat {
       0%, 100% { transform: translate(0, 0) scale(1); }
       33%      { transform: translate(60px, -40px) scale(1.08); }
@@ -80,14 +80,14 @@
     .grain {
       position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
-      opacity: .035;
-      mix-blend-mode: overlay;
+      opacity: .025;
+      mix-blend-mode: multiply;
     }
 
     /* ── Nav ──────────────────────────────────────────────────────────── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(10,13,19,.72);
+      background: rgba(255,255,255,.72);
       backdrop-filter: blur(18px) saturate(140%);
       -webkit-backdrop-filter: blur(18px) saturate(140%);
       border-bottom: 1px solid transparent;
@@ -98,7 +98,7 @@
     }
     nav.scrolled {
       border-bottom-color: var(--border);
-      background: rgba(10,13,19,.88);
+      background: rgba(255,255,255,.92);
     }
     .nav-logo {
       display: flex; align-items: center; gap: .65rem;
@@ -213,11 +213,11 @@
     }
     .btn-primary:hover { box-shadow: 0 8px 28px rgba(76,200,106,.45), inset 0 1px 0 rgba(255,255,255,.3); }
     .btn-ghost {
-      background: rgba(255,255,255,.03);
+      background: rgba(15,23,42,.035);
       color: var(--text);
       border: 1px solid var(--border2);
     }
-    .btn-ghost:hover { background: rgba(255,255,255,.06); border-color: var(--muted2); }
+    .btn-ghost:hover { background: rgba(15,23,42,.06); border-color: var(--muted2); }
 
     .trust-row {
       margin-top: 2.25rem;
@@ -350,7 +350,7 @@
       gap: 1.25rem;
     }
     .stat {
-      background: rgba(20,25,36,.5);
+      background: #ffffff;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.25rem 1.35rem;
@@ -419,12 +419,12 @@
     .bento-card::before {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,.06), transparent 40%);
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(47,164,79,.08), transparent 40%);
       opacity: 0;
       transition: opacity .3s;
       pointer-events: none;
     }
-    .bento-card:hover { transform: translateY(-3px); border-color: var(--border2); box-shadow: 0 12px 32px rgba(0,0,0,.35); }
+    .bento-card:hover { transform: translateY(-3px); border-color: var(--border2); box-shadow: 0 12px 32px rgba(15,23,42,.08); }
     .bento-card:hover::before { opacity: 1; }
     .bento-card.wide { grid-column: span 4; }
     .bento-card.tall { grid-column: span 2; grid-row: span 2; }
@@ -486,7 +486,7 @@
     }
     .tall-list .chip {
       font-size: .78rem;
-      background: rgba(255,255,255,.04);
+      background: rgba(15,23,42,.04);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: .55rem .75rem;
@@ -510,7 +510,7 @@
       gap: .75rem;
     }
     .anim-chip {
-      background: rgba(255,255,255,.02);
+      background: rgba(15,23,42,.025);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: .9rem .75rem;
@@ -604,7 +604,7 @@
       display: flex; flex-direction: column; gap: .5rem;
       transition: border-color .2s, box-shadow .2s, transform .2s;
     }
-    .download-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+    .download-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(15,23,42,.08); }
     .download-card h3 { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: .55rem; letter-spacing: -.01em; }
     .download-card p { font-size: .9rem; color: var(--muted); flex: 1; margin-bottom: .75rem; }
     .download-card .btn { align-self: flex-start; margin-top: .25rem; font-size: .9rem; padding: .65rem 1.2rem; }
@@ -691,13 +691,13 @@
     }
     .final-cta-box {
       background:
-        radial-gradient(ellipse at 20% 0%, rgba(76,200,106,.18), transparent 60%),
-        radial-gradient(ellipse at 80% 100%, rgba(155,110,212,.18), transparent 60%),
-        linear-gradient(180deg, rgba(20,25,36,.9), rgba(14,18,27,.9));
+        radial-gradient(ellipse at 20% 0%, rgba(47,164,79,.14), transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(123,80,184,.14), transparent 60%),
+        linear-gradient(180deg, #ffffff, #f2f5fa);
       border: 1px solid var(--border2);
       border-radius: 24px;
       padding: 3.5rem 2rem;
-      box-shadow: 0 20px 60px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
+      box-shadow: 0 20px 60px rgba(15,23,42,.08), inset 0 1px 0 rgba(255,255,255,.7);
     }
     .final-cta h2 { margin-bottom: .75rem; }
     .final-cta p {
@@ -724,7 +724,7 @@
       font-size: .95rem;
       transition: all .2s;
     }
-    .support-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.3); }
+    .support-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(15,23,42,.1); }
     .support-card.gh { border-color: rgba(155,110,212,.3); }
     .support-card.gh:hover { border-color: rgba(155,110,212,.6); background: linear-gradient(135deg, rgba(155,110,212,.08), transparent); }
     .support-card.bmc { border-color: rgba(245,158,11,.3); }
