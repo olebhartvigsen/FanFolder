@@ -822,14 +822,38 @@
   <div class="hero-visual" aria-hidden="true">
     <div class="hv-glow"></div>
     <video class="hv-video"
+           id="heroVideo"
            src="menu-opens.mp4"
            autoplay
            muted
            loop
            playsinline
-           preload="auto"></video>
+           webkit-playsinline
+           preload="auto"
+           disablepictureinpicture></video>
   </div>
 </header>
+
+<script>
+  // Some browsers (Safari, mobile Chrome) refuse autoplay unless muted is
+  // explicitly set from JS after the element is in the DOM.
+  (function () {
+    var v = document.getElementById('heroVideo');
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    var tryPlay = function () {
+      var p = v.play();
+      if (p && typeof p.catch === 'function') { p.catch(function () {}); }
+    };
+    if (v.readyState >= 2) tryPlay();
+    v.addEventListener('loadedmetadata', tryPlay, { once: true });
+    v.addEventListener('canplay', tryPlay, { once: true });
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) tryPlay();
+    });
+  })();
+</script>
 
 <!-- ── Stats band ──────────────────────────────────────────────── -->
 
