@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://olebhartvigsen.github.io/FanFolder/sitemap.xml
