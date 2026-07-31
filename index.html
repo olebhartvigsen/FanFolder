@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FanFolder: Animated Windows Taskbar File Launcher</title>
-  <meta name="description" content="FanFolder is a free Windows 10/11 taskbar utility that fans out your recent files and folders in one click. Install with winget or download the installer." />
+  <title>FanFolder: Quick Access to Recent Files on Windows</title>
+  <meta name="description" content="Open recent documents or any folder from the Windows taskbar with FanFolder, a free utility for Windows 10 and 11. Install with winget or download the installer." />
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="nMYRQemaY09QO16GZcdxoyHzv7gSjUTvng0rrcjCX9g" />
   <link rel="canonical" href="https://olebhartvigsen.github.io/FanFolder/" />
-  <meta property="og:title" content="FanFolder: Animated Windows Taskbar File Launcher" />
-  <meta property="og:description" content="A free Windows 10/11 taskbar utility for opening your recent files and folders in one click. Install with winget." />
+  <meta property="og:title" content="FanFolder: Quick Access to Recent Files on Windows" />
+  <meta property="og:description" content="Open recent documents or any folder from the Windows taskbar with FanFolder, a free utility for Windows 10 and 11." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://olebhartvigsen.github.io/FanFolder/" />
   <meta property="og:site_name" content="FanFolder" />
   <meta property="og:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
   <meta property="og:image:alt" content="FanFolder app icon" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="FanFolder: Animated Windows Taskbar File Launcher" />
-  <meta name="twitter:description" content="A free Windows 10/11 taskbar utility for opening your recent files and folders in one click." />
+  <meta name="twitter:title" content="FanFolder: Quick Access to Recent Files on Windows" />
+  <meta name="twitter:description" content="Open recent documents or any folder from the Windows taskbar with FanFolder, a free utility for Windows 10 and 11." />
   <meta name="twitter:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
   <link rel="icon" href="favicon.ico" />
   <script type="application/ld+json">
@@ -25,7 +25,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "FanFolder",
-    "description": "A free Windows taskbar utility that fans out recent files and folders in one click.",
+    "description": "A free Windows taskbar utility for opening recent documents or files from any selected folder.",
     "url": "https://olebhartvigsen.github.io/FanFolder/",
     "sameAs": "https://github.com/olebhartvigsen/FanFolder",
     "image": "https://olebhartvigsen.github.io/FanFolder/icon.png",
@@ -37,7 +37,7 @@
     "isAccessibleForFree": true,
     "featureList": [
       "Animated fan popup anchored to the Windows taskbar",
-      "Recent file and folder access",
+      "Recent documents and selected-folder access",
       "Windows shell context menu and drag-and-drop support",
       "Configurable sorting, filtering, and animation styles"
     ],
@@ -868,7 +868,7 @@
   <div class="hero-copy">
     <div class="eyebrow"><span class="dot"></span> Windows 10/11</div>
     <h1>Your recent files,<br /><span class="grad">one click away on the Windows taskbar.</span></h1>
-    <p>FanFolder is a free Windows taskbar utility. Click its icon and the files you were just working on fan out instantly — documents, images, and folders from OneDrive, Dropbox, or any custom path. No searching. No digging through Explorer.</p>
+    <p>FanFolder is a free Windows taskbar utility. Click its icon to open recent documents from Windows Jump Lists or files from any folder you choose, including folders available through OneDrive, Dropbox, or Google Drive. Open, drag, and manage items without searching through Explorer.</p>
 
     <div class="btn-row">
       <a class="btn btn-primary" href="#download">
@@ -932,7 +932,7 @@
   <div class="section-head reveal">
     <div class="section-label">Features</div>
     <h2>Built to put your files&nbsp;<span style="background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">right where you need them</span></h2>
-    <p class="section-sub">The files and folders you were just working on — including the ones in OneDrive, Dropbox, or any other cloud folder — always one click away.</p>
+    <p class="section-sub">Open recent documents from Windows Jump Lists, or choose any folder available on your PC.</p>
   </div>
 
   <div class="bento">
@@ -942,8 +942,8 @@
       <div class="bc-icon bc-p">
         <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
       </div>
-      <h3>Your latest files. One click away.</h3>
-      <p>By default, FanFolder surfaces the most recently changed files from wherever they actually live — Downloads, OneDrive, Dropbox, Google Drive, or any custom path you point it at. No searching. No digging. The files you just worked on are always right there on your taskbar, exactly when you need them.</p>
+      <h3>Recent documents or any folder you choose.</h3>
+      <p>By default, FanFolder shows recent documents collected from Windows Jump Lists. You can also point it at Downloads, Documents, OneDrive, Dropbox, Google Drive, or any other folder available on your PC.</p>
       <div class="any-row">
         <div class="chip"><span class="g"></span> Downloads</div>
         <div class="chip"><span class="g"></span> OneDrive</div>
@@ -1012,8 +1012,8 @@
       <div class="bc-icon bc-a">
         <svg viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
       </div>
-      <h3>Tiny &amp; blazing fast</h3>
-      <p>~161&nbsp;KB native executable, minimal memory, cached icons and pre-warmed windows — buttery-smooth animations on x64 and ARM64 alike.</p>
+      <h3>Native and lightweight</h3>
+      <p>FanFolder is a small native Win32 application with x64 and ARM64 builds. It has no .NET runtime dependency.</p>
     </div>
 
   </div>
@@ -1058,7 +1058,7 @@
   <div class="faq-list reveal">
     <details class="faq-item">
       <summary>What is FanFolder?</summary>
-      <p>FanFolder is a free Windows 10/11 taskbar utility that shows your most recently modified files and folders in an animated fan menu. Click the FanFolder icon in the taskbar to open items quickly.</p>
+      <p>FanFolder is a free Windows 10/11 taskbar utility that shows recent documents collected from Windows Jump Lists, or files and folders from a location you select. Click the FanFolder icon in the taskbar to open items quickly.</p>
     </details>
     <details class="faq-item">
       <summary>How do I install FanFolder with winget?</summary>
