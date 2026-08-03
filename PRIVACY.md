@@ -219,19 +219,7 @@ the application's own installation directory.
 
 ---
 
-## 10. Children
-
-FanFolder is a general-purpose file utility and is not directed at
-children. The App does not knowingly collect any information from
-children or from any other user beyond the anonymous installation
-event described in this Notice. If You believe a child has provided
-information to us through the App, and the App has not sent any
-personally identifiable data, contact us so the installation record
-can be removed from the Aptabase dashboard.
-
----
-
-## 11. Your rights
+## 10. Your rights
 
 Because the only data FanFolder sends is an anonymous random
 identifier that is not linked to Your name, account, or any other
@@ -247,13 +235,13 @@ under most privacy regulations. Nonetheless, You have control:
   identifier is random and not tied to You, it cannot be matched to
   an individual. If You wish, You may request that all FanFolder-
   related records be removed from the Aptabase dashboard by writing
-  to the contact address in Section 13 and providing Your
+  to the contact address in Section 12 and providing Your
   installation identifier (which You can read from the registry
   using the path shown in Section 9 before You delete it).
 
 ---
 
-## 12. Changes to this notice
+## 11. Changes to this notice
 
 If FanFolder's data practices change in a material way, this Notice
 will be updated and the "Last updated" date at the top will reflect
@@ -265,7 +253,7 @@ apply. The current version of this Notice is maintained at:
 
 ---
 
-## 13. Contact
+## 12. Contact
 
 Licensor: Ole Bülow Hartvigsen
 Project:  FanFolder — <https://github.com/olebhartvigsen/FanFolder>
