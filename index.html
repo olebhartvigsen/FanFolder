@@ -1077,6 +1077,10 @@
       <p>Yes. Point FanFolder at any folder that is available on your computer, including locally synchronised OneDrive, Dropbox, and Google Drive folders.</p>
     </details>
     <details class="faq-item">
+      <summary>Are there settings that aren't in the tray menu?</summary>
+      <p>Yes. The tray menu covers folder, sort order, item count, showing folders, and file extensions. Two options are only available in the registry under <code>HKCU\SOFTWARE\FanFolder</code>: <code>FilterRegex</code> (a case-insensitive regular expression matched against filenames — for example <code>\.(pdf|docx?)$</code> shows only PDF and Word files; leave it empty to show everything) and <code>AnimationStyle</code> (<code>Spring</code>, <code>Fan</code>, <code>Glide</code>, <code>Fade</code>, or <code>None</code>). Edit them with <code>regedit</code> or PowerShell's <code>Set-ItemProperty</code>.</p>
+    </details>
+    <details class="faq-item">
       <summary>Is FanFolder free?</summary>
       <p>Yes. FanFolder is free for personal and commercial use forever. Optional support is appreciated but never required.</p>
     </details>
