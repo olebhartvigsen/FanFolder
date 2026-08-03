@@ -1077,8 +1077,16 @@
       <p>Yes. Point FanFolder at any folder that is available on your computer, including locally synchronised OneDrive, Dropbox, and Google Drive folders.</p>
     </details>
     <details class="faq-item">
+      <summary>Can FanFolder show recent documents instead of a folder?</summary>
+      <p>By default FanFolder shows recent documents collected from Windows Jump Lists. You can also point it at other recent-docs sources by setting <code>FolderPath</code> in the registry to a special value: <code>::RecentDocs::</code> (Jump List recent, the default), <code>::RecentFiles::</code> (Explorer's Recent list), or <code>::GraphRecent::</code> (recent Office and Microsoft 365 documents ordered by last-opened time). Any normal folder path works too.</p>
+    </details>
+    <details class="faq-item">
       <summary>Are there settings that aren't in the tray menu?</summary>
       <p>Yes. The tray menu covers folder, sort order, item count, showing folders, and file extensions. Two options are only available in the registry under <code>HKCU\SOFTWARE\FanFolder</code>: <code>FilterRegex</code> (a case-insensitive regular expression matched against filenames — for example <code>\.(pdf|docx?)$</code> shows only PDF and Word files; leave it empty to show everything) and <code>AnimationStyle</code> (<code>Spring</code>, <code>Fan</code>, <code>Glide</code>, <code>Fade</code>, or <code>None</code>). Edit them with <code>regedit</code> or PowerShell's <code>Set-ItemProperty</code>.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does FanFolder send any telemetry?</summary>
+      <p>Once, after a successful install, FanFolder sends a single anonymous <code>app_installed</code> event to the FanFolder Aptabase project in the EU. It carries only a random per-user id, the app version, CPU architecture, and the platform "Windows" — never filenames, folder paths, or account details. It is sent in the background with a short timeout and is ignored when offline. To opt out before launching, set <code>HKCU\SOFTWARE\FanFolder\TelemetryEnabled</code> (DWORD) to <code>0</code>. See the <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy page</a> for full details.</p>
     </details>
     <details class="faq-item">
       <summary>Is FanFolder free?</summary>
