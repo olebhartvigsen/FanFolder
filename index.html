@@ -1078,7 +1078,7 @@
     </details>
     <details class="faq-item">
       <summary>Can FanFolder show recent documents instead of a folder?</summary>
-      <p>By default FanFolder shows recent documents collected from Windows Jump Lists. You can also point it at other recent-docs sources by setting <code>FolderPath</code> in the registry to a special value: <code>::RecentDocs::</code> (Jump List recent, the default), <code>::RecentFiles::</code> (Explorer's Recent list), or <code>::GraphRecent::</code> (recent Office and Microsoft 365 documents ordered by last-opened time). Any normal folder path works too.</p>
+      <p>By default FanFolder shows recent documents collected from Windows Jump Lists. The tray-icon <strong>Folder</strong> submenu also offers <em>Recent files</em> (the Windows Jump List recent list) and <em>Recent Office 365 documents</em> (recent Office/Microsoft 365 files ordered by last-opened time) as one-click choices. A third recent-docs source, <code>::RecentFiles::</code> (Explorer's own Recent list), is registry-only — set <code>FolderPath</code> to that value with <code>regedit</code> or PowerShell's <code>Set-ItemProperty</code>.</p>
     </details>
     <details class="faq-item">
       <summary>Are there settings that aren't in the tray menu?</summary>
