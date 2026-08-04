@@ -14,7 +14,7 @@ FanFolder is a native Win32/C++ app. No .NET runtime needed. The executable is a
 
 ## License
 
-FanFolder is proprietary software, free to use for personal and commercial use forever. The source code is not publicly distributed. See [LICENSE](LICENSE) for full terms.
+FanFolder is proprietary software, free to use for personal and commercial use forever. The source code is not publicly distributed. See [LICENSE](LICENSE.md) for full terms.
 
 If you find FanFolder useful, an optional "buy me a coffee" donation is appreciated but never required.
 
