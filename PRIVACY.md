@@ -6,8 +6,6 @@ Last updated: 31 July 2026
 
 FanFolder is a local Windows taskbar utility. It shows you files from folders on your computer and uses the standard Windows context menu for file operations. The app does not transmit, upload, sync, or share your files, folder contents, filenames, or file activity to any server.
 
-Your file data stays on your device unless you open, move, or share it through Windows or another application. None of that goes through FanFolder.
-
 ---
 
 ## 1. What we collect
