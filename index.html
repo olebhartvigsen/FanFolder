@@ -629,23 +629,44 @@
     /* ── Download ──────────────────────────────────────────────────── */
     .download-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      max-width: 1100px; margin: 0 auto;
+      grid-template-areas:
+        "store winget"
+        "direct winget";
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      grid-template-rows: repeat(2, minmax(185px, 1fr));
+      gap: 1rem;
+      max-width: 980px; margin: 0 auto;
     }
     .download-card {
+      position: relative;
+      min-width: 0;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
+      border-radius: 18px;
+      padding: 1.5rem;
       display: flex; flex-direction: column; gap: .5rem;
+      box-shadow: 0 5px 20px rgba(15,23,42,.045);
       transition: border-color .2s, box-shadow .2s, transform .2s;
     }
     .download-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(15,23,42,.08); }
-    .download-card h3 { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: .55rem; letter-spacing: -.01em; }
-    .download-card p { font-size: .9rem; color: var(--muted); flex: 1; margin-bottom: .75rem; }
+    .download-card h3 { font-size: 1.08rem; font-weight: 700; display: flex; align-items: center; gap: .55rem; letter-spacing: -.01em; }
+    .download-card p { font-size: .88rem; line-height: 1.55; color: var(--muted); flex: 1; margin-bottom: .55rem; }
     .download-card .btn { align-self: flex-start; margin-top: .25rem; font-size: .9rem; padding: .65rem 1.2rem; }
-    .download-card.store-card { border-color: rgba(0,95,184,.25); }
+    .download-kicker {
+      display: flex; align-items: center; gap: .45rem;
+      color: var(--muted2);
+      font-size: .67rem; font-weight: 700;
+      letter-spacing: .1em; line-height: 1;
+      text-transform: uppercase;
+    }
+    .method-dot { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; }
+    .store-dot { background: #0067b8; box-shadow: 0 0 0 3px rgba(0,103,184,.1); }
+    .winget-dot { background: var(--green); box-shadow: 0 0 0 3px rgba(47,164,79,.12); }
+    .direct-dot { background: var(--purple); box-shadow: 0 0 0 3px rgba(123,80,184,.12); }
+    .download-card.store-card {
+      grid-area: store;
+      border-color: rgba(0,95,184,.25);
+    }
     .download-card.store-card:hover { border-color: rgba(0,95,184,.55); }
     .store-badge {
       display: block;
@@ -654,6 +675,32 @@
       margin-top: auto;
     }
     .store-badge-link { display: inline-block; line-height: 0; margin-top: .25rem; }
+    .download-card.winget-card {
+      grid-area: winget;
+      justify-content: space-between;
+      padding: 2rem;
+      overflow: hidden;
+      background: linear-gradient(145deg, #ffffff 0%, #f4fbf5 100%);
+      border-color: rgba(47,164,79,.42);
+      box-shadow: 0 14px 34px rgba(47,164,79,.12);
+    }
+    .winget-card::before {
+      content: '';
+      position: absolute;
+      width: 240px; height: 240px;
+      right: -105px; top: -115px;
+      border-radius: 50%;
+      background: rgba(76,200,106,.12);
+      pointer-events: none;
+    }
+    .winget-card > * { position: relative; z-index: 1; }
+    .winget-card h3 { font-size: 1.3rem; }
+    .winget-card .winget-cmd { margin-top: 1rem; }
+    .download-card.direct-card {
+      grid-area: direct;
+      border-color: rgba(123,80,184,.2);
+    }
+    .download-card.direct-card:hover { border-color: rgba(123,80,184,.5); }
     .tag {
       font-size: .65rem; font-weight: 700;
       background: var(--grad-green);
@@ -676,6 +723,7 @@
       letter-spacing: .01em;
       user-select: all;
     }
+    .winget-cmd span { min-width: 0; overflow-wrap: anywhere; }
     .winget-cmd::before { content: '$'; color: var(--muted); margin-right: .2rem; }
     .copy-btn {
       background: transparent; border: 1px solid var(--border);
@@ -835,6 +883,16 @@
       .bento { grid-template-columns: repeat(2, 1fr); }
       .bento-card.wide, .bento-card.tall, .bento-card.med, .bento-card.full { grid-column: span 2; grid-row: auto; }
     }
+    @media (max-width: 840px) {
+      .download-grid {
+        grid-template-areas:
+          "winget winget"
+          "store direct";
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto auto;
+      }
+      .winget-card { min-height: 250px; }
+    }
     @media (max-width: 640px) {
       nav { padding: 0 1.25rem; }
       .nav-links { gap: 1rem; }
@@ -842,7 +900,27 @@
       .hero { padding: 2rem 1.25rem 3rem; }
       .section-wrap { padding: 4rem 1.25rem; }
       .stats { grid-template-columns: 1fr 1fr; padding: 0 1.25rem; }
-      .download-grid, .steps, .support-cards { grid-template-columns: 1fr; }
+      .download-grid {
+        grid-template-areas:
+          "store"
+          "winget"
+          "direct";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .winget-card { min-height: 0; padding: 1.5rem; }
+      .winget-card .winget-cmd {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        row-gap: .45rem;
+      }
+      .winget-card .winget-cmd span {
+        flex: 1 1 100%;
+        padding-left: 1.1rem;
+        overflow-wrap: normal;
+      }
+      .winget-card .copy-btn { margin-left: auto; }
+      .steps, .support-cards { grid-template-columns: 1fr; }
       .anim-strip { grid-template-columns: repeat(2, 1fr); }
       .final-cta-box { padding: 2.5rem 1.5rem; }
     }
@@ -1038,13 +1116,15 @@
 
   <div class="download-grid reveal">
     <div class="download-card store-card">
+      <div class="download-kicker"><span class="method-dot store-dot"></span>Official Store app</div>
       <h3>Microsoft Store</h3>
       <p>Install FanFolder through the Microsoft Store. The Store handles updates and installation for you.</p>
       <a class="store-badge-link" href="https://apps.microsoft.com/detail/9P3VT115SBM1?hl=en-US&amp;gl=DK" target="_blank" rel="noopener" aria-label="Get FanFolder from Microsoft Store">
         <img class="store-badge" src="microsoft-store-badge.svg" alt="Get it from Microsoft Store" />
       </a>
     </div>
-    <div class="download-card">
+    <div class="download-card winget-card">
+      <div class="download-kicker"><span class="method-dot winget-dot"></span>Command line install</div>
       <h3>WinGet <span class="tag">Recommended</span></h3>
       <p>Install FanFolder from the Windows Package Manager with one command. No administrator rights required.</p>
       <div class="winget-cmd" id="wingetCmd">
@@ -1052,7 +1132,8 @@
         <button class="copy-btn" id="copyBtn" type="button">Copy</button>
       </div>
     </div>
-    <div class="download-card">
+    <div class="download-card direct-card">
+      <div class="download-kicker"><span class="method-dot direct-dot"></span>GitHub release</div>
       <h3>Direct download</h3>
       <p>Download the latest GitHub build and run the per-user installer. No administrator rights required.</p>
       <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
