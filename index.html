@@ -662,9 +662,34 @@
     .winget-dot { background: var(--green); box-shadow: 0 0 0 3px rgba(47,164,79,.12); }
     .direct-dot { background: var(--purple); box-shadow: 0 0 0 3px rgba(123,80,184,.12); }
     .download-card.store-card {
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 92% 8%, rgba(0,103,184,.16) 0 4px, transparent 5px),
+        radial-gradient(circle at 82% 18%, rgba(0,103,184,.1) 0 3px, transparent 4px),
+        linear-gradient(145deg, #ffffff 0%, #f5faff 100%);
       border-color: rgba(0,95,184,.25);
     }
     .download-card.store-card:hover { border-color: rgba(0,95,184,.55); }
+    .store-card::before,
+    .store-card::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      transform: rotate(45deg);
+      border: 1px solid rgba(0,103,184,.12);
+      border-radius: 8px;
+    }
+    .store-card::before {
+      width: 155px; height: 155px;
+      right: -72px; top: -78px;
+      box-shadow: 0 0 0 18px rgba(0,103,184,.035), 0 0 0 36px rgba(0,103,184,.025);
+    }
+    .store-card::after {
+      width: 86px; height: 86px;
+      right: 24px; bottom: 34px;
+      opacity: .65;
+    }
+    .store-card > * { position: relative; z-index: 1; }
     .download-card-action {
       display: flex;
       flex-direction: column;
@@ -1124,7 +1149,7 @@
   <div class="download-grid reveal">
     <div class="download-card store-card">
       <div class="download-kicker"><span class="method-dot store-dot"></span>Official Store app</div>
-      <h3>Microsoft Store</h3>
+      <h3>Microsoft Store <span class="tag store-tag">Recommended</span></h3>
       <p>Install FanFolder through the Microsoft Store. The Store handles updates and installation for you.</p>
       <div class="download-card-action">
         <span class="download-action-label">Available for Windows 10 and 11</span>
@@ -1135,7 +1160,7 @@
     </div>
     <div class="download-card winget-card">
       <div class="download-kicker"><span class="method-dot winget-dot"></span>Command line install</div>
-      <h3>WinGet <span class="tag">Recommended</span></h3>
+      <h3>WinGet</h3>
       <p>Install FanFolder from the Windows Package Manager with one command. No administrator rights required.</p>
       <div class="download-card-action">
         <span class="download-action-label">Run in Windows Terminal or PowerShell</span>
