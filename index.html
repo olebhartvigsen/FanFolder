@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FanFolder: Quick Access to Recent Files on Windows</title>
-  <meta name="description" content="Open recent documents or any folder from the Windows taskbar with FanFolder, a free utility for Windows 10 and 11. Install with winget or download the installer." />
+  <meta name="description" content="Open recent documents or any folder from the Windows taskbar with FanFolder, a free utility for Windows 10 and 11. Install from the Microsoft Store, with WinGet, or download the latest installer." />
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="nMYRQemaY09QO16GZcdxoyHzv7gSjUTvng0rrcjCX9g" />
   <link rel="canonical" href="https://olebhartvigsen.github.io/FanFolder/" />
@@ -629,9 +629,9 @@
     /* ── Download ──────────────────────────────────────────────────── */
     .download-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
-      max-width: 820px; margin: 0 auto;
+      max-width: 1100px; margin: 0 auto;
     }
     .download-card {
       background: var(--bg-card);
@@ -645,6 +645,15 @@
     .download-card h3 { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: .55rem; letter-spacing: -.01em; }
     .download-card p { font-size: .9rem; color: var(--muted); flex: 1; margin-bottom: .75rem; }
     .download-card .btn { align-self: flex-start; margin-top: .25rem; font-size: .9rem; padding: .65rem 1.2rem; }
+    .download-card.store-card { border-color: rgba(0,95,184,.25); }
+    .download-card.store-card:hover { border-color: rgba(0,95,184,.55); }
+    .store-badge {
+      display: block;
+      width: min(100%, 161px);
+      height: auto;
+      margin-top: auto;
+    }
+    .store-badge-link { display: inline-block; line-height: 0; margin-top: .25rem; }
     .tag {
       font-size: .65rem; font-weight: 700;
       background: var(--grad-green);
@@ -1024,12 +1033,19 @@
   <div class="section-head reveal">
     <div class="section-label b">Download</div>
     <h2>Install FanFolder for Windows</h2>
-    <p class="section-sub">Install the free Windows taskbar file launcher with winget, or download the per-user installer. Releases are built automatically from source.</p>
+    <p class="section-sub">Choose the Microsoft Store, WinGet, or a direct download. Releases are built automatically from source.</p>
   </div>
 
   <div class="download-grid reveal">
+    <div class="download-card store-card">
+      <h3>Microsoft Store</h3>
+      <p>Install FanFolder through the Microsoft Store. The Store handles updates and installation for you.</p>
+      <a class="store-badge-link" href="https://apps.microsoft.com/detail/9P3VT115SBM1?hl=en-US&amp;gl=DK" target="_blank" rel="noopener" aria-label="Get FanFolder from Microsoft Store">
+        <img class="store-badge" src="microsoft-store-badge.svg" alt="Get it from Microsoft Store" />
+      </a>
+    </div>
     <div class="download-card">
-      <h3>winget <span class="tag">Recommended</span></h3>
+      <h3>WinGet <span class="tag">Recommended</span></h3>
       <p>Install FanFolder from the Windows Package Manager with one command. No administrator rights required.</p>
       <div class="winget-cmd" id="wingetCmd">
         <span>winget install OleBhartvigsen.FanFolder</span>
@@ -1037,11 +1053,11 @@
       </div>
     </div>
     <div class="download-card">
-      <h3>Installer</h3>
-      <p>Prefer a direct download? Run the per-user installer — no admin rights needed. It starts with Windows automatically.</p>
+      <h3>Direct download</h3>
+      <p>Download the latest GitHub build and run the per-user installer. No administrator rights required.</p>
       <a class="btn btn-primary" href="https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download FanFolder
+        Download latest build
       </a>
     </div>
   </div>
