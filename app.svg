@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!--
+    FanFolder app icon — OPEN STATE (transparent, no blue card)
+    Two file cards fanning upward from a bottom-center hinge.
+    Back  : Purple image (photo with sun + mountains)
+    Front : Green spreadsheet (grid) — largest, most prominent
+    No blue card. Transparent background.
+  -->
+  <defs>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5CE08C"/>
+      <stop offset="100%" stop-color="#15A34A"/>
+    </linearGradient>
+    <linearGradient id="gPurple" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C8A5FF"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="cardGloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-30%" y="-20%" width="160%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="3"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.32"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+<g transform="translate(-78.66490,-15.67169) scale(1.357617,1.372157)">
+
+  <!-- Back: Purple image -->
+  <g transform="translate(100,250) rotate(4)" filter="url(#cardShadow)">
+    <rect x="-48" y="-218" width="96" height="130" rx="11" fill="url(#gPurple)"/>
+    <rect x="-48" y="-218" width="96" height="130" rx="11" fill="url(#cardGloss)"/>
+    <rect x="-48" y="-218" width="96" height="130" rx="11" fill="none" stroke="#4c1d95" stroke-opacity="0.45" stroke-width="1.5"/>
+    <rect x="-36" y="-206" width="72" height="54" rx="6" fill="#ffffff" opacity="0.22"/>
+    <circle cx="14" cy="-190" r="9" fill="#FDE047"/>
+    <polygon points="-36,-152 -8,-188 20,-152" fill="#ffffff" opacity="0.78"/>
+    <polygon points="4,-152 24,-180 36,-152" fill="#ffffff" opacity="0.55"/>
+    <rect x="-32" y="-140" width="44" height="5" rx="2" fill="#ffffff" opacity="0.75"/>
+    <rect x="-32" y="-128" width="60" height="5" rx="2" fill="#ffffff" opacity="0.55"/>
+    <rect x="-32" y="-116" width="36" height="5" rx="2" fill="#ffffff" opacity="0.45"/>
+  </g>
+
+  <!-- Front: Green spreadsheet -->
+  <g transform="translate(100,250) rotate(24)" filter="url(#cardShadow)">
+    <rect x="-58" y="-242" width="116" height="160" rx="13" fill="url(#gGreen)"/>
+    <rect x="-58" y="-242" width="116" height="160" rx="13" fill="url(#cardGloss)"/>
+    <rect x="-58" y="-242" width="116" height="160" rx="13" fill="none" stroke="#14532d" stroke-opacity="0.5" stroke-width="1.5"/>
+    <g stroke="#ffffff" stroke-linecap="round">
+      <line x1="-20" y1="-226" x2="-20" y2="-98" stroke-width="5" opacity="0.92"/>
+      <line x1="18"  y1="-226" x2="18"  y2="-98" stroke-width="5" opacity="0.92"/>
+      <line x1="-46" y1="-201" x2="46"  y2="-201" stroke-width="5" opacity="0.92"/>
+      <line x1="-46" y1="-174" x2="46"  y2="-174" stroke-width="5" opacity="0.92"/>
+      <line x1="-46" y1="-147" x2="46"  y2="-147" stroke-width="5" opacity="0.92"/>
+      <line x1="-46" y1="-120" x2="46"  y2="-120" stroke-width="5" opacity="0.92"/>
+    </g>
+  </g>
+</g>
+</svg>
