@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page title</title>
+<meta name="description" content="Windows has no native equivalent of the macOS dock Stacks. Here is what the dock clones do, what they miss, and how to get the part of the dock that saves you time." />
+<link rel="canonical" href="https://olebhartvigsen.github.io/FanFolder/guides/macos-stacks-windows/" />
+<meta property="og:title" content="macOS Stacks on Windows: what actually exists and what to use" />
+<meta property="og:description" content="Windows has no native equivalent of the macOS dock Stacks. Here is what the dock clones do, what they miss, and how to get the part of the dock that saves you time." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://olebhartvigsen.github.io/FanFolder/guides/macos-stacks-windows/" />
+<meta property="og:site_name" content="FanFolder" />
+<meta property="og:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="macOS Stacks on Windows: what actually exists and what to use" />
+<meta name="twitter:description" content="Windows has no native equivalent of the macOS dock Stacks. Here is what the dock clones do, what they miss, and how to get the part of the dock that saves you time." />
+<meta name="twitter:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
+<link rel="icon" href="../../favicon.ico" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* Article typography, layered on top of the homepage stylesheet. */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+  .article { padding: 7.5rem 0 4rem; }
+  .article h1 {
+    font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -.025em;
+    line-height: 1.12;
+    margin-bottom: .75rem;
+  }
+  .article .lede { font-size: 1.12rem; color: var(--text2); margin-bottom: 2rem; }
+  .article h2 {
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    font-weight: 750;
+    letter-spacing: -.015em;
+    margin: 2.5rem 0 .75rem;
+    padding-top: .25rem;
+  }
+  .article h3 { font-size: 1.08rem; font-weight: 700; margin: 1.75rem 0 .5rem; }
+  .article p { color: var(--text2); margin-bottom: 1.05rem; }
+  .article ul { color: var(--text2); margin: 0 0 1.15rem; padding-left: 1.3rem; }
+  .article li { margin-bottom: .5rem; }
+  .article code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .88em;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .1em .38em;
+    color: var(--text);
+  }
+  .article pre {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.15rem;
+    overflow-x: auto;
+    margin: 0 0 1.3rem;
+  }
+  .article pre code { background: none; border: 0; padding: 0; font-size: .9rem; }
+  .callout {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin: 0 0 1.5rem;
+  }
+  .callout p { margin-bottom: .6rem; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .c-label {
+    display: block;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: .45rem;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1.5rem; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 700; color: var(--text); }
+  td { color: var(--text2); }
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 2.25rem;
+  }
+  .toc h2 { margin: 0 0 .6rem; font-size: .78rem; font-weight: 700;
+            letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+  .toc ul { margin: 0; padding-left: 1.15rem; }
+  .toc li { margin-bottom: .3rem; }
+  .toc a { color: var(--text2); text-decoration: none; font-size: .95rem; }
+  .toc a:hover { color: var(--accent2); text-decoration: underline; }
+  .guide-nav {
+    display: grid; gap: .6rem; margin: 3rem 0 0;
+    padding-top: 1.75rem; border-top: 1px solid var(--border);
+  }
+  .guide-nav a {
+    display: block; padding: .8rem 1rem; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    text-decoration: none; color: var(--text2); font-size: .95rem;
+  }
+  .guide-nav a:hover { border-color: var(--accent); color: var(--accent2); }
+  .guide-nav .gn-label { display: block; font-size: .72rem; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+  .faq-json { display: none; }
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <a class="nav-logo" href="../../index.html">
+    <img src="../../app.svg" alt="FanFolder" />
+    FanFolder
+  </a>
+  <div class="nav-links">
+    <a href="../../index.html#features">Features</a>
+    <a href="../../index.html#macos">From macOS?</a>
+    <a href="../../index.html#download">Download</a>
+    <a href="../../index.html#guides">Guides</a>
+    <a href="../../index.html#faq">FAQ</a>
+    <a class="nav-icon" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee">&#9749;</a>
+    <a class="nav-cta" href="../../index.html#download">Get FanFolder</a>
+  </div>
+</nav>
+
+<main class="article">
+  <div class="wrap">
+
+    <div class="section-label">GUIDE</div>
+    <h1>macOS Stacks on Windows: the real options in 2026</h1>
+    <p class="lede">Windows has no native equivalent of the macOS dock Stacks. Here is what the dock clones do, what they miss, and how to get the part of the dock that saves you time.</p>
+
+    <div class="toc">
+      <h2>On this page</h2>
+      <ul>
+                <li><a href="#mapping">What Stacks actually are</a></li>
+        <li><a href="#clones">What the dock clones do</a></li>
+        <li><a href="#real-gap">The part nobody ships</a></li>
+        <li><a href="#answer">Getting the useful half</a></li>
+        <li><a href="#switching">If you just switched to Windows</a></li>
+      </ul>
+    </div>
+
+    <h2 id="mapping">What Stacks actually are</h2>
+    <p>On macOS, a dock stack is a folder that lives on the dock. Click it and its contents fan out in an
+    arc, or open as a grid or list. The Downloads stack is the one people use constantly. Right-click any
+    dock icon and you get that app's recent documents.</p>
+    <p>Two separate behaviours are often bundled under the word "dock". One is the look: a bar of icons
+    along the bottom. The other is the Stacks behaviour: click one thing, get a fan of files. The look is
+    widely copied. The behaviour is not.</p>
+    <table>
+      <thead><tr><th>macOS feature</th><th>What it does</th><th>Windows equivalent</th></tr></thead>
+      <tbody>
+        <tr><td>Dock Stacks, fan view</td><td>Click a stack, files fan out in an arc</td><td>FanFolder's fan menu</td></tr>
+        <tr><td>Dock icon right-click &rarr; Recents</td><td>Recent documents for that app</td><td>Jump Lists, read by FanFolder</td></tr>
+        <tr><td>Finder &rarr; Recents</td><td>Recent files across all apps</td><td><code>::RecentDocs::</code> mode</td></tr>
+        <tr><td>Downloads stack</td><td>One click to your Downloads folder</td><td>Point FanFolder at Downloads</td></tr>
+        <tr><td>The dock bar itself</td><td>A launcher strip</td><td>MyDockFinder, ExtraDock, RocketDock, Start11</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="clones">What the dock clones do</h2>
+    <p>Several good tools put a macOS-style dock on a Windows taskbar. MyDockFinder, ExtraDock and
+    RocketDock all do it, and if the appearance is what you want they work.</p>
+    <p>None of them read your Windows Jump Lists to build a recent-files fan. They are launchers: they
+    open programs and files you point them at. That is a different job from surfacing what you were
+    working on five minutes ago.</p>
+
+    <h2 id="real-gap">The part nobody ships</h2>
+    <p>Search for "macOS Stacks for Windows" and you will find dock clones, or an answer saying Windows
+    has no equivalent. Both are technically right and practically useless, because the Stacks behaviour
+    is the part that saves time.</p>
+    <div class="callout">
+      <span class="c-label">Worth being straight about</span>
+      <p>FanFolder is not a dock clone and does not pretend to be one. It is a tray app that does the
+      fan-of-files thing on the taskbar you already have. If you want the macOS dock bar, a dock clone is
+      the right answer. If you want to stop hunting for the file you had open ten minutes ago, this is.</p>
+    </div>
+
+    <h2 id="answer">Getting the useful half</h2>
+    <p>FanFolder covers the Stacks behaviour and the Recents behaviour. Click the icon and recent files
+    fan out from the taskbar in the same gesture as a macOS stack. Right-click a file inside the fan and
+    you get the standard Windows menu.</p>
+    <p>Point it at Downloads and it behaves like the Downloads stack. Leave it on Recent Documents and it
+    collects from Jump Lists and Explorer's recent files, which is the Windows equivalent of Finder's
+    Recents across every app.</p>
+    <p>It does not patch explorer.exe, so a Windows feature update cannot break it. That matters if you
+    have been burned by a shell patcher before.</p>
+    <pre><code>winget install OleBhartvigsen.FanFolder</code></pre>
+
+    <h2 id="switching">If you just switched to Windows</h2>
+    <p>The features people miss most after leaving macOS are usually file-related rather than cosmetic:
+    reaching a recent document quickly, and getting to Downloads without opening Explorer. Both are one
+    click with FanFolder.</p>
+    <p>Windows 11 also removed taskbar toolbars and Quick Launch, which macOS never had, so there is a
+    Windows-specific gap too. The
+    <a href="../quick-launch-windows-11/">Quick Launch guide</a> covers that one, including the tools that
+    restore the old taskbar if you want the full thing.</p>
+    <p>If you want the whole macOS look rather than just the useful behaviour, run a dock clone alongside
+    FanFolder. They do not conflict.</p>
+
+    <h2 id="faq-here">Common questions</h2>
+    <div class="faq-list">
+            <details class="faq-item">
+        <summary>Is there a way to get the macOS dock on Windows?</summary>
+        <p>Yes, and several tools do it: MyDockFinder, ExtraDock, RocketDock and Start11. They clone the look. None of them read Jump Lists to fan out recent files, which is the Stacks behaviour.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does FanFolder include a dock?</summary>
+        <p>No. It adds one icon to your existing Windows taskbar and shows a fan of files when you click it. There is no dock bar, and no start menu replacement.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will it look out of place on Windows?</summary>
+        <p>It uses the Windows taskbar and the standard shell context menu, so it matches the system it runs on. Five animation styles are available if you want the fan to feel different.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does it work the same on Windows 10?</summary>
+        <p>Yes. It runs on Windows 10 version 2004 or later and Windows 11, on both x64 and ARM64.</p>
+      </details>
+    </div>
+
+    <div class="guide-nav">
+      <a href="../../index.html#guides"><span class="gn-label">All guides</span>Back to the homepage</a>
+            <a href="../macos-stacks-windows/"><span class="gn-label">Next guide</span>Getting Quick Launch and toolbars back</a>
+      <a href="../quick-launch-windows-11/"><span class="gn-label">Next guide</span>Recent files not showing</a>
+      <a href="../recent-files-taskbar/"><span class="gn-label">Next guide</span>Jump Lists missing or not working</a>
+    </div>
+
+    <div style="margin-top:2.5rem">
+      <a class="btn btn-primary" href="../../index.html#download">Get FanFolder</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/olebhartvigsen/FanFolder#readme">Technical details</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/LICENSE.md">License</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/issues">Report an issue</a>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is there a way to get the macOS dock on Windows?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, and several tools do it: MyDockFinder, ExtraDock, RocketDock and Start11. They clone the look. None of them read Jump Lists to fan out recent files, which is the Stacks behaviour."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does FanFolder include a dock?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It adds one icon to your existing Windows taskbar and shows a fan of files when you click it. There is no dock bar, and no start menu replacement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will it look out of place on Windows?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It uses the Windows taskbar and the standard shell context menu, so it matches the system it runs on. Five animation styles are available if you want the fan to feel different."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work the same on Windows 10?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It runs on Windows 10 version 2004 or later and Windows 11, on both x64 and ARM64."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

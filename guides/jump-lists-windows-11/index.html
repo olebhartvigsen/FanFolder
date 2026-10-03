@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page title</title>
+<meta name="description" content="Why Jump Lists show nothing for some apps and disappear entirely on others, how the recent items setting affects them, and how to get one working recents list on your taskbar." />
+<link rel="canonical" href="https://olebhartvigsen.github.io/FanFolder/guides/jump-lists-windows-11/" />
+<meta property="og:title" content="Windows 11 Jump Lists missing or not working: why and what to do" />
+<meta property="og:description" content="Why Jump Lists show nothing for some apps and disappear entirely on others, how the recent items setting affects them, and how to get one working recents list on your taskbar." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://olebhartvigsen.github.io/FanFolder/guides/jump-lists-windows-11/" />
+<meta property="og:site_name" content="FanFolder" />
+<meta property="og:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Windows 11 Jump Lists missing or not working: why and what to do" />
+<meta name="twitter:description" content="Why Jump Lists show nothing for some apps and disappear entirely on others, how the recent items setting affects them, and how to get one working recents list on your taskbar." />
+<meta name="twitter:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
+<link rel="icon" href="../../favicon.ico" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* Article typography, layered on top of the homepage stylesheet. */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+  .article { padding: 7.5rem 0 4rem; }
+  .article h1 {
+    font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -.025em;
+    line-height: 1.12;
+    margin-bottom: .75rem;
+  }
+  .article .lede { font-size: 1.12rem; color: var(--text2); margin-bottom: 2rem; }
+  .article h2 {
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    font-weight: 750;
+    letter-spacing: -.015em;
+    margin: 2.5rem 0 .75rem;
+    padding-top: .25rem;
+  }
+  .article h3 { font-size: 1.08rem; font-weight: 700; margin: 1.75rem 0 .5rem; }
+  .article p { color: var(--text2); margin-bottom: 1.05rem; }
+  .article ul { color: var(--text2); margin: 0 0 1.15rem; padding-left: 1.3rem; }
+  .article li { margin-bottom: .5rem; }
+  .article code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .88em;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .1em .38em;
+    color: var(--text);
+  }
+  .article pre {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.15rem;
+    overflow-x: auto;
+    margin: 0 0 1.3rem;
+  }
+  .article pre code { background: none; border: 0; padding: 0; font-size: .9rem; }
+  .callout {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin: 0 0 1.5rem;
+  }
+  .callout p { margin-bottom: .6rem; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .c-label {
+    display: block;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: .45rem;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1.5rem; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 700; color: var(--text); }
+  td { color: var(--text2); }
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 2.25rem;
+  }
+  .toc h2 { margin: 0 0 .6rem; font-size: .78rem; font-weight: 700;
+            letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+  .toc ul { margin: 0; padding-left: 1.15rem; }
+  .toc li { margin-bottom: .3rem; }
+  .toc a { color: var(--text2); text-decoration: none; font-size: .95rem; }
+  .toc a:hover { color: var(--accent2); text-decoration: underline; }
+  .guide-nav {
+    display: grid; gap: .6rem; margin: 3rem 0 0;
+    padding-top: 1.75rem; border-top: 1px solid var(--border);
+  }
+  .guide-nav a {
+    display: block; padding: .8rem 1rem; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    text-decoration: none; color: var(--text2); font-size: .95rem;
+  }
+  .guide-nav a:hover { border-color: var(--accent); color: var(--accent2); }
+  .guide-nav .gn-label { display: block; font-size: .72rem; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+  .faq-json { display: none; }
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <a class="nav-logo" href="../../index.html">
+    <img src="../../app.svg" alt="FanFolder" />
+    FanFolder
+  </a>
+  <div class="nav-links">
+    <a href="../../index.html#features">Features</a>
+    <a href="../../index.html#macos">From macOS?</a>
+    <a href="../../index.html#download">Download</a>
+    <a href="../../index.html#guides">Guides</a>
+    <a href="../../index.html#faq">FAQ</a>
+    <a class="nav-icon" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee">&#9749;</a>
+    <a class="nav-cta" href="../../index.html#download">Get FanFolder</a>
+  </div>
+</nav>
+
+<main class="article">
+  <div class="wrap">
+
+    <div class="section-label">GUIDE</div>
+    <h1>Windows 11 Jump Lists missing or not working</h1>
+    <p class="lede">Why Jump Lists show nothing for some apps and disappear entirely on others, how the recent items setting affects them, and how to get one working recents list on your taskbar.</p>
+
+    <div class="toc">
+      <h2>On this page</h2>
+      <ul>
+                <li><a href="#what">What a Jump List actually is</a></li>
+        <li><a href="#per-app">Why one app has none</a></li>
+        <li><a href="#all-apps">Why every app lost them</a></li>
+        <li><a href="#fix">Getting them back</a></li>
+        <li><a href="#one-list">One working list instead of per-app ones</a></li>
+      </ul>
+    </div>
+
+    <h2 id="what">What a Jump List actually is</h2>
+    <p>A Jump List is the list Windows shows when you right-click a taskbar icon: recent documents for
+    that app, plus pinned items you chose to add. It is stored per application, in a file under
+    <code>%AppData%\Microsoft\Windows\Recent\AutomaticDestinations</code>.</p>
+    <p>Two separate things can go wrong, and they have different causes. Knowing which one you have saves
+    a lot of guessing.</p>
+
+    <h2 id="per-app">Why one app has no recent files</h2>
+    <p>If most apps show Jump Lists but one specific app never does, that app simply does not write them.
+    Portable apps, games, some older desktop software, and most command-line tools never record recent
+    documents.</p>
+    <p>No setting fixes this, because there is nothing recorded to display. Check whether the app writes
+    any recent-file entries at all by looking at its own recent list inside the application. If the app
+    does not track recent files internally, Windows has nothing to show either.</p>
+
+    <h2 id="all-apps">Why every app lost them</h2>
+    <p>If no app shows recent files, the cause is system-wide. Two candidates:</p>
+    <ul>
+      <li><strong>The Start setting is off.</strong> "Show recently opened items in Start, Jump Lists,
+      and File Explorer" governs recording for all three at once.</li>
+      <li><strong>A policy is overriding it.</strong> The same setting can be forced off by group policy,
+      and the local toggle will appear to do nothing.</li>
+    </ul>
+    <p>Files opened while recording was off are not recoverable. The list only contains what was written
+    at the time.</p>
+
+    <h2 id="fix">Getting them back</h2>
+    <p>Toggle the setting off, wait a moment, toggle it on again, then restart. Restarting matters,
+    because shell components cache the old value and keep the stale state until they reload.</p>
+    <pre><code>Stop-Process -Name explorer -Force</code></pre>
+    <p>If that does not help, check for a policy:</p>
+    <pre><code>reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v NoRecentDocsHistory</code></pre>
+    <p>If the AutomaticDestinations folders are damaged, clearing them forces Windows to rebuild them.
+    The next few files you open will repopulate the list.</p>
+
+    <div class="callout">
+      <span class="c-label">A corrupt list is rare</span>
+      <p>If Jump Lists work for some apps and not others, resist clearing everything. You lose the history
+      for the apps that were working, and rebuild nothing that was already fine. Diagnose per app first.</p>
+    </div>
+
+    <h2 id="one-list">One working list instead of per-app ones</h2>
+    <p>Jump Lists are per-app by design, which is useful when you work in one program and awkward when
+    you do not. To find the file you need, you have to guess which app opened it, then check that app's
+    list.</p>
+    <p>FanFolder collects recent documents from all Jump Lists plus Explorer's recent files into a single
+    fan on the taskbar. One click shows everything you have touched recently, across every app, newest
+    first. When an individual Jump List is empty or broken, the combined list still finds the file.</p>
+    <p>It reads what Windows already stored. It does not patch the shell, so it is unaffected by the
+    recording setting and by the toolbars removal described in the
+    <a href="../quick-launch-windows-11/">Quick Launch guide</a>.</p>
+    <pre><code>winget install OleBhartvigsen.FanFolder</code></pre>
+
+    <h2 id="faq-here">Common questions</h2>
+    <div class="faq-list">
+            <details class="faq-item">
+        <summary>What is the difference between Jump Lists and Recent files?</summary>
+        <p>Jump Lists are per-app and appear when you right-click a taskbar icon. Explorer's Recent folder is one combined list of everything opened. FanFolder shows the combined view on the taskbar.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I recover Jump List entries from before recording was turned off?</summary>
+        <p>No. Entries are written as you open files, so anything opened while recording was off was never stored. The list only rebuilds forward from when it was re-enabled.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does clearing AutomaticDestinations affect installed apps?</summary>
+        <p>No. Those folders hold only recent-item metadata and pinned Jump List entries, not program files. Clearing them resets history and pinned items, nothing else.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will a Windows update break FanFolder?</summary>
+        <p>It is an ordinary application, not a shell patch. It reads documented recent-file data. A Windows update cannot break it the way it can break ExplorerPatcher or StartAllBack.</p>
+      </details>
+    </div>
+
+    <div class="guide-nav">
+      <a href="../../index.html#guides"><span class="gn-label">All guides</span>Back to the homepage</a>
+            <a href="../jump-lists-windows-11/"><span class="gn-label">Next guide</span>Getting Quick Launch and toolbars back</a>
+      <a href="../quick-launch-windows-11/"><span class="gn-label">Next guide</span>Recent files not showing</a>
+      <a href="../recent-files-taskbar/"><span class="gn-label">Next guide</span>macOS Stacks on Windows</a>
+    </div>
+
+    <div style="margin-top:2.5rem">
+      <a class="btn btn-primary" href="../../index.html#download">Get FanFolder</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/olebhartvigsen/FanFolder#readme">Technical details</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/LICENSE.md">License</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/issues">Report an issue</a>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between Jump Lists and Recent files?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jump Lists are per-app and appear when you right-click a taskbar icon. Explorer's Recent folder is one combined list of everything opened. FanFolder shows the combined view on the taskbar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I recover Jump List entries from before recording was turned off?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Entries are written as you open files, so anything opened while recording was off was never stored. The list only rebuilds forward from when it was re-enabled."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does clearing AutomaticDestinations affect installed apps?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Those folders hold only recent-item metadata and pinned Jump List entries, not program files. Clearing them resets history and pinned items, nothing else."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will a Windows update break FanFolder?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It is an ordinary application, not a shell patch. It reads documented recent-file data. A Windows update cannot break it the way it can break ExplorerPatcher or StartAllBack."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

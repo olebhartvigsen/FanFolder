@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page title</title>
+<meta name="description" content="Recent files missing in Windows 11? Here is what the setting does, why the list is often empty on a managed PC, how to clear a stale cache, and a way to see recent files anyway." />
+<link rel="canonical" href="https://olebhartvigsen.github.io/FanFolder/guides/recent-files-taskbar/" />
+<meta property="og:title" content="Windows 11 recent files not showing: fixes and what to use instead" />
+<meta property="og:description" content="Recent files missing in Windows 11? Here is what the setting does, why the list is often empty on a managed PC, how to clear a stale cache, and a way to see recent files anyway." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://olebhartvigsen.github.io/FanFolder/guides/recent-files-taskbar/" />
+<meta property="og:site_name" content="FanFolder" />
+<meta property="og:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Windows 11 recent files not showing: fixes and what to use instead" />
+<meta name="twitter:description" content="Recent files missing in Windows 11? Here is what the setting does, why the list is often empty on a managed PC, how to clear a stale cache, and a way to see recent files anyway." />
+<meta name="twitter:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
+<link rel="icon" href="../../favicon.ico" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* Article typography, layered on top of the homepage stylesheet. */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+  .article { padding: 7.5rem 0 4rem; }
+  .article h1 {
+    font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -.025em;
+    line-height: 1.12;
+    margin-bottom: .75rem;
+  }
+  .article .lede { font-size: 1.12rem; color: var(--text2); margin-bottom: 2rem; }
+  .article h2 {
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    font-weight: 750;
+    letter-spacing: -.015em;
+    margin: 2.5rem 0 .75rem;
+    padding-top: .25rem;
+  }
+  .article h3 { font-size: 1.08rem; font-weight: 700; margin: 1.75rem 0 .5rem; }
+  .article p { color: var(--text2); margin-bottom: 1.05rem; }
+  .article ul { color: var(--text2); margin: 0 0 1.15rem; padding-left: 1.3rem; }
+  .article li { margin-bottom: .5rem; }
+  .article code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .88em;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .1em .38em;
+    color: var(--text);
+  }
+  .article pre {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.15rem;
+    overflow-x: auto;
+    margin: 0 0 1.3rem;
+  }
+  .article pre code { background: none; border: 0; padding: 0; font-size: .9rem; }
+  .callout {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin: 0 0 1.5rem;
+  }
+  .callout p { margin-bottom: .6rem; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .c-label {
+    display: block;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: .45rem;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1.5rem; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 700; color: var(--text); }
+  td { color: var(--text2); }
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 2.25rem;
+  }
+  .toc h2 { margin: 0 0 .6rem; font-size: .78rem; font-weight: 700;
+            letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+  .toc ul { margin: 0; padding-left: 1.15rem; }
+  .toc li { margin-bottom: .3rem; }
+  .toc a { color: var(--text2); text-decoration: none; font-size: .95rem; }
+  .toc a:hover { color: var(--accent2); text-decoration: underline; }
+  .guide-nav {
+    display: grid; gap: .6rem; margin: 3rem 0 0;
+    padding-top: 1.75rem; border-top: 1px solid var(--border);
+  }
+  .guide-nav a {
+    display: block; padding: .8rem 1rem; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    text-decoration: none; color: var(--text2); font-size: .95rem;
+  }
+  .guide-nav a:hover { border-color: var(--accent); color: var(--accent2); }
+  .guide-nav .gn-label { display: block; font-size: .72rem; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+  .faq-json { display: none; }
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <a class="nav-logo" href="../../index.html">
+    <img src="../../app.svg" alt="FanFolder" />
+    FanFolder
+  </a>
+  <div class="nav-links">
+    <a href="../../index.html#features">Features</a>
+    <a href="../../index.html#macos">From macOS?</a>
+    <a href="../../index.html#download">Download</a>
+    <a href="../../index.html#guides">Guides</a>
+    <a href="../../index.html#faq">FAQ</a>
+    <a class="nav-icon" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee">&#9749;</a>
+    <a class="nav-cta" href="../../index.html#download">Get FanFolder</a>
+  </div>
+</nav>
+
+<main class="article">
+  <div class="wrap">
+
+    <div class="section-label">GUIDE</div>
+    <h1>Windows 11 recent files not showing, or the list is empty</h1>
+    <p class="lede">Recent files missing in Windows 11? Here is what the setting does, why the list is often empty on a managed PC, how to clear a stale cache, and a way to see recent files anyway.</p>
+
+    <div class="toc">
+      <h2>On this page</h2>
+      <ul>
+                <li><a href="#the-setting">The one setting that controls it</a></li>
+        <li><a href="#why-empty">Why the list is empty anyway</a></li>
+        <li><a href="#fix">Fixing a stale or blocked recent list</a></li>
+        <li><a href="#always">Seeing recent files regardless of policy</a></li>
+        <li><a href="#pinning">Pinning files to the taskbar</a></li>
+      </ul>
+    </div>
+
+    <h2 id="the-setting">The one setting that controls it</h2>
+    <p>Windows 11 keeps recently opened files in a list that feeds the Start menu, Jump Lists and File
+    Explorer's Recent folder. One setting governs all of it:</p>
+    <p><strong>Settings &rarr; Personalization &rarr; Start &rarr; "Show recently opened items in Start,
+    Jump Lists, and File Explorer"</strong></p>
+    <p>Turn that off and the list stops being recorded. Turn it back on and recording resumes, but files
+    opened while it was off never appear, because they were never written down.</p>
+
+    <h2 id="why-empty">Why the list is empty anyway</h2>
+    <p>The setting being on does not guarantee entries. Four things commonly cause an empty list:</p>
+    <ul>
+      <li><strong>Group policy.</strong> On a work or school PC an administrator can force the setting off.
+      No local toggle overrides it, and the Settings UI may not even show the option.</li>
+      <li><strong>The app never records anything.</strong> Only apps that write recent-file entries show up.
+      Some portable and older programs never do.</li>
+      <li><strong>A stale cache.</strong> The folders under <code>%AppData%\Microsoft\Windows\Recent</code>
+      can get into a state where Explorer shows nothing.</li>
+      <li><strong>You are on a fresh profile.</strong> A new Windows install, a new user account, or a reset
+      VM genuinely has no history yet. Nothing is broken.</li>
+    </ul>
+
+    <div class="callout">
+      <span class="c-label">Check this first</span>
+      <p>If you have just installed Windows or created a new account, an empty recent list is correct
+      behaviour, not a fault. Use your machine for a day and it will fill up. Troubleshooting settings on
+      an empty history wastes your time.</p>
+    </div>
+
+    <h2 id="fix">Fixing a stale or blocked recent list</h2>
+    <p>If the setting is on and you have real history that is not showing, clear the cached Recent folders
+    and restart Explorer. Open PowerShell and run:</p>
+    <pre><code>Remove-Item "$env:AppData\Microsoft\Windows\Recent\*" -Recurse -Force -ErrorAction SilentlyContinue
+Stop-Process -Name explorer -Force</code></pre>
+    <p>Explorer restarts automatically. The recent list rebuilds from scratch as you open files.</p>
+    <p>If a policy is blocking recording, you can check whether that is the cause:</p>
+    <pre><code>reg query "HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v NoRecentDocsHistory</code></pre>
+    <p>A value of <code>1</code> means recording is disabled by policy. That is an administrator decision,
+    and changing it needs administrator rights. On a work PC, ask IT. On your own machine, deleting the
+    value restores the default.</p>
+
+    <h2 id="always">Seeing recent files regardless of policy</h2>
+    <p>FanFolder does not depend on that setting. It reads recent-document data that Windows already
+    records and shows it in a fan on the taskbar, so it works on a locked-down work PC where the Start
+    menu list stays empty.</p>
+    <p>It collects from Windows Jump Lists and from Explorer's recent files, which gives you one list
+    across every app rather than a per-app list. Click the icon and your most recent work is there.</p>
+    <p>It also works in the other direction. If you want a specific folder rather than a recents list,
+    point FanFolder at it and sort by modified date. That is often the more useful view anyway, since
+    "recent" and "what I am working on now" are not always the same set of files.</p>
+
+    <h2 id="pinning">Pinning files to the taskbar</h2>
+    <p>Windows 11 does not let you pin individual files to the taskbar, only apps. If you want a document
+    one click from the taskbar, the options are:</p>
+    <ul>
+      <li>Drag the file into a folder and point FanFolder at that folder.</li>
+      <li>Pin the app that opens the file, then use that app's Jump List on right-click.</li>
+      <li>Use a launcher. Everything is searchable from the keyboard in a few keystrokes, which beats
+      clicking through a menu for anything you know the name of.</li>
+    </ul>
+    <p>The first option is the one that stays out of your way. A fan of the five or ten files you touched
+    today is usually closer to what you want than a static list.</p>
+
+    <h2 id="faq-here">Common questions</h2>
+    <div class="faq-list">
+            <details class="faq-item">
+        <summary>Why does my recent list show files from months ago but not today's?</summary>
+        <p>Usually the recording setting was turned off in between, so the newer files were never written down. Toggle the Start setting off and on, restart, and use the machine for a while to rebuild the list.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does FanFolder send my file names anywhere?</summary>
+        <p>No. It reads the recent-file data Windows already keeps on your machine and displays it locally. The one optional telemetry event carries no file names or paths, and a registry value turns it off. See the privacy policy for the exact detail.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I show recent files from only one app?</summary>
+        <p>Windows Jump Lists do this natively: right-click a pinned taskbar icon and the app's own recent files appear. FanFolder is better when you want one combined list across every app.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will clearing the Recent folder delete my files?</summary>
+        <p>No. Those folders hold shortcuts and metadata, not the documents themselves. Clearing them only resets the list. Your actual files are untouched.</p>
+      </details>
+    </div>
+
+    <div class="guide-nav">
+      <a href="../../index.html#guides"><span class="gn-label">All guides</span>Back to the homepage</a>
+            <a href="../recent-files-taskbar/"><span class="gn-label">Next guide</span>Getting Quick Launch and toolbars back</a>
+      <a href="../quick-launch-windows-11/"><span class="gn-label">Next guide</span>Jump Lists missing or not working</a>
+      <a href="../jump-lists-windows-11/"><span class="gn-label">Next guide</span>macOS Stacks on Windows</a>
+    </div>
+
+    <div style="margin-top:2.5rem">
+      <a class="btn btn-primary" href="../../index.html#download">Get FanFolder</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/olebhartvigsen/FanFolder#readme">Technical details</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/LICENSE.md">License</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/issues">Report an issue</a>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does my recent list show files from months ago but not today's?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually the recording setting was turned off in between, so the newer files were never written down. Toggle the Start setting off and on, restart, and use the machine for a while to rebuild the list."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does FanFolder send my file names anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It reads the recent-file data Windows already keeps on your machine and displays it locally. The one optional telemetry event carries no file names or paths, and a registry value turns it off. See the privacy policy for the exact detail."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I show recent files from only one app?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Windows Jump Lists do this natively: right-click a pinned taskbar icon and the app's own recent files appear. FanFolder is better when you want one combined list across every app."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will clearing the Recent folder delete my files?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Those folders hold shortcuts and metadata, not the documents themselves. Clearing them only resets the list. Your actual files are untouched."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

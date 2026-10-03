@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page title</title>
+<meta name="description" content="Windows 11 removed taskbar toolbars and the Quick Launch bar. Here are the real options: ExplorerPatcher, StartAllBack, Start11, and a plain tray app that needs no shell patching." />
+<link rel="canonical" href="https://olebhartvigsen.github.io/FanFolder/guides/quick-launch-windows-11/" />
+<meta property="og:title" content="How to get Quick Launch and taskbar toolbars back in Windows 11" />
+<meta property="og:description" content="Windows 11 removed taskbar toolbars and the Quick Launch bar. Here are the real options: ExplorerPatcher, StartAllBack, Start11, and a plain tray app that needs no shell patching." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://olebhartvigsen.github.io/FanFolder/guides/quick-launch-windows-11/" />
+<meta property="og:site_name" content="FanFolder" />
+<meta property="og:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="How to get Quick Launch and taskbar toolbars back in Windows 11" />
+<meta name="twitter:description" content="Windows 11 removed taskbar toolbars and the Quick Launch bar. Here are the real options: ExplorerPatcher, StartAllBack, Start11, and a plain tray app that needs no shell patching." />
+<meta name="twitter:image" content="https://olebhartvigsen.github.io/FanFolder/icon.png" />
+<link rel="icon" href="../../favicon.ico" />
+<link rel="stylesheet" href="../../assets/site.css" />
+<style>
+  /* Article typography, layered on top of the homepage stylesheet. */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+  .article { padding: 7.5rem 0 4rem; }
+  .article h1 {
+    font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -.025em;
+    line-height: 1.12;
+    margin-bottom: .75rem;
+  }
+  .article .lede { font-size: 1.12rem; color: var(--text2); margin-bottom: 2rem; }
+  .article h2 {
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    font-weight: 750;
+    letter-spacing: -.015em;
+    margin: 2.5rem 0 .75rem;
+    padding-top: .25rem;
+  }
+  .article h3 { font-size: 1.08rem; font-weight: 700; margin: 1.75rem 0 .5rem; }
+  .article p { color: var(--text2); margin-bottom: 1.05rem; }
+  .article ul { color: var(--text2); margin: 0 0 1.15rem; padding-left: 1.3rem; }
+  .article li { margin-bottom: .5rem; }
+  .article code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .88em;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .1em .38em;
+    color: var(--text);
+  }
+  .article pre {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.15rem;
+    overflow-x: auto;
+    margin: 0 0 1.3rem;
+  }
+  .article pre code { background: none; border: 0; padding: 0; font-size: .9rem; }
+  .callout {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin: 0 0 1.5rem;
+  }
+  .callout p { margin-bottom: .6rem; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .c-label {
+    display: block;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: .45rem;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1.5rem; font-size: .95rem; }
+  th, td { text-align: left; padding: .6rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 700; color: var(--text); }
+  td { color: var(--text2); }
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 2.25rem;
+  }
+  .toc h2 { margin: 0 0 .6rem; font-size: .78rem; font-weight: 700;
+            letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+  .toc ul { margin: 0; padding-left: 1.15rem; }
+  .toc li { margin-bottom: .3rem; }
+  .toc a { color: var(--text2); text-decoration: none; font-size: .95rem; }
+  .toc a:hover { color: var(--accent2); text-decoration: underline; }
+  .guide-nav {
+    display: grid; gap: .6rem; margin: 3rem 0 0;
+    padding-top: 1.75rem; border-top: 1px solid var(--border);
+  }
+  .guide-nav a {
+    display: block; padding: .8rem 1rem; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    text-decoration: none; color: var(--text2); font-size: .95rem;
+  }
+  .guide-nav a:hover { border-color: var(--accent); color: var(--accent2); }
+  .guide-nav .gn-label { display: block; font-size: .72rem; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+  .faq-json { display: none; }
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <a class="nav-logo" href="../../index.html">
+    <img src="../../app.svg" alt="FanFolder" />
+    FanFolder
+  </a>
+  <div class="nav-links">
+    <a href="../../index.html#features">Features</a>
+    <a href="../../index.html#macos">From macOS?</a>
+    <a href="../../index.html#download">Download</a>
+    <a href="../../index.html#guides">Guides</a>
+    <a href="../../index.html#faq">FAQ</a>
+    <a class="nav-icon" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee">&#9749;</a>
+    <a class="nav-cta" href="../../index.html#download">Get FanFolder</a>
+  </div>
+</nav>
+
+<main class="article">
+  <div class="wrap">
+
+    <div class="section-label">GUIDE</div>
+    <h1>How to get the Quick Launch bar and taskbar toolbars back in Windows 11</h1>
+    <p class="lede">Windows 11 removed taskbar toolbars and the Quick Launch bar. Here are the real options: ExplorerPatcher, StartAllBack, Start11, and a plain tray app that needs no shell patching.</p>
+
+    <div class="toc">
+      <h2>On this page</h2>
+      <ul>
+                <li><a href="#what-was-removed">What Windows 11 actually removed</a></li>
+        <li><a href="#the-options">The four real options</a></li>
+        <li><a href="#patching">Why patching explorer.exe is a gamble</a></li>
+        <li><a href="#plain-app">The option that patches nothing</a></li>
+        <li><a href="#bring-back">Bringing the old taskbar back, if you insist</a></li>
+      </ul>
+    </div>
+
+    <h2 id="what-was-removed">What Windows 11 actually removed</h2>
+    <p>Windows 11 took away two things people had used for years: the Quick Launch toolbar, and the
+    ability to pin folders as taskbar toolbars. The old taskbar let you drag a folder onto it and get a
+    small popup with that folder's contents. That is the behaviour most people miss.</p>
+    <p>No setting brings it back. This is not a hidden toggle that got flipped. The toolbar support was
+    removed from the shell itself, so there is nothing to re-enable.</p>
+
+    <h2 id="the-options">The four real options</h2>
+    <p>There are four ways people solve this today. Two restore the old taskbar, one is a commercial
+    taskbar replacement, and one sidesteps the problem.</p>
+    <table>
+      <thead><tr><th>Option</th><th>What it does</th><th>Trade-off</th></tr></thead>
+      <tbody>
+        <tr><td>ExplorerPatcher</td><td>Restores the Windows 10 taskbar, toolbars included</td><td>Patches explorer.exe, free, breaks on some updates until fixed</td></tr>
+        <tr><td>StartAllBack</td><td>Same idea, commercial, polished</td><td>Patches explorer.exe, costs money</td></tr>
+        <tr><td>Start11</td><td>Replaces the shell with a Start11 taskbar and Start menu</td><td>Patches the shell, paid, changes far more than you asked for</td></tr>
+        <tr><td>FanFolder</td><td>Puts one folder or your recent files in a fan on the taskbar</td><td>Not a taskbar replacement. No patching, no updates can break it</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="patching">Why patching explorer.exe is a gamble</h2>
+    <p>ExplorerPatcher and StartAllBack work by injecting code into the Windows shell process. That is
+    how they restore the old taskbar. It works right up until Microsoft changes something the patch
+    depends on, and then the taskbar is broken, or Explorer refuses to start, until the tool ships a fix.</p>
+    <p>This is not a hypothetical. The recurring theme in support threads about these tools is a broken
+    taskbar after a Windows feature update. If you have ever had a black or empty taskbar after an
+    update, that was the cause.</p>
+
+    <div class="callout">
+      <span class="c-label">The fair comparison</span>
+      <p>All three shell patchers are legitimate tools with real users. If you want the entire Windows 10
+      taskbar back, ExplorerPatcher is the usual answer and it is free.</p>
+      <p>The question is whether that is what you are actually after. Most people asking this question
+      want one folder or their recent files within a click. That is a much smaller problem, and it does
+      not require replacing the shell.</p>
+    </div>
+
+    <h2 id="plain-app">The option that patches nothing</h2>
+    <p>FanFolder is a small tray app. Click its icon and the contents of the folder you chose fan out from
+    the taskbar in an arc. Open a file, drag it into another app, or right-click for the normal Windows
+    menu.</p>
+    <p>Because it is an ordinary application rather than a shell patch, a Windows update cannot break it.
+    It also does not change the rest of your taskbar: clock, system tray, pinned apps and Start all behave
+    exactly as Windows intended.</p>
+    <p>Point it at Downloads and you have the old Quick Launch behaviour. Point it at a project folder and
+    you have a one-click shortcut to that folder's most recently changed files. Leave it on Recent
+    Documents and it collects what you have been working on across every app.</p>
+    <pre><code>winget install OleBhartvigsen.FanFolder</code></pre>
+
+    <h2 id="bring-back">Bringing the old taskbar back, if you insist</h2>
+    <p>If you have decided you want the genuine Windows 10 taskbar, install ExplorerPatcher, run it as
+    administrator, pick the Windows 10 option, and sign out or restart. Toolbars come back with it.</p>
+    <p>Keep a note of how you uninstall it, because you may need it one day:</p>
+    <pre><code>winget uninstall explorerpatcher</code></pre>
+    <p>If the taskbar is already broken, boot into Safe Mode, uninstall the patcher there, and restart.
+    That is the standard recovery path.</p>
+
+    <h2 id="faq-here">Common questions</h2>
+    <div class="faq-list">
+            <details class="faq-item">
+        <summary>Is the Quick Launch toolbar coming back in a future Windows update?</summary>
+        <p>Microsoft has not announced it. Treat any claim that it is returning as speculation until it ships. The taskbar toolbar code was removed rather than disabled, so restoring it would be a feature addition, not a settings fix.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does ExplorerPatcher slow Windows down?</summary>
+        <p>It adds work to the shell process, and some users report higher explorer.exe memory use. It is not usually noticeable on a modern machine, but it is more moving parts than a plain tray app.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use both FanFolder and ExplorerPatcher?</summary>
+        <p>Yes. They do not conflict. FanFolder sits on the taskbar as its own icon and does not touch the shell, so the two can run side by side while you decide whether you want to keep the patch.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will FanFolder show a folder's files in date order?</summary>
+        <p>Yes, and you can change it. Sort by modified date, created date or name, set how many items appear, and filter filenames with a regular expression.</p>
+      </details>
+    </div>
+
+    <div class="guide-nav">
+      <a href="../../index.html#guides"><span class="gn-label">All guides</span>Back to the homepage</a>
+            <a href="../quick-launch-windows-11/"><span class="gn-label">Next guide</span>Windows 11 recent files not showing</a>
+      <a href="../recent-files-taskbar/"><span class="gn-label">Next guide</span>Jump Lists missing or not working</a>
+      <a href="../jump-lists-windows-11/"><span class="gn-label">Next guide</span>macOS Stacks on Windows</a>
+    </div>
+
+    <div style="margin-top:2.5rem">
+      <a class="btn btn-primary" href="../../index.html#download">Get FanFolder</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/olebhartvigsen/FanFolder#readme">Technical details</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/LICENSE.md">License</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/issues">Report an issue</a>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the Quick Launch toolbar coming back in a future Windows update?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Microsoft has not announced it. Treat any claim that it is returning as speculation until it ships. The taskbar toolbar code was removed rather than disabled, so restoring it would be a feature addition, not a settings fix."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does ExplorerPatcher slow Windows down?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It adds work to the shell process, and some users report higher explorer.exe memory use. It is not usually noticeable on a modern machine, but it is more moving parts than a plain tray app."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use both FanFolder and ExplorerPatcher?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. They do not conflict. FanFolder sits on the taskbar as its own icon and does not touch the shell, so the two can run side by side while you decide whether you want to keep the patch."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will FanFolder show a folder's files in date order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, and you can change it. Sort by modified date, created date or name, set how many items appear, and filter filenames with a regular expression."
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
