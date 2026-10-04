@@ -6,7 +6,7 @@ Stop digging through File Explorer for files you just used. FanFolder puts your 
 
 Use it for recent documents, an active project folder, Downloads, or whatever you open often.
 
-FanFolder is a native Win32/C++ app. No .NET runtime needed. The executable is about 161 KB.
+FanFolder is a native Win32/C++ app. No .NET runtime needed. The executable is about 1.4 MB.
 
 **Homepage:** <https://olebhartvigsen.github.io/FanFolder/>
 
