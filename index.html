@@ -620,6 +620,8 @@
       color: var(--text2);
       transition: border-color .2s, transform .2s;
     }
+    .anim-chip { font-family: inherit; cursor: pointer; }
+    .anim-chip[aria-selected="true"] { border-color: var(--green); color: var(--green); background: rgba(47,164,79,.08); }
     .anim-chip:hover { border-color: var(--green); transform: translateY(-2px); color: var(--green); }
     .anim-chip small {
       display: block;
@@ -976,12 +978,12 @@
     .ad-stage { position: relative; height: 150px; border-radius: 12px; background: linear-gradient(180deg, #f1f5f9, #e2e8f0); overflow: hidden; border: 1px solid var(--border); }
     .ad-hinge { position: absolute; left: 50%; bottom: 10px; width: 34px; height: 34px; margin-left: -17px; border-radius: 9px; background: var(--grad-green); }
     .ad-stage i { position: absolute; left: 50%; bottom: 14px; width: 26px; height: 26px; margin-left: -13px; border-radius: 7px; background: #fff; border: 1px solid #cbd5e1; box-shadow: 0 2px 6px rgba(0,0,0,.12); opacity: 0; }
-    .ad-stage i:nth-child(2) { --tx: -64px; --ty: -34px; --d: 0ms; }
-    .ad-stage i:nth-child(3) { --tx: -32px; --ty: -66px; --d: 60ms; }
-    .ad-stage i:nth-child(4) { --tx: 0px; --ty: -84px; --d: 120ms; }
-    .ad-stage i:nth-child(5) { --tx: 32px; --ty: -66px; --d: 180ms; }
-    .ad-stage i:nth-child(6) { --tx: 64px; --ty: -34px; --d: 240ms; }
-    @keyframes adFan { from { opacity: 0; transform: translate(0,0) scale(.4) rotate(0); } to { opacity: 1; transform: translate(var(--tx), var(--ty)) scale(1) rotate(calc(var(--tx) / 4)); } }
+    .ad-stage i:nth-child(2) { --tx: -64px; --r: -14deg; --ty: -34px; --d: 0ms; }
+    .ad-stage i:nth-child(3) { --tx: -32px; --r: -7deg; --ty: -66px; --d: 60ms; }
+    .ad-stage i:nth-child(4) { --tx: 0px; --r: 0deg; --ty: -84px; --d: 120ms; }
+    .ad-stage i:nth-child(5) { --tx: 32px; --r: 7deg; --ty: -66px; --d: 180ms; }
+    .ad-stage i:nth-child(6) { --tx: 64px; --r: 14deg; --ty: -34px; --d: 240ms; }
+    @keyframes adFan { from { opacity: 0; transform: translate(0,0) scale(.4) rotate(0); } to { opacity: 1; transform: translate(var(--tx), var(--ty)) scale(1) rotate(var(--r)); } }
     @keyframes adGlide { from { opacity: 0; transform: translate(var(--tx), 20px); } to { opacity: 1; transform: translate(var(--tx), var(--ty)); } }
     @keyframes adSpring { 0% { opacity: 0; transform: translate(var(--tx), 0) scale(.5); } 55% { opacity: 1; transform: translate(var(--tx), calc(var(--ty) * 1.25)) scale(1.1); } 80% { transform: translate(var(--tx), calc(var(--ty) * .94)); } 100% { opacity: 1; transform: translate(var(--tx), var(--ty)); } }
     @keyframes adFade { from { opacity: 0; transform: translate(var(--tx), var(--ty)); } to { opacity: 1; transform: translate(var(--tx), var(--ty)); } }
@@ -989,7 +991,7 @@
     .ad-stage.play[data-style="glide"] i { animation: adGlide .6s ease-out var(--d) both; }
     .ad-stage.play[data-style="spring"] i { animation: adSpring .7s ease-out var(--d) both; }
     .ad-stage.play[data-style="fade"] i { animation: adFade .5s ease var(--d) both; }
-    .ad-stage[data-style="none"] i, .ad-stage:not(.play) i { opacity: 1; transform: translate(var(--tx), var(--ty)); }
+    .ad-stage[data-style="none"] i, .ad-stage:not(.play) i { opacity: 1; transform: translate(var(--tx), var(--ty)) rotate(var(--r, 0deg)); }
     @media (prefers-reduced-motion: reduce) { .ad-stage i { animation: none !important; opacity: 1 !important; } }
     @media (max-width: 900px) {
       nav { flex-wrap: wrap; height: auto; min-height: 62px; }
@@ -1170,21 +1172,14 @@
       <h3>Five animation styles</h3>
       <p>Pick whichever vibe fits your desktop, each one is tuned to feel snappy and alive.</p>
       <div class="anim-demo" id="animDemo" aria-label="Animation preview">
-        <div class="ad-tabs" role="tablist">
-          <button type="button" role="tab" aria-selected="true" data-style="fan">Fan</button>
-          <button type="button" role="tab" aria-selected="false" data-style="glide">Glide</button>
-          <button type="button" role="tab" aria-selected="false" data-style="spring">Spring</button>
-          <button type="button" role="tab" aria-selected="false" data-style="fade">Fade</button>
-          <button type="button" role="tab" aria-selected="false" data-style="none">None</button>
-        </div>
         <div class="ad-stage" data-style="fan"><div class="ad-hinge"></div><i></i><i></i><i></i><i></i><i></i></div>
       </div>
-      <div class="anim-strip">
-        <div class="anim-chip">Fan<small>arc in</small></div>
-        <div class="anim-chip">Glide<small>drift up</small></div>
-        <div class="anim-chip">Spring<small>bouncy</small></div>
-        <div class="anim-chip">Fade<small>soft</small></div>
-        <div class="anim-chip">None<small>instant</small></div>
+      <div class="anim-strip" role="tablist" aria-label="Animation style">
+        <button type="button" role="tab" class="anim-chip" data-style="fan" aria-selected="true">Fan<small>arc in</small></button>
+        <button type="button" role="tab" class="anim-chip" data-style="glide" aria-selected="false">Glide<small>drift up</small></button>
+        <button type="button" role="tab" class="anim-chip" data-style="spring" aria-selected="false">Spring<small>bouncy</small></button>
+        <button type="button" role="tab" class="anim-chip" data-style="fade" aria-selected="false">Fade<small>soft</small></button>
+        <button type="button" role="tab" class="anim-chip" data-style="none" aria-selected="false">None<small>instant</small></button>
       </div>
     </div>
 
@@ -1495,7 +1490,7 @@
   var demo = document.getElementById('animDemo');
   if (demo) {
     var stage = demo.querySelector('.ad-stage');
-    var tabs = demo.querySelectorAll('[role="tab"]');
+    var tabs = document.querySelectorAll('.anim-strip [role="tab"]');
     var play = function () { stage.classList.remove('play'); void stage.offsetWidth; stage.classList.add('play'); };
     tabs.forEach(function (t) {
       t.addEventListener('click', function () {
