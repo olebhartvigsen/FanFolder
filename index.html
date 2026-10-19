@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FanFolder: macOS Stacks-style recent files fan for the Windows taskbar</title>
+  <title>FanFolder: recent files fanned out from your Windows taskbar</title>
   <meta name="description" content="Get the macOS Stacks experience on Windows 10/11. Click the FanFolder icon and recent files or any folder fan out from the taskbar. Free, native C++, no runtime." />
   <meta name="robots" content="index, follow" />
   <meta name="google-site-verification" content="nMYRQemaY09QO16GZcdxoyHzv7gSjUTvng0rrcjCX9g" />
   <link rel="canonical" href="https://olebhartvigsen.github.io/FanFolder/" />
-  <meta property="og:title" content="FanFolder: macOS Stacks-style recent files fan for the Windows taskbar" />
+  <meta property="og:title" content="FanFolder: recent files fanned out from your Windows taskbar" />
   <meta property="og:description" content="Get the macOS Stacks experience on Windows 10/11: click the icon and recent files or any folder fan out from the taskbar. Free, native C++." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://olebhartvigsen.github.io/FanFolder/" />
@@ -18,7 +18,7 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="FanFolder open on the Windows taskbar, fanning out recent files including Word, Excel and PDF documents" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FanFolder: macOS Stacks-style recent files fan for the Windows taskbar" />
+  <meta name="twitter:title" content="FanFolder: recent files fanned out from your Windows taskbar" />
   <meta name="twitter:description" content="Get the macOS Stacks experience on Windows 10/11: recent files fan out from the taskbar in one click. Free, native C++." />
   <meta name="twitter:image" content="https://olebhartvigsen.github.io/FanFolder/social-card.png" />
   <meta name="twitter:image:alt" content="FanFolder open on the Windows taskbar, fanning out recent files including Word, Excel and PDF documents" />
@@ -959,6 +959,47 @@
       .anim-strip { grid-template-columns: repeat(2, 1fr); }
       .final-cta-box { padding: 2.5rem 1.5rem; }
     }
+    /* ── Announce bar, mobile menu, animation demo ───────────────────── */
+    .announce { background: #0f172a; color: #e2e8f0; font-size: .82rem; text-align: center; padding: .5rem 1rem; }
+    .announce a { color: #86efac; font-weight: 600; text-decoration: none; margin-left: .5rem; white-space: nowrap; }
+    .announce a:hover { text-decoration: underline; }
+    .menu-toggle { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; width: 40px; height: 40px; align-items: center; justify-content: center; color: var(--text); cursor: pointer; }
+    .menu-toggle svg { width: 20px; height: 20px; }
+    .nav-links .nav-github { display: inline-flex; color: var(--muted); }
+    .nav-links .nav-github svg { width: 20px; height: 20px; }
+    .nav-links .nav-github:hover { color: var(--text); }
+    .nav-links a.active:not(.nav-cta) { color: var(--text); box-shadow: 0 2px 0 var(--green); }
+    .anim-demo { margin: 1rem 0 1.25rem; }
+    .ad-tabs { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .75rem; }
+    .ad-tabs button { font: inherit; font-size: .78rem; font-weight: 600; padding: .3rem .7rem; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: var(--muted); cursor: pointer; }
+    .ad-tabs button[aria-selected="true"] { color: #fff; background: var(--grad-green); border-color: transparent; }
+    .ad-stage { position: relative; height: 150px; border-radius: 12px; background: linear-gradient(180deg, #f1f5f9, #e2e8f0); overflow: hidden; border: 1px solid var(--border); }
+    .ad-hinge { position: absolute; left: 50%; bottom: 10px; width: 34px; height: 34px; margin-left: -17px; border-radius: 9px; background: var(--grad-green); }
+    .ad-stage i { position: absolute; left: 50%; bottom: 14px; width: 26px; height: 26px; margin-left: -13px; border-radius: 7px; background: #fff; border: 1px solid #cbd5e1; box-shadow: 0 2px 6px rgba(0,0,0,.12); opacity: 0; }
+    .ad-stage i:nth-child(2) { --tx: -64px; --ty: -34px; --d: 0ms; }
+    .ad-stage i:nth-child(3) { --tx: -32px; --ty: -66px; --d: 60ms; }
+    .ad-stage i:nth-child(4) { --tx: 0px; --ty: -84px; --d: 120ms; }
+    .ad-stage i:nth-child(5) { --tx: 32px; --ty: -66px; --d: 180ms; }
+    .ad-stage i:nth-child(6) { --tx: 64px; --ty: -34px; --d: 240ms; }
+    @keyframes adFan { from { opacity: 0; transform: translate(0,0) scale(.4) rotate(0); } to { opacity: 1; transform: translate(var(--tx), var(--ty)) scale(1) rotate(calc(var(--tx) / 4)); } }
+    @keyframes adGlide { from { opacity: 0; transform: translate(var(--tx), 20px); } to { opacity: 1; transform: translate(var(--tx), var(--ty)); } }
+    @keyframes adSpring { 0% { opacity: 0; transform: translate(var(--tx), 0) scale(.5); } 55% { opacity: 1; transform: translate(var(--tx), calc(var(--ty) * 1.25)) scale(1.1); } 80% { transform: translate(var(--tx), calc(var(--ty) * .94)); } 100% { opacity: 1; transform: translate(var(--tx), var(--ty)); } }
+    @keyframes adFade { from { opacity: 0; transform: translate(var(--tx), var(--ty)); } to { opacity: 1; transform: translate(var(--tx), var(--ty)); } }
+    .ad-stage.play[data-style="fan"] i { animation: adFan .55s cubic-bezier(.2,.9,.3,1) var(--d) both; }
+    .ad-stage.play[data-style="glide"] i { animation: adGlide .6s ease-out var(--d) both; }
+    .ad-stage.play[data-style="spring"] i { animation: adSpring .7s ease-out var(--d) both; }
+    .ad-stage.play[data-style="fade"] i { animation: adFade .5s ease var(--d) both; }
+    .ad-stage[data-style="none"] i, .ad-stage:not(.play) i { opacity: 1; transform: translate(var(--tx), var(--ty)); }
+    @media (prefers-reduced-motion: reduce) { .ad-stage i { animation: none !important; opacity: 1 !important; } }
+    @media (max-width: 900px) {
+      nav { flex-wrap: wrap; height: auto; min-height: 62px; }
+      .menu-toggle { display: inline-flex; }
+      .nav-links { display: none; width: 100%; flex-direction: column; align-items: stretch; gap: 0; padding: .5rem 0 1rem; }
+      body.menu-open .nav-links { display: flex; }
+      .nav-links a:not(.nav-cta):not(.nav-github) { display: block !important; padding: .7rem .25rem; border-bottom: 1px solid var(--border); }
+      .nav-links .nav-github { padding: .7rem .25rem; }
+      .nav-links .nav-cta { justify-content: center; margin-top: .5rem; }
+    }
   </style>
 </head>
 <body>
@@ -971,18 +1012,20 @@
 <div class="grain"></div>
 
 <!-- ── Nav ───────────────────────────────────────────────────────── -->
+<div class="announce"><span>Now on the Microsoft Store. Free for life, commercial use included.</span> <a href="#download">Get FanFolder &rarr;</a></div>
 <nav id="topnav">
   <a class="nav-logo" href="#">
     <img src="app.svg" alt="FanFolder" />
     FanFolder
   </a>
-  <div class="nav-links">
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
+  <div class="nav-links" id="site-menu">
     <a href="#features">Features</a>
     <a href="#macos">From macOS?</a>
     <a href="#download">Download</a>
-    <a href="#guides">Guides</a>
     <a href="#faq">FAQ</a>
-    <a class="nav-icon" href="https://buymeacoffee.com/fanfolder" target="_blank" rel="noopener" title="Buy Me a Coffee">☕</a>
+    <a href="#guides">Guides</a>
+    <a class="nav-github" href="https://github.com/olebhartvigsen/FanFolder/releases" target="_blank" rel="noopener" aria-label="FanFolder releases on GitHub" title="Releases on GitHub"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg></a>
     <a class="nav-cta" href="#download">Get FanFolder</a>
   </div>
 </nav>
@@ -991,7 +1034,7 @@
 <header class="hero">
   <div class="hero-copy">
     <div class="eyebrow"><span class="dot"></span> Windows 10/11</div>
-    <h1>Your recent files,<br /><span class="grad">one click away on the Windows taskbar.</span></h1>
+    <h1>Your recent files,<br /><span class="grad">fanned out from the taskbar.</span></h1>
     <p>FanFolder is a free Windows taskbar utility. Click its icon to open recent documents from Windows Jump Lists or files from any folder you choose, including folders available through OneDrive, Dropbox, or Google Drive. Open, drag, and manage items without searching through Explorer.</p>
 
     <div class="btn-row">
@@ -1005,16 +1048,17 @@
       </a>
     </div>
     <div class="trust-row">
-      <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>No admin required</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Free for life, commercial use included</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>1.4&nbsp;MB, native, no .NET runtime</span>
+      <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>No admin, no account</span>
       <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>x64 &amp; ARM64</span>
-      <span class="trust-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Installs in seconds</span>
     </div>
   </div>
 
   <!-- Hero visual: autoplaying screen-capture of the fan opening -->
   <div class="hero-visual" aria-hidden="true">
     <div class="hv-glow"></div>
-    <video class="hv-video"
+    <video class="hv-video" poster="hero-poster.jpg"
            id="heroVideo"
            autoplay
            muted
@@ -1055,8 +1099,8 @@
 <!-- ── macOS Stacks band ─────────────────────────────────────────── -->
 <section class="section-wrap" id="macos">
   <div class="section-head reveal">
-    <div class="section-label">Switched from Mac?</div>
-    <h2>The macOS <span style="background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Stacks</span> feature, on the Windows taskbar</h2>
+    <div class="section-label">Coming from macOS</div>
+    <h2>Stacks, <span style="background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">on Windows.</span></h2>
     <p class="section-sub">FanFolder is not a dock or start menu clone. It is the part of the macOS dock that saves time: your recent files and folders, one click from the taskbar. Free, native C++, 1.4&nbsp;MB, no .NET runtime.</p>
   </div>
 
@@ -1094,7 +1138,7 @@
 <section class="section-wrap" id="features">
   <div class="section-head reveal">
     <div class="section-label">Features</div>
-    <h2>Built to put your files&nbsp;<span style="background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">right where you need them</span></h2>
+    <h2>Files <span style="background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">where you need them.</span></h2>
     <p class="section-sub">Open recent documents from Windows Jump Lists, or choose any folder available on your PC.</p>
   </div>
 
@@ -1124,7 +1168,17 @@
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
       </div>
       <h3>Five animation styles</h3>
-      <p>Pick whichever vibe fits your desktop — each one is tuned to feel snappy and alive.</p>
+      <p>Pick whichever vibe fits your desktop, each one is tuned to feel snappy and alive.</p>
+      <div class="anim-demo" id="animDemo" aria-label="Animation preview">
+        <div class="ad-tabs" role="tablist">
+          <button type="button" role="tab" aria-selected="true" data-style="fan">Fan</button>
+          <button type="button" role="tab" aria-selected="false" data-style="glide">Glide</button>
+          <button type="button" role="tab" aria-selected="false" data-style="spring">Spring</button>
+          <button type="button" role="tab" aria-selected="false" data-style="fade">Fade</button>
+          <button type="button" role="tab" aria-selected="false" data-style="none">None</button>
+        </div>
+        <div class="ad-stage" data-style="fan"><div class="ad-hinge"></div><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
       <div class="anim-strip">
         <div class="anim-chip">Fan<small>arc in</small></div>
         <div class="anim-chip">Glide<small>drift up</small></div>
@@ -1149,7 +1203,7 @@
         <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       </div>
       <h3>Instant open</h3>
-      <p>Icons are pre-loaded in the background so the fan opens the moment you click — zero wait.</p>
+      <p>Icons are pre-loaded in the background so the fan opens the moment you click, zero wait.</p>
     </div>
 
     <!-- Med: Filter & sort -->
@@ -1167,7 +1221,7 @@
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </div>
       <h3>Follows your language</h3>
-      <p>The UI adapts automatically to your Windows display language — no setup needed.</p>
+      <p>The UI adapts automatically to your Windows display language, no setup needed.</p>
     </div>
 
     <!-- Med: Tiny & fast -->
@@ -1232,53 +1286,12 @@
   </div>
 </section>
 
-<!-- ── Guides ───────────────────────────────────────────────────── -->
-<section class="section-wrap" id="guides">
-  <div class="section-head reveal">
-    <div class="section-label">Guides</div>
-    <h2>Windows taskbar questions, answered honestly</h2>
-    <p class="section-sub">FanFolder is one option in each guide. The other options are real alternatives, with their trade-offs stated plainly.</p>
-  </div>
-
-  <div class="bento">
-    <!-- Guide: Quick Launch / toolbars -->
-    <div class="bento-card full reveal" id="guides-quick-launch">
-      <h3>How to get the Quick Launch bar and taskbar toolbars back in Windows 11</h3>
-      <p>Windows 11 removed taskbar toolbars, including Quick Launch. No setting brings them back. ExplorerPatcher restores the Windows 10 style taskbar with toolbars, and StartAllBack or Start11 do something similar. All of them patch explorer.exe, so a Windows update can break them until the next fix arrives.</p>
-      <p>If what you actually want is one folder, or your recent files, within a click, FanFolder covers that part without touching the shell. Click the tray icon and the folder or recent documents fan out from the taskbar. No patching, nothing for an update to break.</p>
-      <p><a href="guides/quick-launch-windows-11/">Read the full guide &rarr;</a></p>
-    </div>
-
-    <!-- Guide: Recent files not showing -->
-    <div class="bento-card full reveal" id="guides-recent-files">
-      <h3>Windows 11 recent files not showing, or the list is empty</h3>
-      <p>The main control lives in Settings, Personalization, Start: "Show recently opened items in Start, Jump Lists, and File Explorer". On a company managed PC it can be forced off by policy, and no local toggle overrides that. If the toggle is on but the list stays empty, the recent cache may be stale. Clear the folders under <code>%AppData%\Microsoft\Windows\Recent</code> and restart Explorer.</p>
-      <p>FanFolder reads the same recent-document data Windows records in Jump Lists, and shows it in the fan. It works even when the built-in list is empty or disabled by policy, because it does not depend on those settings.</p>
-      <p><a href="guides/recent-files-taskbar/">Read the full guide &rarr;</a></p>
-    </div>
-
-    <!-- Guide: Jump Lists -->
-    <div class="bento-card full reveal" id="guides-jump-lists">
-      <h3>Windows 11 Jump Lists missing or not working</h3>
-      <p>Jump Lists only appear for apps that write them. Portable apps and some older programs never write them, and the "Show recently opened items" toggle or a policy can hide them system-wide.</p>
-      <p>If right-clicking a taskbar icon shows no recent files section, toggle that Start setting off and on, then restart the PC. If an app still shows nothing, that app simply does not write entries, no setting will fix that. FanFolder collects recent documents from Windows Jump Lists and from Explorer's recent files into one fan, so a broken or empty per-app Jump List does not stop you from reaching your files.</p>
-      <p><a href="guides/jump-lists-windows-11/">Read the full guide &rarr;</a></p>
-    </div>
-
-    <!-- Guide: macOS Stacks -->
-    <div class="bento-card full reveal" id="guides-macos-stacks">
-      <h3>macOS Stacks on Windows: what actually exists</h3>
-      <p>The dock clones copy the look of the macOS dock. None of them read your Windows Jump Lists to fan out recent files, which is the part of the dock that actually saves you time. FanFolder does that part, on the taskbar you already have.</p>
-      <p><a href="guides/macos-stacks-windows/">Read the full guide &rarr;</a></p>
-    </div>
-  </div>
-</section>
 
 <!-- ── FAQ ─────────────────────────────────────────────────────── -->
 <section class="section-wrap" id="faq">
   <div class="section-head reveal">
-    <div class="section-label">FAQ</div>
-    <h2>Frequently asked questions</h2>
+    <div class="section-label">Questions</div>
+    <h2>Questions, answered.</h2>
     <p class="section-sub">Everything you need to know about this Windows taskbar file launcher.</p>
   </div>
 
@@ -1305,20 +1318,62 @@
     </details>
     <details class="faq-item">
       <summary>Can FanFolder show recent documents instead of a folder?</summary>
-      <p>By default FanFolder shows recent documents collected from Windows Jump Lists. The tray-icon <strong>Folder</strong> submenu also offers <em>Recent files</em> (the Windows Jump List recent list) and <em>Recent Office 365 documents</em> (recent Office/Microsoft 365 files ordered by last-opened time) as one-click choices. A third recent-docs source, <code>::RecentFiles::</code> (Explorer's own Recent list), is registry-only — set <code>FolderPath</code> to that value with <code>regedit</code> or PowerShell's <code>Set-ItemProperty</code>.</p>
+      <p>By default FanFolder shows recent documents collected from Windows Jump Lists. The tray-icon <strong>Folder</strong> submenu also offers <em>Recent files</em> (the Windows Jump List recent list) and <em>Recent Office 365 documents</em> (recent Office/Microsoft 365 files ordered by last-opened time) as one-click choices. A third recent-docs source, <code>::RecentFiles::</code> (Explorer's own Recent list), is registry-only, set <code>FolderPath</code> to that value with <code>regedit</code> or PowerShell's <code>Set-ItemProperty</code>.</p>
     </details>
     <details class="faq-item">
       <summary>Are there settings that aren't in the tray menu?</summary>
-      <p>Yes. The tray menu covers folder, sort order, item count, showing folders, and file extensions. Two options are only available in the registry under <code>HKCU\SOFTWARE\FanFolder</code>: <code>FilterRegex</code> (a case-insensitive regular expression matched against filenames — for example <code>\.(pdf|docx?)$</code> shows only PDF and Word files; leave it empty to show everything) and <code>AnimationStyle</code> (<code>Spring</code>, <code>Fan</code>, <code>Glide</code>, <code>Fade</code>, or <code>None</code>). Edit them with <code>regedit</code> or PowerShell's <code>Set-ItemProperty</code>. See the <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/README.md#configuration">README on GitHub</a> for the full list of registry settings and PowerShell examples.</p>
+      <p>Yes. The tray menu covers folder, sort order, item count, showing folders, and file extensions. Two options are only available in the registry under <code>HKCU\SOFTWARE\FanFolder</code>: <code>FilterRegex</code> (a case-insensitive regular expression matched against filenames, for example <code>\.(pdf|docx?)$</code> shows only PDF and Word files; leave it empty to show everything) and <code>AnimationStyle</code> (<code>Spring</code>, <code>Fan</code>, <code>Glide</code>, <code>Fade</code>, or <code>None</code>). Edit them with <code>regedit</code> or PowerShell's <code>Set-ItemProperty</code>. See the <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/README.md#configuration">README on GitHub</a> for the full list of registry settings and PowerShell examples.</p>
     </details>
     <details class="faq-item">
       <summary>Does FanFolder send any telemetry?</summary>
-      <p>Once, after a successful install, FanFolder sends a single anonymous <code>app_installed</code> event to the FanFolder Aptabase project in the EU. It carries only a random per-user id, the app version, CPU architecture, and the platform "Windows" — never filenames, folder paths, or account details. It is sent in the background with a short timeout and is ignored when offline. To opt out before launching, set <code>HKCU\SOFTWARE\FanFolder\TelemetryEnabled</code> (DWORD) to <code>0</code>. See the <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy page</a> for full details.</p>
+      <p>Once, after a successful install, FanFolder sends a single anonymous <code>app_installed</code> event to the FanFolder Aptabase project in the EU. It carries only a random per-user id, the app version, CPU architecture, and the platform "Windows", never filenames, folder paths, or account details. It is sent in the background with a short timeout and is ignored when offline. To opt out before launching, set <code>HKCU\SOFTWARE\FanFolder\TelemetryEnabled</code> (DWORD) to <code>0</code>. See the <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy page</a> for full details.</p>
     </details>
     <details class="faq-item">
       <summary>Is FanFolder free?</summary>
       <p>Yes. FanFolder is free for personal and commercial use forever. Optional support is appreciated but never required.</p>
     </details>
+  </div>
+</section>
+
+<!-- ── Guides ───────────────────────────────────────────────────── -->
+<section class="section-wrap" id="guides">
+  <div class="section-head reveal">
+    <div class="section-label">Guides</div>
+    <h2>Taskbar problems, honest answers.</h2>
+    <p class="section-sub">FanFolder is one option in each guide. The other options are real alternatives, with their trade-offs stated plainly.</p>
+  </div>
+
+  <div class="bento">
+    <!-- Guide: Quick Launch / toolbars -->
+    <div class="bento-card full reveal" id="guides-quick-launch">
+      <h3>How to get the Quick Launch bar and taskbar toolbars back in Windows 11</h3>
+      <p>Windows 11 removed taskbar toolbars, including Quick Launch. No setting brings them back. ExplorerPatcher restores the Windows 10 style taskbar with toolbars, and StartAllBack or Start11 do something similar. All of them patch explorer.exe, so a Windows update can break them until the next fix arrives.</p>
+      
+      <p><a href="guides/quick-launch-windows-11/">Read the full guide &rarr;</a></p>
+    </div>
+
+    <!-- Guide: Recent files not showing -->
+    <div class="bento-card full reveal" id="guides-recent-files">
+      <h3>Windows 11 recent files not showing, or the list is empty</h3>
+      <p>The main control lives in Settings, Personalization, Start: "Show recently opened items in Start, Jump Lists, and File Explorer". On a company managed PC it can be forced off by policy, and no local toggle overrides that. If the toggle is on but the list stays empty, the recent cache may be stale. Clear the folders under <code>%AppData%\Microsoft\Windows\Recent</code> and restart Explorer.</p>
+      
+      <p><a href="guides/recent-files-taskbar/">Read the full guide &rarr;</a></p>
+    </div>
+
+    <!-- Guide: Jump Lists -->
+    <div class="bento-card full reveal" id="guides-jump-lists">
+      <h3>Windows 11 Jump Lists missing or not working</h3>
+      <p>Jump Lists only appear for apps that write them. Portable apps and some older programs never write them, and the "Show recently opened items" toggle or a policy can hide them system-wide.</p>
+      
+      <p><a href="guides/jump-lists-windows-11/">Read the full guide &rarr;</a></p>
+    </div>
+
+    <!-- Guide: macOS Stacks -->
+    <div class="bento-card full reveal" id="guides-macos-stacks">
+      <h3>macOS Stacks on Windows: what actually exists</h3>
+      <p>The dock clones copy the look of the macOS dock. None of them read your Windows Jump Lists to fan out recent files, which is the part of the dock that actually saves you time. FanFolder does that part, on the taskbar you already have.</p>
+      <p><a href="guides/macos-stacks-windows/">Read the full guide &rarr;</a></p>
+    </div>
   </div>
 </section>
 
@@ -1347,6 +1402,8 @@
     <a href="https://github.com/olebhartvigsen/FanFolder#readme">Technical details</a>
     <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/LICENSE.md">License</a>
     <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy</a>
+    <a href="https://github.com/olebhartvigsen/FanFolder/releases">Releases</a>
+    <a href="https://buymeacoffee.com/fanfolder">Buy me a coffee</a>
     <a href="https://github.com/olebhartvigsen/FanFolder/issues">Report an issue</a>
   </div>
 </footer>
@@ -1405,6 +1462,52 @@
         });
       }
     });
+  }
+
+
+  // ── Mobile menu, scroll-spy, animation demo ──────────────────
+  var mt = document.querySelector('.menu-toggle');
+  if (mt) {
+    mt.addEventListener('click', function () {
+      var o = document.body.classList.toggle('menu-open');
+      mt.setAttribute('aria-expanded', o ? 'true' : 'false');
+    });
+    document.querySelectorAll('#site-menu a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        document.body.classList.remove('menu-open');
+        mt.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+  var spyLinks = {};
+  document.querySelectorAll('#site-menu a[href^="#"]').forEach(function (a) { spyLinks[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        Object.keys(spyLinks).forEach(function (k) { spyLinks[k].classList.remove('active'); spyLinks[k].removeAttribute('aria-current'); });
+        var l = spyLinks[e.target.id];
+        if (l) { l.classList.add('active'); l.setAttribute('aria-current', 'true'); }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    Object.keys(spyLinks).forEach(function (k) { var s = document.getElementById(k); if (s) spy.observe(s); });
+  }
+  var demo = document.getElementById('animDemo');
+  if (demo) {
+    var stage = demo.querySelector('.ad-stage');
+    var tabs = demo.querySelectorAll('[role="tab"]');
+    var play = function () { stage.classList.remove('play'); void stage.offsetWidth; stage.classList.add('play'); };
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        tabs.forEach(function (x) { x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
+        stage.setAttribute('data-style', t.getAttribute('data-style'));
+        play();
+      });
+    });
+    if ('IntersectionObserver' in window) {
+      var dio = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { play(); dio.disconnect(); } }, { threshold: .6 });
+      dio.observe(stage);
+    }
   }
 
   // ── Hero static fan visual ───────────────────────────────────
