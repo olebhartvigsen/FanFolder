@@ -35,6 +35,8 @@
     "image": "https://olebhartvigsen.github.io/FanFolder/icon.png",
     "downloadUrl": "https://github.com/olebhartvigsen/FanFolder/releases/latest/download/FanFolderSetup.exe",
     "softwareVersion": "1.4.3",
+    "datePublished": "2026-08-24",
+    "dateModified": "2026-10-21",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Windows 10, Windows 11",
     "softwareRequirements": "Windows 10 version 2004 or later, or Windows 11; x64 or ARM64",
@@ -57,6 +59,86 @@
       "availability": "https://schema.org/InStock",
       "url": "https://olebhartvigsen.github.io/FanFolder/#download"
     }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is FanFolder?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "FanFolder is a free Windows 10/11 taskbar utility that shows recent documents collected from Windows Jump Lists, or files and folders from a location you select. Click the FanFolder icon in the taskbar to open items quickly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I install FanFolder with winget?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Open Windows Terminal or PowerShell and run winget install OleBhartvigsen.FanFolder. The Windows Package Manager installs the current version for your user."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does FanFolder require administrator rights?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. FanFolder installs per user and does not require administrator privileges or elevation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which versions of Windows does FanFolder support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "FanFolder supports Windows 10 version 2004 and later, and Windows 11. Release packages are available for both x64 and ARM64 computers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can FanFolder show OneDrive or Dropbox files?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Point FanFolder at any folder that is available on your computer, including locally synchronised OneDrive, Dropbox, and Google Drive folders."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can FanFolder show recent documents instead of a folder?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "By default FanFolder shows recent documents collected from Windows Jump Lists. The tray-icon Folder submenu offers three one-click recent sources: Recent files (the Windows Jump List recent list), Recent Explorer files (Explorer's own Recent list, stored as ::RecentFiles::) and Recent Office 365 documents (recent Office/Microsoft 365 files ordered by last-opened time). No registry editing is needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are there settings that aren't in the tray menu?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The tray menu covers folder, sort order, item count, showing folders, and file extensions. Two options are only available in the registry under HKCU\\SOFTWARE\\FanFolder: FilterRegex (a case-insensitive regular expression matched against filenames, for example \\.(pdf|docx?)$ shows only PDF and Word files; leave it empty to show everything) and AnimationStyle (Spring, Fan, Glide, Fade, or None). Edit them with regedit or PowerShell's Set-ItemProperty. See the README on GitHub for the full list of registry settings and PowerShell examples."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does FanFolder send any telemetry?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Once, after a successful install, FanFolder sends a single anonymous app_installed event to the FanFolder Aptabase project in the EU. It carries only a random per-user id, the app version, CPU architecture, and the platform \"Windows\", never filenames, folder paths, or account details. It is sent in the background with a short timeout and is ignored when offline. To opt out before launching, set HKCU\\SOFTWARE\\FanFolder\\TelemetryEnabled (DWORD) to 0. See the Privacy page for full details."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is FanFolder free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. FanFolder is free for personal and commercial use forever. Optional support is appreciated but never required."
+        }
+      }
+    ]
   }
   </script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="1afd585d-640c-496d-b32a-71bc1568fd94"></script>
@@ -1306,7 +1388,7 @@
     </details>
     <details class="faq-item">
       <summary>Can FanFolder show recent documents instead of a folder?</summary>
-      <p>By default FanFolder shows recent documents collected from Windows Jump Lists. The tray-icon <strong>Folder</strong> submenu also offers <em>Recent files</em> (the Windows Jump List recent list) and <em>Recent Office 365 documents</em> (recent Office/Microsoft 365 files ordered by last-opened time) as one-click choices. A third recent-docs source, <code>::RecentFiles::</code> (Explorer's own Recent list), is registry-only, set <code>FolderPath</code> to that value with <code>regedit</code> or PowerShell's <code>Set-ItemProperty</code>.</p>
+      <p>By default FanFolder shows recent documents collected from Windows Jump Lists. The tray-icon <strong>Folder</strong> submenu offers three one-click recent sources: <em>Recent files</em> (the Windows Jump List recent list), <em>Recent Explorer files</em> (Explorer's own Recent list, stored as <code>::RecentFiles::</code>) and <em>Recent Office 365 documents</em> (recent Office/Microsoft 365 files ordered by last-opened time). No registry editing is needed.</p>
     </details>
     <details class="faq-item">
       <summary>Are there settings that aren't in the tray menu?</summary>

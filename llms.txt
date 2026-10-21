@@ -1,0 +1,19 @@
+# FanFolder
+
+> FanFolder is a free Windows 10/11 taskbar utility. Click its icon and recent documents, or the files of any folder you choose, fan out from the taskbar. It is the Windows equivalent of macOS Stacks. Native C++, per-user install, no administrator rights, free for personal and commercial use.
+
+Facts: current version 1.4.3. Requires Windows 10 version 2004 or later, or Windows 11, on x64 or ARM64. Install with `winget install OleBhartvigsen.FanFolder`, from the Microsoft Store, or from the direct installer.
+
+## Main pages
+- [Homepage, features, download and FAQ](https://olebhartvigsen.github.io/FanFolder/): what FanFolder does and how to install it
+- [Privacy and telemetry](https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md): one anonymous install event, opt-out via registry
+- [License](https://github.com/olebhartvigsen/FanFolder/blob/main/LICENSE.md): free for life, source not published
+
+## Guides
+- [Quick Launch bar and taskbar toolbars in Windows 11](https://olebhartvigsen.github.io/FanFolder/guides/quick-launch-windows-11/)
+- [Windows 11 recent files not showing](https://olebhartvigsen.github.io/FanFolder/guides/recent-files-taskbar/)
+- [Windows 11 Jump Lists missing or not working](https://olebhartvigsen.github.io/FanFolder/guides/jump-lists-windows-11/)
+- [macOS Stacks on Windows](https://olebhartvigsen.github.io/FanFolder/guides/macos-stacks-windows/)
+
+## Optional
+- [Releases](https://github.com/olebhartvigsen/FanFolder/releases/latest)

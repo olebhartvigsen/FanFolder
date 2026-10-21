@@ -111,6 +111,8 @@
   .guide-nav a:hover { border-color: var(--accent); color: var(--accent2); }
   .guide-nav .gn-label { display: block; font-size: .72rem; font-weight: 700;
     letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: .15rem; }
+  .byline { color: var(--muted); font-size: .92rem; margin: -.25rem 0 1rem; }
+  .byline a { color: var(--accent2); }
   .faq-json { display: none; }
 </style>
 </head>
@@ -137,6 +139,7 @@
 
     <div class="section-label">GUIDE</div>
     <h1>Windows 11 Jump Lists missing or not working</h1>
+    <p class="byline">By <a href="https://github.com/olebhartvigsen">Ole B. Hartvigsen</a>, developer of FanFolder. Published <time datetime="2026-10-03">3 October 2026</time>, last updated <time datetime="2026-10-21">21 October 2026</time>.</p>
     <p class="lede">Why Jump Lists show nothing for some apps and disappear entirely on others, how the recent items setting affects them, and how to get one working recents list on your taskbar.</p>
 
     <div class="toc">
@@ -203,6 +206,12 @@
     <a href="../quick-launch-windows-11/">Quick Launch guide</a>.</p>
     <pre><code>winget install OleBhartvigsen.FanFolder</code></pre>
 
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li><a href="https://learn.microsoft.com/en-us/windows/win32/shell/taskbar-extensions" rel="noopener">Microsoft Learn: Taskbar extensions and Jump Lists</a></li>
+      <li><a href="https://github.com/olebhartvigsen/FanFolder#readme">FanFolder technical details (README)</a></li>
+    </ul>
+
     <h2 id="faq-here">Common questions</h2>
     <div class="faq-list">
             <details class="faq-item">
@@ -245,6 +254,28 @@
     <a href="https://github.com/olebhartvigsen/FanFolder/issues">Report an issue</a>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Windows 11 Jump Lists missing or not working",
+  "description": "Why Jump Lists show nothing for some apps and disappear entirely on others, how the recent items setting affects them, and how to get one working recents list on your taskbar.",
+  "datePublished": "2026-10-03",
+  "dateModified": "2026-10-21",
+  "author": {
+    "@type": "Person",
+    "name": "Ole Bülow Hartvigsen",
+    "url": "https://github.com/olebhartvigsen"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FanFolder",
+    "url": "https://olebhartvigsen.github.io/FanFolder/"
+  },
+  "mainEntityOfPage": "https://olebhartvigsen.github.io/FanFolder/guides/jump-lists-windows-11/"
+}
+</script>
 
 <script type="application/ld+json">
 {

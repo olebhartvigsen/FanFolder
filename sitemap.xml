@@ -2,22 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://olebhartvigsen.github.io/FanFolder/</loc>
+    <lastmod>2026-10-21</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://olebhartvigsen.github.io/FanFolder/guides/quick-launch-windows-11/</loc>
+    <lastmod>2026-10-21</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://olebhartvigsen.github.io/FanFolder/guides/recent-files-taskbar/</loc>
+    <lastmod>2026-10-21</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://olebhartvigsen.github.io/FanFolder/guides/jump-lists-windows-11/</loc>
+    <lastmod>2026-10-21</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://olebhartvigsen.github.io/FanFolder/guides/macos-stacks-windows/</loc>
+    <lastmod>2026-10-21</lastmod>
     <priority>0.8</priority>
   </url>
 </urlset>
