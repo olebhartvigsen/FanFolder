@@ -127,7 +127,7 @@
         "name": "Does FanFolder send any telemetry?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Once, after a successful install, FanFolder sends a single anonymous app_installed event to the FanFolder Aptabase project in the EU. It carries only a random per-user id, the app version, CPU architecture, and the platform \"Windows\", never filenames, folder paths, or account details. It is sent in the background with a short timeout and is ignored when offline. To opt out before launching, set HKCU\\SOFTWARE\\FanFolder\\TelemetryEnabled (DWORD) to 0. See the Privacy page for full details."
+          "text": "FanFolder sends two anonymous events to the FanFolder Aptabase project in the EU: app_installed on the first successful launch after installation, and app_updated on the first launch after the app version changes. Both carry a random per-user id, the running version, CPU architecture, and the platform \"Windows\", never filenames, folder paths, or account details. app_updated also carries the previous and new version. They are sent in the background with a short timeout and ignored when offline. To opt out before launching, set HKCU\\SOFTWARE\\FanFolder\\TelemetryEnabled (DWORD) to 0. See the Privacy page for full details."
         }
       },
       {
@@ -1395,7 +1395,7 @@
     </details>
     <details class="faq-item">
       <summary>Does FanFolder send any telemetry?</summary>
-      <p>Once, after a successful install, FanFolder sends a single anonymous <code>app_installed</code> event to the FanFolder Aptabase project in the EU. It carries only a random per-user id, the app version, CPU architecture, and the platform "Windows", never filenames, folder paths, or account details. It is sent in the background with a short timeout and is ignored when offline. To opt out before launching, set <code>HKCU\SOFTWARE\FanFolder\TelemetryEnabled</code> (DWORD) to <code>0</code>. See the <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy page</a> for full details.</p>
+      <p>FanFolder sends two anonymous events to the FanFolder Aptabase project in the EU: <code>app_installed</code> on the first successful launch after installation, and <code>app_updated</code> on the first launch after the app version changes. Both carry a random per-user id, the running version, CPU architecture, and the platform "Windows", never filenames, folder paths, or account details. <code>app_updated</code> also carries the previous and new version. They are sent in the background with a short timeout and ignored when offline. To opt out before launching, set <code>HKCU\SOFTWARE\FanFolder\TelemetryEnabled</code> (DWORD) to <code>0</code>. See the <a href="https://github.com/olebhartvigsen/FanFolder/blob/main/PRIVACY.md">Privacy page</a> for full details.</p>
     </details>
     <details class="faq-item">
       <summary>Is FanFolder free?</summary>
